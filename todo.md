@@ -47,3 +47,15 @@
 - [x] Datos Abiertos
 - [x] Participación Ciudadana
 - [x] Diseño y Estilo técnico
+
+
+## Segunda Investigación: Resiliencia Hídrica ante Demanda Incremental
+- [x] Eje 1: Variabilidad climática real (precipitación 5 años, nivel mensual presa, tendencia)
+- [x] Eje 2: Señal social temprana (quejas documentadas, pozos secos, pipas, declaraciones municipales)
+- [x] Eje 3: Benchmark internacional (minas de pórfido de cobre, consumo, recirculación, impacto)
+- [x] Eje 4: Cálculo bruto acumulativo (demanda proyectada vs disponibilidad + recarga)
+- [x] Eje 5: Capacidad de amortiguación institucional (plan de contingencia, fondo, infraestructura redundante)
+- [x] Construir tabla maestra con datos de los 5 ejes
+- [x] Desarrollar modelo mínimo (balance acumulativo + índice de volatilidad)
+- [x] Redactar investigación completa con protocolo de 7 secciones
+- [x] Publicar segunda investigación en el sitio
