@@ -71,3 +71,30 @@
 - [x] Implementar ReportGenerator para generación automática de reportes
 - [x] Integrar agente con sistema de investigaciones existente
 - [x] Crear interfaz web para ejecución y visualización del agente
+
+
+## Pulido y Refinamiento del Laboratorio
+
+### Rediseño Estético
+- [x] Actualizar paleta de colores con identidad de laboratorio científico
+- [x] Cambiar tipografía a fuente técnica/científica (Inter, IBM Plex Sans, o similar)
+- [ ] Mejorar espaciado y jerarquía visual
+- [ ] Refinar diseño de cards y componentes
+- [ ] Actualizar navegación con estilo más técnico
+
+### Gráficas Técnicas de Laboratorio
+- [x] Implementar gráfica de serie temporal de precipitación (5 años)
+- [x] Implementar gráfica de serie temporal de almacenamiento Huites
+- [x] Implementar gráfica de proyección de escenarios (base, estrés, extremo)
+- [x] Implementar gráfica de indicadores estructurales (IVC, IVA, ISD, BAS)
+- [ ] Agregar gráficas en página de investigaciones
+- [x] Agregar gráficas en página del agente
+- [x] Estilo científico: ejes claros, leyendas precisas, colores sobrios
+
+### Fortalecimiento de Investigaciones
+- [x] Refinar redacción técnica de supuestos explícitos
+- [x] Expandir modelo mínimo con ecuaciones más claras
+- [x] Mejorar análisis de escenarios con más detalle técnico
+- [x] Fortalecer sección de brechas detectadas
+- [x] Refinar conclusiones estructurales (eliminar cualquier rastro narrativo)
+- [x] Agregar más referencias a fuentes oficiales

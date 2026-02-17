@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, Play, AlertTriangle, CheckCircle2, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Streamdown } from "streamdown";
+import AgenteCharts from "@/components/AgenteCharts";
 
 export default function Agente() {
   const [miningWaterM3PerYear, setMiningWaterM3PerYear] = useState(19_300_000);
@@ -304,39 +305,10 @@ export default function Agente() {
                 </TabsContent>
 
                 <TabsContent value="escenarios" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Proyección de Escenarios</CardTitle>
-                      <CardDescription>
-                        Simulación a {projectYears} años
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="border rounded-lg p-4">
-                          <h3 className="font-semibold mb-2">Escenario Base</h3>
-                          <p className="text-sm text-gray-600">Sin nueva demanda</p>
-                          <p className="text-xs text-gray-500 mt-2">
-                            Almacenamiento final: {(runEvaluation.data.scenarios.base[runEvaluation.data.scenarios.base.length - 1].storage / 1_000_000).toFixed(2)} millones m³
-                          </p>
-                        </div>
-                        <div className="border rounded-lg p-4">
-                          <h3 className="font-semibold mb-2">Escenario de Estrés</h3>
-                          <p className="text-sm text-gray-600">Con nueva demanda + reducción de recarga 10%</p>
-                          <p className="text-xs text-gray-500 mt-2">
-                            Almacenamiento final: {(runEvaluation.data.scenarios.stress[runEvaluation.data.scenarios.stress.length - 1].storage / 1_000_000).toFixed(2)} millones m³
-                          </p>
-                        </div>
-                        <div className="border rounded-lg p-4">
-                          <h3 className="font-semibold mb-2">Escenario Extremo</h3>
-                          <p className="text-sm text-gray-600">Con nueva demanda + reducción de recarga 20%</p>
-                          <p className="text-xs text-gray-500 mt-2">
-                            Almacenamiento final: {(runEvaluation.data.scenarios.extreme[runEvaluation.data.scenarios.extreme.length - 1].storage / 1_000_000).toFixed(2)} millones m³
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <AgenteCharts
+                    scenarios={runEvaluation.data.scenarios}
+                    metrics={runEvaluation.data.metrics}
+                  />
                 </TabsContent>
 
                 <TabsContent value="reporte" className="space-y-4">

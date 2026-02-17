@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import ScientificChart from "@/components/ScientificChart";
 
 export default function VisualizacionHuites() {
   // Datos verificados de la tabla maestra
@@ -73,45 +73,18 @@ export default function VisualizacionHuites() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={datosAlmacenamiento} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis 
-                dataKey="fecha" 
-                stroke="hsl(var(--muted-foreground))"
-                style={{ fontSize: '12px' }}
-                angle={-45}
-                textAnchor="end"
-                height={80}
-              />
-              <YAxis 
-                stroke="hsl(var(--muted-foreground))"
-                style={{ fontSize: '12px' }}
-                label={{ value: 'Porcentaje de Capacidad (%)', angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip 
-                contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '8px',
-                }}
-                formatter={(value: number, name: string) => {
-                  if (name === "porcentaje") return [`${value}%`, "Capacidad"];
-                  if (name === "almacenamiento" && value) return [`${value} Mm³`, "Almacenamiento"];
-                  return [value, name];
-                }}
-              />
-              <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="porcentaje" 
-                stroke="hsl(var(--primary))" 
-                strokeWidth={2}
-                dot={{ fill: 'hsl(var(--primary))', r: 4 }}
-                name="Porcentaje de Capacidad"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <ScientificChart
+            data={datosAlmacenamiento}
+            type="line"
+            xKey="fecha"
+            yKeys={[
+              { key: "porcentaje", label: "Porcentaje de Capacidad (%)", color: "hsl(var(--chart-1))" },
+            ]}
+            title=""
+            xLabel="Fecha"
+            yLabel="Porcentaje de Capacidad (%)"
+            height={350}
+          />
         </CardContent>
       </Card>
 
