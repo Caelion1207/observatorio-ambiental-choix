@@ -9,6 +9,8 @@ import { Streamdown } from "streamdown";
 import TableOfContents from "@/components/TableOfContents";
 import RelatedInvestigaciones from "@/components/RelatedInvestigaciones";
 import InvestigacionImages from "@/components/InvestigacionImages";
+import ProtocoloVersion from "@/components/ProtocoloVersion";
+import RegistroSupuestos, { type Supuesto } from "@/components/RegistroSupuestos";
 
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
@@ -38,6 +40,16 @@ export default function InvestigacionDetalle() {
         </div>
       </div>
     );
+  }
+
+  // Parsear supuestos estructurados si existen
+  let supuestosEstructurados: Supuesto[] = [];
+  if (investigacion.supuestosEstructurados) {
+    try {
+      supuestosEstructurados = JSON.parse(investigacion.supuestosEstructurados);
+    } catch (e) {
+      console.error("Error parsing supuestosEstructurados:", e);
+    }
   }
 
   const secciones = [
@@ -94,6 +106,18 @@ export default function InvestigacionDetalle() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Blindaje Metodológico */}
+          <ProtocoloVersion 
+            version={investigacion.versionProtocolo || "1.0"}
+            fechaCierre={investigacion.fechaCierreSemantico}
+            indiceRobustez={investigacion.indiceRobustez}
+          />
+
+          {/* Registro Público de Supuestos */}
+          {supuestosEstructurados.length > 0 && (
+            <RegistroSupuestos supuestos={supuestosEstructurados} />
+          )}
 
           {/* Imágenes de Contexto */}
           {investigacion.categoria === "hidrologia" && (

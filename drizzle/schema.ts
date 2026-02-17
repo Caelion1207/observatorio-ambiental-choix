@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, decimal } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -45,6 +45,11 @@ export const investigaciones = mysqlTable("investigaciones", {
   brechas: text("brechas").notNull(), // 6. Brechas Detectadas
   conclusion: text("conclusion").notNull(), // 7. Conclusión Estructural
   fuentes: text("fuentes").notNull(),
+  // Blindaje metodológico
+  versionProtocolo: varchar("versionProtocolo", { length: 20 }).default("1.0").notNull(),
+  fechaCierreSemantico: timestamp("fechaCierreSemantico"),
+  supuestosEstructurados: text("supuestosEstructurados"), // JSON: [{supuesto, impacto, sensibilidad, verificado}]
+  indiceRobustez: decimal("indiceRobustez", { precision: 3, scale: 2 }).default("0.00"), // IRM: 0.00 - 1.00
   publicada: boolean("publicada").default(false).notNull(),
   autorId: int("autorId").default(1).notNull(), // Default a admin
   createdAt: timestamp("createdAt").defaultNow().notNull(),

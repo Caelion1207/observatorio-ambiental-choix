@@ -34,6 +34,15 @@ export default function Home() {
                 estructural replicable y auditable.
               </p>
             </div>
+            {/* Declaración de Neutralidad Técnica */}
+            <div className="mt-8 p-6 border border-primary/20 bg-primary/5 rounded-lg">
+              <p className="text-sm leading-relaxed text-foreground">
+                <strong>Declaración de Neutralidad Técnica:</strong> Este laboratorio no emite juicios morales ni acusaciones. 
+                Evalúa estructuras, no personas. Si los datos cambian, las conclusiones cambian. 
+                Toda inferencia debe estar respaldada por variables cuantificadas. 
+                Todo supuesto crítico debe ser verificable. Todo modelo debe ser auditable.
+              </p>
+            </div>
             <div className="flex gap-4 justify-center pt-4">
               <Link href="/investigaciones">
                 <Button size="lg">Ver Análisis</Button>

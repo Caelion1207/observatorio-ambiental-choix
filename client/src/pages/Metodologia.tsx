@@ -102,6 +102,70 @@ export default function Metodologia() {
             </AlertDescription>
           </Alert>
 
+          {/* Principios del Laboratorio */}
+          <Card className="border-primary/20 bg-primary/5">
+            <CardHeader>
+              <CardTitle className="text-2xl">Principios del Laboratorio</CardTitle>
+              <CardDescription>
+                Estos principios guían todas las investigaciones y garantizan la neutralidad técnica del análisis.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-foreground">No emitimos juicios morales ni acusaciones.</strong>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Evaluamos estructuras, no personas. El análisis se centra en sistemas, flujos y variables, 
+                      no en culpabilidades individuales.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-foreground">Si los datos cambian, las conclusiones cambian.</strong>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      No hay conclusiones inmutables. Si aparecen nuevos datos oficiales o se corrigen los existentes, 
+                      actualizamos el modelo y las conclusiones derivadas.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-foreground">Toda inferencia debe estar respaldada por variables cuantificadas.</strong>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      No permitimos saltos narrativos. Cada afirmación debe derivarse de variables definidas en el Modelo Mínimo. 
+                      Palabras como "probablemente", "es evidente" o "claramente" son rechazadas automáticamente.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-foreground">Todo supuesto crítico debe ser verificable.</strong>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Los supuestos con sensibilidad "Crítica" requieren verificación con fuentes primarias oficiales. 
+                      El Índice de Robustez del Modelo (IRM) penaliza supuestos críticos no verificados.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <strong className="text-foreground">Todo modelo debe ser auditable.</strong>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      El protocolo de 7 secciones garantiza que cualquier persona con conocimientos técnicos pueda 
+                      reproducir el análisis, verificar las fuentes y cuestionar los supuestos.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Protocolo de 7 Secciones */}
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold">Estructura Replicable (7 Secciones)</h2>
