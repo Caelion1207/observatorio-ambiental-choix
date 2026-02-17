@@ -26,13 +26,13 @@ export default function Navigation() {
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
               <div className="w-10 h-10 bg-primary rounded flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">OA</span>
+                <span className="text-primary-foreground font-bold text-lg">LP</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-semibold text-foreground text-sm leading-tight">
-                  Observatorio Ambiental
+                  Laboratorio Público
                 </span>
-                <span className="text-muted-foreground text-xs">Choix, Sinaloa</span>
+                <span className="text-muted-foreground text-xs">Análisis Estructural • Choix</span>
               </div>
             </div>
           </Link>

@@ -1,51 +1,49 @@
-# TODO - Observatorio Ambiental de Choix
+# TODO - Laboratorio Público de Análisis Estructural de Choix
 
-## Estructura de Base de Datos
-- [x] Tabla de investigaciones con 9 secciones obligatorias
-- [x] Tabla de datos abiertos (CSV, enlaces, imágenes satelitales)
-- [x] Tabla de fuentes oficiales
-- [x] Tabla de participaciones ciudadanas estructuradas
-- [x] Tabla de visualizaciones de datos ambientales
+## Transformación del Sitio (Nueva Dirección)
+- [x] Reconfigurar identidad: de "Observatorio Ambiental" a "Laboratorio Público de Análisis Estructural"
+- [x] Actualizar página de inicio con nuevo propósito: extracción de datos públicos, modelado explícito, supuestos declarados, simulación transparente, variables auditables
+- [x] Actualizar página de Metodología con protocolo replicable de 7 secciones
+- [x] Eliminar lenguaje activista o anti-mina
+- [x] Enfatizar replicabilidad del protocolo a otros dominios (educación, salud, transporte)
 
-## Páginas Principales
-- [x] Página de inicio con declaración de propósito (menos de 6 líneas)
-- [x] Página de Metodología (fuentes, modelación, supuestos, límites)
-- [x] Sistema de navegación técnico y minimalista
+## Nueva Estructura de Investigaciones (7 Secciones)
+- [ ] 1. Definición del sistema (nodo central, nodos periféricos, flujos, variables críticas)
+- [ ] 2. Tabla maestra de datos (fuente primaria, unidad, periodo, estatus)
+- [ ] 3. Supuestos explícitos (nada implícito, todo declarado)
+- [ ] 4. Modelo mínimo (ecuación clara, nada ornamental)
+- [ ] 5. Escenarios (base, estrés, extremo)
+- [ ] 6. Brechas detectadas (qué no es público, qué debería ser público)
+- [ ] 7. Conclusión estructural (no narrativa, no moral, estructural)
 
-## Sistema de Investigaciones
-- [x] Vista de listado de investigaciones publicadas
-- [x] Vista de detalle de investigación con 9 secciones
-- [x] Sistema de publicación de investigaciones (admin)
-- [x] Plantilla fija de 9 secciones obligatorias
-- [x] Primera investigación: Balance hídrico proyectado del acuífero de Choix 2025-2030
+## Tabla Maestra de Presa Huites
+- [x] 1. Congelar nuevas publicaciones (deshabilitar formularios de creación)
+- [x] 2. Construir tabla maestra con datos verificados hasta septiembre 2025
+- [x] 2.1. Marcar explícitamente ausencia de datos post-septiembre 2025
+- [x] 2.2. Incluir: fuente primaria, unidad, periodo, estatus para cada dato
 
-## Datos Abiertos
-- [x] Página de Datos Abiertos con tablas descargables
-- [x] Sistema de descarga de archivos CSV
-- [x] Enlaces directos a fuentes oficiales
-- [x] Galería de imágenes satelitales utilizadas
+## Apéndice Metodológico
+- [x] 3. Generar apéndice metodológico descargable en PDF
+- [x] 3.1. Protocolo replicable de 7 secciones
+- [x] 3.2. Explicación de auditoría por método constante
+- [x] 3.3. Ejemplos de aplicación a otros dominios
 
-## Participación Ciudadana
-- [x] Formulario estructurado de participación
-- [x] Categorías: corrección de datos, nueva fuente oficial, aclaración técnica, pregunta metodológica
-- [x] Sistema de gestión de participaciones (admin)
-- [x] Sin comentarios abiertos tipo foro
-
-## Visualización de Datos
-- [ ] Sistema de gráficas limpias para datos hidrológicos
-- [ ] Mapas técnicos para cobertura forestal
-- [ ] Visualización de series de tiempo
-- [ ] Integración con datos oficiales
-
-## Diseño y Estilo
-- [x] Diseño elegante y técnico con credibilidad científica
-- [x] Tipografía sobria y profesional
-- [x] Paleta de colores neutros y técnicos
-- [x] Sin elementos dramáticos o alarmistas
-- [x] Todo en español con tono técnico-académico
-
-## Testing y Validación
-- [ ] Pruebas de flujo de publicación de investigaciones
-- [ ] Validación de formulario de participación ciudadana
-- [ ] Verificación de descarga de datos CSV
-- [ ] Pruebas de visualización de datos
+## Actualización de Primera Investigación
+- [x] 4. Reestructurar investigación de balance hídrico con nueva plantilla de 7 secciones
+- [x] 4.1. Definición del sistema hídrico de Choix
+- [x] 4.2. Tabla maestra integrada
+- [x] 4.3. Supuestos explícitos
+- [x] 4.4. Modelo mínimo (balance hídrico simple)
+- [x] 4.5. Tres escenarios (base, estrés, extremo)
+- [x] 4.6. Brechas detectadas
+- [x] 4.7. Conclusión estructural (no narrati## Sistema de Visualización
+- [x] 5. Implementar visualización de datos con gráficas limpias
+- [x] 5.1. Serie temporal de almacenamiento Huites
+- [x] 5.2. Volatilidad del sistema
+- [x] 5.3. Disponibilidad del acuíferoompletadas
+- [x] Estructura de Base de Datos
+- [x] Páginas Principales (versión anterior)
+- [x] Sistema de Investigaciones (versión anterior)
+- [x] Datos Abiertos
+- [x] Participación Ciudadana
+- [x] Diseño y Estilo técnico

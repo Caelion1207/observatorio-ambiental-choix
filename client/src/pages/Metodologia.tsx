@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ExternalLink, AlertTriangle } from "lucide-react";
+import { ExternalLink, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export default function Metodologia() {
   const fuentesOficiales = [
@@ -34,43 +34,49 @@ export default function Metodologia() {
     },
   ];
 
-  const tiposModelacion = [
+  const protocoloSecciones = [
     {
-      tipo: "Balance Hídrico Simple",
+      numero: 1,
+      titulo: "Definición del Sistema",
       descripcion:
-        "Comparación entre recarga media anual del acuífero, volumen concesionado y demanda proyectada. No incluye modelación hidrológica compleja debido a limitaciones de datos.",
+        "Identificación del nodo central, nodos periféricos, flujos entre componentes y variables críticas que determinan el comportamiento del sistema.",
     },
     {
-      tipo: "Proyección Lineal",
+      numero: 2,
+      titulo: "Tabla Maestra de Datos",
       descripcion:
-        "Extrapolación de tendencias históricas bajo supuesto de continuidad de condiciones actuales. Se utiliza para proyecciones a 3-5 años.",
+        "Registro estructurado de todos los datos utilizados con: fuente primaria oficial, unidad de medida, periodo temporal y estatus de disponibilidad.",
     },
     {
-      tipo: "Análisis Comparativo NDVI",
+      numero: 3,
+      titulo: "Supuestos Explícitos",
       descripcion:
-        "Comparación de índices de vegetación normalizados en series de tiempo para evaluar cambios en cobertura forestal. Basado en imágenes satelitales Landsat y Sentinel.",
+        "Declaración completa de todos los supuestos del análisis. Nada implícito, todo declarado. Permite auditoría y evaluación de validez.",
     },
     {
-      tipo: "Análisis de Escenarios",
+      numero: 4,
+      titulo: "Modelo Mínimo",
       descripcion:
-        "Evaluación de múltiples escenarios alternativos (con/sin intervención) para identificar rangos de resultados posibles bajo diferentes supuestos.",
+        "Ecuación o modelo conceptual claro y reproducible. Nada ornamental. Solo lo necesario para representar el sistema y sus dinámicas.",
     },
-  ];
-
-  const supuestos = [
-    "Las series de datos oficiales son completas y representativas de las condiciones reales.",
-    "Las condiciones climáticas futuras seguirán patrones históricos (sin considerar cambio climático acelerado).",
-    "Las concesiones de agua registradas en REPDA reflejan el uso real del recurso.",
-    "La capacidad logística municipal para distribución de agua permanece constante.",
-    "No se consideran eventos extremos (sequías prolongadas, inundaciones catastróficas).",
-  ];
-
-  const limitaciones = [
-    "Ausencia de series de tiempo históricas completas (2015-2026) para algunas variables hidrológicas.",
-    "Falta de datos sobre capacidad logística real del municipio (número y capacidad de pipas).",
-    "No se realiza modelación hidrológica compleja por limitaciones de datos y recursos computacionales.",
-    "Las proyecciones asumen continuidad de condiciones actuales y no incorporan cambio climático.",
-    "Los datos de uso de agua pueden estar subestimados si existen extracciones no registradas.",
+    {
+      numero: 5,
+      titulo: "Escenarios",
+      descripcion:
+        "Simulación de tres escenarios: Base (condiciones actuales), Estrés (presión moderada) y Extremo (presión máxima o crisis).",
+    },
+    {
+      numero: 6,
+      titulo: "Brechas Detectadas",
+      descripcion:
+        "Identificación de qué datos no son públicos pero deberían serlo, y qué información falta para un análisis más robusto.",
+    },
+    {
+      numero: 7,
+      titulo: "Conclusión Estructural",
+      descripcion:
+        "Conclusión basada en la estructura del sistema y los datos, no en narrativa, moral o ideología. Solo lo que el análisis permite afirmar.",
+    },
   ];
 
   return (
@@ -79,29 +85,100 @@ export default function Metodologia() {
         <div className="space-y-8">
           {/* Encabezado */}
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight">Metodología</h1>
+            <h1 className="text-4xl font-bold tracking-tight">Protocolo de Análisis Estructural</h1>
             <p className="text-lg text-muted-foreground">
-              Transparencia metodológica: fuentes oficiales, tipos de modelación, supuestos
-              declarados y límites del análisis.
+              Método constante, replicable y auditable para análisis de problemáticas locales con 
+              impacto sistémico.
             </p>
           </div>
 
           {/* Principio Rector */}
           <Alert>
-            <AlertTriangle className="h-4 w-4" />
+            <CheckCircle2 className="h-4 w-4" />
             <AlertDescription>
-              <strong>Principio fundamental:</strong> Toda afirmación técnica debe estar respaldada
-              por datos oficiales verificables. Cuando no existen datos suficientes, se declara
-              explícitamente como limitación del análisis.
+              <strong>Principio fundamental:</strong> Este laboratorio no es activismo, opinión ni 
+              ideología. Es extracción de datos públicos, modelado explícito, supuestos declarados, 
+              simulación transparente y variables auditables.
             </AlertDescription>
           </Alert>
+
+          {/* Protocolo de 7 Secciones */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Estructura Replicable (7 Secciones)</h2>
+            <p className="text-muted-foreground">
+              Cada análisis sigue exactamente el mismo esquema. Esto permite auditoría porque el 
+              método es constante. No depende de quién lo escriba, depende del protocolo.
+            </p>
+            <div className="grid gap-4">
+              {protocoloSecciones.map((seccion) => (
+                <Card key={seccion.numero} className="border-l-4 border-l-primary">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold">
+                        {seccion.numero}
+                      </span>
+                      {seccion.titulo}
+                    </CardTitle>
+                    <CardDescription>{seccion.descripcion}</CardDescription>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Replicabilidad a Otros Dominios */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Replicabilidad a Otros Dominios</h2>
+            <p className="text-muted-foreground">
+              Este protocolo no sirve solo para análisis hídrico. Se puede aplicar a cualquier 
+              problemática local con impacto sistémico:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Educación</CardTitle>
+                  <CardDescription>
+                    Tasa de abandono, capacidad docente, infraestructura, presupuesto ejecutado, 
+                    resultado proyectado a 5 años.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Salud</CardTitle>
+                  <CardDescription>
+                    Camas hospitalarias, personal médico, demanda demográfica, cobertura real, 
+                    vulnerabilidad sistémica.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Agua</CardTitle>
+                  <CardDescription>
+                    Balance hídrico, capacidad logística, demanda proyectada, escenarios de estrés, 
+                    brechas en datos públicos.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Transporte</CardTitle>
+                  <CardDescription>
+                    Capacidad de infraestructura, flujo vehicular, cuellos de botella, saturación 
+                    proyectada, escenarios de colapso.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </div>
+          </div>
 
           {/* Fuentes Oficiales */}
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold">Fuentes Oficiales Utilizadas</h2>
             <p className="text-muted-foreground">
-              El observatorio utiliza exclusivamente datos de instituciones gubernamentales con
-              mandato oficial para la recopilación y publicación de información ambiental.
+              Solo se utilizan datos de instituciones gubernamentales con mandato oficial para la 
+              recopilación y publicación de información.
             </p>
             <div className="grid gap-4">
               {fuentesOficiales.map((fuente) => (
@@ -129,73 +206,14 @@ export default function Metodologia() {
             </div>
           </div>
 
-          {/* Tipos de Modelación */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Tipos de Modelación Empleados</h2>
-            <p className="text-muted-foreground">
-              Se utilizan métodos de modelación simples y transparentes, evitando complejidad
-              innecesaria que pueda ocultar supuestos o limitar la reproducibilidad.
-            </p>
-            <div className="grid gap-4">
-              {tiposModelacion.map((modelo) => (
-                <Card key={modelo.tipo}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{modelo.tipo}</CardTitle>
-                    <CardDescription>{modelo.descripcion}</CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Supuestos Declarados */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Supuestos Declarados</h2>
-            <p className="text-muted-foreground">
-              Todo análisis técnico parte de supuestos. La transparencia exige declararlos
-              explícitamente para que el lector pueda evaluar su validez.
-            </p>
-            <Card>
-              <CardContent className="pt-6">
-                <ul className="space-y-3">
-                  {supuestos.map((supuesto, index) => (
-                    <li key={index} className="flex gap-3">
-                      <span className="text-primary font-semibold">{index + 1}.</span>
-                      <span className="text-muted-foreground">{supuesto}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Límites del Análisis */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Límites del Análisis</h2>
-            <p className="text-muted-foreground">
-              Reconocer las limitaciones es tan importante como presentar los hallazgos. Estas
-              limitaciones definen el alcance y confiabilidad de las conclusiones.
-            </p>
-            <Card>
-              <CardContent className="pt-6">
-                <ul className="space-y-3">
-                  {limitaciones.map((limitacion, index) => (
-                    <li key={index} className="flex gap-3">
-                      <span className="text-destructive font-semibold">•</span>
-                      <span className="text-muted-foreground">{limitacion}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Nota Final */}
+          {/* Auditoría por Método Constante */}
           <Alert>
+            <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              <strong>Nota importante:</strong> Esta metodología se actualiza conforme se
-              incorporan nuevas fuentes de datos o técnicas de análisis. Cada investigación
-              publicada especifica la metodología exacta utilizada en su sección correspondiente.
+              <strong>Auditoría:</strong> Si todos los estudios siguen el mismo marco, se vuelven 
+              auditables. La estructura se mantiene estable, el método reduce ruido, el modelo evita 
+              deriva narrativa y la arquitectura escala a distintos dominios. Esto es metagobernanza 
+              aplicada.
             </AlertDescription>
           </Alert>
         </div>

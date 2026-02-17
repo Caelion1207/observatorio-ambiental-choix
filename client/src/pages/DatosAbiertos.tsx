@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Download, ExternalLink, Image, Loader2, Database } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import VisualizacionHuites from "@/components/VisualizacionHuites";
 
 export default function DatosAbiertos() {
   const { data: datosAbiertos, isLoading } = trpc.datosAbiertos.list.useQuery();
@@ -61,6 +62,12 @@ export default function DatosAbiertos() {
               satelitales utilizadas en las investigaciones. Todos los datos son de acceso público
               y verificables.
             </p>
+          </div>
+
+          {/* Visualización de Datos: Presa Huites */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold">Visualización: Presa Luis Donaldo Colosio (Huites)</h2>
+            <VisualizacionHuites />
           </div>
 
           {/* Archivos CSV */}

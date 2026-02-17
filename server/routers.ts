@@ -41,28 +41,29 @@ export const appRouter = router({
         return investigacion;
       }),
     
-    create: adminProcedure
-      .input(z.object({
-        titulo: z.string(),
-        slug: z.string(),
-        resumenEjecutivo: z.string(),
-        contexto: z.string(),
-        datosOficiales: z.string(),
-        metodologia: z.string(),
-        analisisTecnico: z.string(),
-        proyeccion: z.string(),
-        escenariosAlternativos: z.string(),
-        limitaciones: z.string(),
-        conclusiones: z.string(),
-        fuentes: z.string(),
-        publicada: z.boolean().optional(),
-      }))
-      .mutation(async ({ input, ctx }) => {
-        return await db.createInvestigacion({
-          ...input,
-          autorId: ctx.user.id,
-        });
-      }),
+    // CONGELADO: Nuevas publicaciones deshabilitadas
+    // create: adminProcedure
+    //   .input(z.object({
+    //     titulo: z.string(),
+    //     slug: z.string(),
+    //     resumenEjecutivo: z.string(),
+    //     contexto: z.string(),
+    //     datosOficiales: z.string(),
+    //     metodologia: z.string(),
+    //     analisisTecnico: z.string(),
+    //     proyeccion: z.string(),
+    //     escenariosAlternativos: z.string(),
+    //     limitaciones: z.string(),
+    //     conclusiones: z.string(),
+    //     fuentes: z.string(),
+    //     publicada: z.boolean().optional(),
+    //   }))
+    //   .mutation(async ({ input, ctx }) => {
+    //     return await db.createInvestigacion({
+    //       ...input,
+    //       autorId: ctx.user.id,
+    //     });
+    //   }),
     
     publish: adminProcedure
       .input(z.object({ id: z.number() }))
@@ -83,21 +84,22 @@ export const appRouter = router({
         return await db.getDatosAbiertosByInvestigacion(input.investigacionId);
       }),
     
-    create: adminProcedure
-      .input(z.object({
-        titulo: z.string(),
-        descripcion: z.string(),
-        tipo: z.enum(["csv", "enlace", "imagen_satelital"]),
-        archivoUrl: z.string().optional(),
-        archivoKey: z.string().optional(),
-        enlaceExterno: z.string().optional(),
-        fuenteOficial: z.string(),
-        fechaDatos: z.date().optional(),
-        investigacionId: z.number().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        return await db.createDatoAbierto(input);
-      }),
+    // CONGELADO: Nuevas publicaciones deshabilitadas
+    // create: adminProcedure
+    //   .input(z.object({
+    //     titulo: z.string(),
+    //     descripcion: z.string(),
+    //     tipo: z.enum(["csv", "enlace", "imagen_satelital"]),
+    //     archivoUrl: z.string().optional(),
+    //     archivoKey: z.string().optional(),
+    //     enlaceExterno: z.string().optional(),
+    //     fuenteOficial: z.string(),
+    //     fechaDatos: z.date().optional(),
+    //     investigacionId: z.number().optional(),
+    //   }))
+    //   .mutation(async ({ input }) => {
+    //     return await db.createDatoAbierto(input);
+    //   }),
   }),
 
   fuentesOficiales: router({
@@ -105,17 +107,18 @@ export const appRouter = router({
       return await db.getFuentesOficiales();
     }),
     
-    create: adminProcedure
-      .input(z.object({
-        nombre: z.string(),
-        siglas: z.string(),
-        descripcion: z.string(),
-        sitioWeb: z.string().optional(),
-        tiposDatos: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        return await db.createFuenteOficial(input);
-      }),
+    // CONGELADO: Nuevas publicaciones deshabilitadas
+    // create: adminProcedure
+    //   .input(z.object({
+    //     nombre: z.string(),
+    //     siglas: z.string(),
+    //     descripcion: z.string(),
+    //     sitioWeb: z.string().optional(),
+    //     tiposDatos: z.string(),
+    //   }))
+    //   .mutation(async ({ input }) => {
+    //     return await db.createFuenteOficial(input);
+    //   }),
   }),
 
   participaciones: router({
@@ -162,18 +165,19 @@ export const appRouter = router({
         return await db.getVisualizacionesByInvestigacion(input.investigacionId);
       }),
     
-    create: adminProcedure
-      .input(z.object({
-        titulo: z.string(),
-        tipo: z.enum(["grafica_hidrologica", "mapa_forestal", "serie_tiempo"]),
-        descripcion: z.string(),
-        datosJson: z.string(),
-        fuenteOficial: z.string(),
-        investigacionId: z.number().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        return await db.createVisualizacion(input);
-      }),
+    // CONGELADO: Nuevas publicaciones deshabilitadas
+    // create: adminProcedure
+    //   .input(z.object({
+    //     titulo: z.string(),
+    //     tipo: z.enum(["grafica_hidrologica", "mapa_forestal", "serie_tiempo"]),
+    //     descripcion: z.string(),
+    //     datosJson: z.string(),
+    //     fuenteOficial: z.string(),
+    //     investigacionId: z.number().optional(),
+    //   }))
+    //   .mutation(async ({ input }) => {
+    //     return await db.createVisualizacion(input);
+    //   }),
   }),
 });
 

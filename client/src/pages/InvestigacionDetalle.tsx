@@ -38,15 +38,14 @@ export default function InvestigacionDetalle() {
   }
 
   const secciones = [
-    { titulo: "1. Contexto del Problema", contenido: investigacion.contexto },
-    { titulo: "2. Datos Oficiales Recopilados", contenido: investigacion.datosOficiales },
-    { titulo: "3. Metodología Empleada", contenido: investigacion.metodologia },
-    { titulo: "4. Análisis Técnico", contenido: investigacion.analisisTecnico },
-    { titulo: "5. Proyección (3-5 años)", contenido: investigacion.proyeccion },
-    { titulo: "6. Escenarios Alternativos", contenido: investigacion.escenariosAlternativos },
-    { titulo: "7. Limitaciones del Análisis", contenido: investigacion.limitaciones },
-    { titulo: "8. Conclusiones Abiertas", contenido: investigacion.conclusiones },
-    { titulo: "9. Fuentes y Anexos", contenido: investigacion.fuentes },
+    { titulo: "1. Definición del Sistema", contenido: investigacion.contexto },
+    { titulo: "2. Tabla Maestra de Datos", contenido: investigacion.datosOficiales },
+    { titulo: "3. Supuestos Explícitos", contenido: investigacion.metodologia },
+    { titulo: "4. Modelo Mínimo", contenido: investigacion.analisisTecnico },
+    { titulo: "5. Escenarios", contenido: investigacion.proyeccion + "\n\n" + investigacion.escenariosAlternativos },
+    { titulo: "6. Brechas Detectadas", contenido: investigacion.limitaciones },
+    { titulo: "7. Conclusión Estructural", contenido: investigacion.conclusiones },
+    { titulo: "Fuentes Primarias", contenido: investigacion.fuentes },
   ];
 
   return (
@@ -89,7 +88,7 @@ export default function InvestigacionDetalle() {
             </CardContent>
           </Card>
 
-          {/* 9 Secciones Obligatorias */}
+          {/* 7 Secciones del Protocolo + Fuentes */}
           {secciones.map((seccion, index) => (
             <Card key={index} className="border-border">
               <CardHeader>
