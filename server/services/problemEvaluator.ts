@@ -5,6 +5,7 @@
 
 export type RiskLevel = "ESTABLE" | "RIESGO MODERADO" | "RIESGO ALTO" | "CRÍTICO";
 export type LogisticStatus = "CAPACIDAD SUFICIENTE" | "PRESIÓN LOGÍSTICA" | "COLAPSO LOGÍSTICO";
+export type OperationalZone = "ESTABLE" | "TENSIÓN" | "RIESGO" | "DÉFICIT";
 
 export interface WaterStressEvaluation {
   riskLevel: RiskLevel;
@@ -195,5 +196,129 @@ export class ProblemEvaluator {
       climateVulnerability,
       overallRisk,
     };
+  }
+
+  /**
+   * Clasifica la zona operativa del sistema según el ISD
+   * Basado en funciones umbral definidas en métricas ingenieriles
+   */
+  classifyOperationalZone(isd: number): {
+    zone: OperationalZone;
+    description: string;
+    actionRequired: string;
+  } {
+    let zone: OperationalZone;
+    let description: string;
+    let actionRequired: string;
+
+    if (isd < 0.7) {
+      zone = "ESTABLE";
+      description = "Sistema opera con margen suficiente. Perturbaciones normales no comprometen funcionamiento.";
+      actionRequired = "Monitoreo rutinario";
+    } else if (isd < 0.9) {
+      zone = "TENSIÓN";
+      description = "Sistema opera cerca del límite. Perturbaciones moderadas pueden generar estrés temporal.";
+      actionRequired = "Activación de protocolos de prevención";
+    } else if (isd < 1.0) {
+      zone = "RIESGO";
+      description = "Sistema opera en saturación. Cualquier perturbación puede generar déficit.";
+      actionRequired = "Activación de protocolos de contingencia";
+    } else {
+      zone = "DÉFICIT";
+      description = "Demanda excede capacidad. Sistema en falla estructural.";
+      actionRequired = "Intervención de emergencia";
+    }
+
+    return { zone, description, actionRequired };
+  }
+
+  /**
+   * Evalúa legitimidad operativa del sistema
+   * Basado en criterios de margen, capacidad logística, transparencia y contingencia
+   */
+  evaluateOperationalLegitimacy(params: {
+    isd: number;
+    margin: number;
+    hasLogisticCapacity: boolean;
+    hasCompleteData: boolean;
+    hasContingencyPlan: boolean;
+  }): {
+    isLegitimate: boolean;
+    score: number;
+    maxScore: number;
+    failedCriteria: string[];
+  } {
+    const criteria = [
+      {
+        name: "Margen mínimo (20-30%)",
+        passed: params.margin >= 0.2,
+      },
+      {
+        name: "Capacidad logística suficiente",
+        passed: params.hasLogisticCapacity,
+      },
+      {
+        name: "Datos públicos completos",
+        passed: params.hasCompleteData,
+      },
+      {
+        name: "Plan de contingencia verificable",
+        passed: params.hasContingencyPlan,
+      },
+    ];
+
+    const score = criteria.filter((c) => c.passed).length;
+    const maxScore = criteria.length;
+    const failedCriteria = criteria.filter((c) => !c.passed).map((c) => c.name);
+    const isLegitimate = score === maxScore;
+
+    return {
+      isLegitimate,
+      score,
+      maxScore,
+      failedCriteria,
+    };
+  }
+
+  /**
+   * Genera evaluación completa con métricas ingenieriles
+   */
+  generateEngineeringEvaluation(params: {
+    isd: number;
+    margin: number;
+    hasLogisticCapacity: boolean;
+    hasCompleteData: boolean;
+    hasContingencyPlan: boolean;
+  }) {
+    const operationalZone = this.classifyOperationalZone(params.isd);
+    const legitimacy = this.evaluateOperationalLegitimacy(params);
+
+    return {
+      operationalZone,
+      legitimacy,
+      interpretation: this.generateInterpretation(operationalZone.zone, legitimacy.isLegitimate),
+    };
+  }
+
+  /**
+   * Genera interpretación estructural basada en zona y legitimidad
+   */
+  private generateInterpretation(zone: OperationalZone, isLegitimate: boolean): string {
+    if (zone === "ESTABLE" && isLegitimate) {
+      return "El sistema opera en estado óptimo con legitimidad operativa completa.";
+    } else if (zone === "ESTABLE" && !isLegitimate) {
+      return "El sistema opera en zona estable pero carece de legitimidad operativa por ausencia de amortiguadores institucionales.";
+    } else if (zone === "TENSIÓN" && isLegitimate) {
+      return "El sistema opera en zona de tensión con legitimidad operativa. Requiere activación de protocolos de prevención.";
+    } else if (zone === "TENSIÓN" && !isLegitimate) {
+      return "El sistema opera en zona de tensión sin legitimidad operativa. Vulnerabilidad estructural moderada.";
+    } else if (zone === "RIESGO" && isLegitimate) {
+      return "El sistema opera en zona de riesgo con legitimidad operativa. Requiere activación inmediata de protocolos de contingencia.";
+    } else if (zone === "RIESGO" && !isLegitimate) {
+      return "El sistema opera en zona de riesgo sin legitimidad operativa. Vulnerabilidad estructural alta.";
+    } else if (zone === "DÉFICIT") {
+      return "El sistema opera en déficit estructural. Requiere intervención de emergencia independientemente de legitimidad operativa.";
+    }
+    return "Evaluación no disponible.";
   }
 }

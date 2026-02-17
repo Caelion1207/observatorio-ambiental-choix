@@ -147,3 +147,13 @@
 - [x] Crear sección de investigaciones relacionadas por categoría
 - [x] Integrar imágenes de Presa Huites en investigaciones
 - [x] Agregar gráficas técnicas en secciones relevantes de investigaciones
+
+
+## Métricas Ingenieriles
+- [x] Definir formalmente Estado Óptimo Operativo con intervalo Ω
+- [x] Definir Rango de Legitimidad Operativa con función de legitimidad
+- [x] Implementar clasificación de zonas (Estable, Tensión, Riesgo, Déficit) con funciones umbral
+- [x] Crear funciones de cálculo de zonas operativas en el backend
+- [x] Implementar visualización de zonas operativas con gráficas
+- [x] Agregar sección de métricas ingenieriles en página del agente
+- [ ] Actualizar investigaciones con marco matemático de zonas operativas

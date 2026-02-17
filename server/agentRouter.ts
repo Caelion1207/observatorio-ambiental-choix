@@ -156,6 +156,21 @@ export const agentRouter = router({
           deficit: logisticPressure.deficit,
         });
 
+        // Métricas ingenieriles
+        const margin = 1 - isd;
+        const engineeringEvaluation = evaluator.generateEngineeringEvaluation({
+          isd,
+          margin,
+          hasLogisticCapacity: logisticPressure.status === "CAPACIDAD SUFICIENTE",
+          hasCompleteData: precipitationValidation.warnings.length === 0 && presaValidation.warnings.length === 0,
+          hasContingencyPlan: false, // TODO: Obtener de datos oficiales
+        });
+
+        logger.log("Métricas ingenieriles calculadas", "SUCCESS", "PROBLEM_EVALUATOR", {
+          operationalZone: engineeringEvaluation.operationalZone.zone,
+          legitimacy: engineeringEvaluation.legitimacy.isLegitimate,
+        });
+
         // 5. Generación de reporte
         const reportGenerator = new ReportGenerator();
         const report = reportGenerator.generate({
@@ -192,6 +207,7 @@ export const agentRouter = router({
           systemEvaluation,
           scenarios,
           report,
+          engineeringEvaluation,
         };
       } catch (error) {
         logger.logOperationError("runEvaluation", error as Error);

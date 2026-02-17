@@ -9,6 +9,7 @@ import { Loader2, Play, AlertTriangle, CheckCircle2, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Streamdown } from "streamdown";
 import AgenteCharts from "@/components/AgenteCharts";
+import OperationalZonesChart from "@/components/OperationalZonesChart";
 
 export default function Agente() {
   const [miningWaterM3PerYear, setMiningWaterM3PerYear] = useState(19_300_000);
@@ -271,6 +272,15 @@ export default function Agente() {
                 </TabsContent>
 
                 <TabsContent value="metricas" className="space-y-4">
+                  {/* Métricas Ingenieriles */}
+                  {runEvaluation.data.engineeringEvaluation && (
+                    <OperationalZonesChart
+                      isd={runEvaluation.data.metrics.isd / 100}
+                      legitimacy={runEvaluation.data.engineeringEvaluation.legitimacy}
+                      operationalZone={runEvaluation.data.engineeringEvaluation.operationalZone}
+                    />
+                  )}
+
                   <Card>
                     <CardHeader>
                       <CardTitle>Indicadores Estructurales</CardTitle>
