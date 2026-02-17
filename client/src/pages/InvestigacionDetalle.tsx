@@ -6,6 +6,9 @@ import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Streamdown } from "streamdown";
+import TableOfContents from "@/components/TableOfContents";
+import RelatedInvestigaciones from "@/components/RelatedInvestigaciones";
+import InvestigacionImages from "@/components/InvestigacionImages";
 
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
@@ -38,19 +41,23 @@ export default function InvestigacionDetalle() {
   }
 
   const secciones = [
-    { titulo: "1. Definición del Sistema", contenido: investigacion.contexto },
-    { titulo: "2. Tabla Maestra de Datos", contenido: investigacion.datosOficiales },
-    { titulo: "3. Supuestos Explícitos", contenido: investigacion.metodologia },
-    { titulo: "4. Modelo Mínimo", contenido: investigacion.analisisTecnico },
-    { titulo: "5. Escenarios", contenido: investigacion.proyeccion + "\n\n" + investigacion.escenariosAlternativos },
-    { titulo: "6. Brechas Detectadas", contenido: investigacion.limitaciones },
-    { titulo: "7. Conclusión Estructural", contenido: investigacion.conclusiones },
-    { titulo: "Fuentes Primarias", contenido: investigacion.fuentes },
+    { id: "definicion-sistema", titulo: "1. Definición del Sistema", contenido: investigacion.contexto },
+    { id: "tabla-maestra", titulo: "2. Tabla Maestra de Datos", contenido: investigacion.datosOficiales },
+    { id: "supuestos", titulo: "3. Supuestos Explícitos", contenido: investigacion.metodologia },
+    { id: "modelo-minimo", titulo: "4. Modelo Mínimo", contenido: investigacion.analisisTecnico },
+    { id: "escenarios", titulo: "5. Escenarios", contenido: investigacion.proyeccion + "\n\n" + investigacion.escenariosAlternativos },
+    { id: "brechas", titulo: "6. Brechas Detectadas", contenido: investigacion.limitaciones },
+    { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusiones },
+    { id: "fuentes", titulo: "Fuentes Primarias", contenido: investigacion.fuentes },
   ];
+
+  const tocSections = secciones.map(s => ({ id: s.id, title: s.titulo }));
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="container max-w-4xl py-12">
+      <div className="container max-w-7xl py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8">
+          <div className="max-w-4xl">
         <div className="space-y-8">
           {/* Navegación */}
           <Link href="/investigaciones">
@@ -88,9 +95,27 @@ export default function InvestigacionDetalle() {
             </CardContent>
           </Card>
 
+          {/* Imágenes de Contexto */}
+          {investigacion.categoria === "hidrologia" && (
+            <InvestigacionImages
+              images={[
+                {
+                  src: "/images/presa-huites-1.jpg",
+                  alt: "Presa Luis Donaldo Colosio (Huites)",
+                  caption: "Presa Luis Donaldo Colosio (Huites), principal fuente de almacenamiento hídrico de la región.",
+                },
+                {
+                  src: "/images/presa-huites-2.jpg",
+                  alt: "Vista aérea de Presa Huites",
+                  caption: "Vista aérea mostrando la capacidad de almacenamiento y la infraestructura de la presa.",
+                },
+              ]}
+            />
+          )}
+
           {/* 7 Secciones del Protocolo + Fuentes */}
           {secciones.map((seccion, index) => (
-            <Card key={index} className="border-border">
+            <Card key={index} id={seccion.id} className="border-border scroll-mt-20">
               <CardHeader>
                 <CardTitle className="text-xl">{seccion.titulo}</CardTitle>
               </CardHeader>
@@ -101,8 +126,22 @@ export default function InvestigacionDetalle() {
               </CardContent>
             </Card>
           ))}
+
+          {/* Investigaciones Relacionadas */}
+          <div className="mt-12 pt-8 border-t border-border">
+            <RelatedInvestigaciones 
+              categoria={investigacion.categoria} 
+              currentSlug={investigacion.slug} 
+            />
+          </div>
         </div>
       </div>
+      {/* Índice de Contenidos (solo desktop) */}
+      <div className="hidden lg:block">
+        <TableOfContents sections={tocSections} />
+      </div>
+    </div>
+    </div>
     </div>
   );
 }

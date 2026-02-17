@@ -1,4 +1,4 @@
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { 
   InsertUser, 
@@ -125,6 +125,37 @@ export async function getInvestigacionBySlug(slug: string) {
     .limit(1);
   
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getInvestigacionesRelacionadas(
+  categoria: string, 
+  currentSlug: string, 
+  limit: number = 3
+) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Obtener todas las investigaciones publicadas de la misma categoría
+  const allInvestigaciones = await db
+    .select({
+      id: investigaciones.id,
+      titulo: investigaciones.titulo,
+      slug: investigaciones.slug,
+      resumenEjecutivo: investigaciones.resumenEjecutivo,
+      categoria: investigaciones.categoria,
+      numero: investigaciones.numero,
+      publishedAt: investigaciones.publishedAt,
+    })
+    .from(investigaciones)
+    .where(eq(investigaciones.publicada, true))
+    .orderBy(desc(investigaciones.publishedAt));
+  
+  // Filtrar por categoría y excluir la investigación actual
+  const result = allInvestigaciones
+    .filter(inv => inv.categoria === categoria && inv.slug !== currentSlug)
+    .slice(0, limit);
+  
+  return result;
 }
 
 export async function createInvestigacion(data: InsertInvestigacion) {

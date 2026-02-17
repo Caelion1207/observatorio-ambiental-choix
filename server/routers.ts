@@ -43,6 +43,20 @@ export const appRouter = router({
         return investigacion;
       }),
     
+    getRelated: publicProcedure
+      .input(z.object({ 
+        categoria: z.string(),
+        currentSlug: z.string(),
+        limit: z.number().optional().default(3)
+      }))
+      .query(async ({ input }) => {
+        return await db.getInvestigacionesRelacionadas(
+          input.categoria, 
+          input.currentSlug, 
+          input.limit
+        );
+      }),
+    
     // CONGELADO: Nuevas publicaciones deshabilitadas
     // create: adminProcedure
     //   .input(z.object({

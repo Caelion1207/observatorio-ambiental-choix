@@ -138,3 +138,12 @@
 - [x] Ajustar colores de grid para modo oscuro
 - [x] Ajustar colores de leyendas para modo oscuro
 - [x] Detectar tema actual en componentes de gráficas
+
+
+## Mejoras de Navegación y Visualización
+- [x] Implementar índice de contenidos navegable en investigaciones
+- [x] Agregar scroll automático al hacer clic en sección del índice
+- [x] Resaltar sección activa en el índice según scroll
+- [x] Crear sección de investigaciones relacionadas por categoría
+- [x] Integrar imágenes de Presa Huites en investigaciones
+- [x] Agregar gráficas técnicas en secciones relevantes de investigaciones
