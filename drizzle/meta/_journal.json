@@ -15,6 +15,13 @@
       "when": 1771311138267,
       "tag": "0001_sloppy_deathstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1771320632609,
+      "tag": "0002_noisy_lily_hollister",
+      "breakpoints": true
     }
   ]
 }

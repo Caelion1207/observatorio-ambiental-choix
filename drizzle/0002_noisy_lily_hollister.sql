@@ -1,0 +1,2 @@
+ALTER TABLE `investigaciones` ADD `numero` int NOT NULL;--> statement-breakpoint
+ALTER TABLE `investigaciones` ADD `categoria` enum('hidrologia','medio_ambiente','infraestructura','salud','educacion','transporte') NOT NULL;

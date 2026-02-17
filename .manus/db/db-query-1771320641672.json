@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE investigaciones SET numero = 1, categoria = 'hidrologia' WHERE slug = 'balance-hidrico-proyectado-acuifero-choix-2025-2030';\nUPDATE investigaciones SET numero = 2, categoria = 'hidrologia' WHERE slug = 'sistema-hidrico-choix-demanda-incremental-resiliencia-amortiguacion';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute UPDATE investigaciones SET numero = 1, categoria = 'hidrologia' WHERE slug = 'balance-hidrico-proyectado-acuifero-choix-2025-2030';\nUPDATE investigaciones SET numero = 2, categoria = 'hidrologia' WHERE slug = 'sistema-hidrico-choix-demanda-incremental-resiliencia-amortiguacion';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 460
+}

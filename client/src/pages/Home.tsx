@@ -7,8 +7,17 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section - Declaración de Propósito */}
-      <section className="bg-gradient-to-b from-muted/50 to-background py-20">
-        <div className="container max-w-4xl">
+      <section className="relative bg-gradient-to-b from-muted/50 to-background py-20 overflow-hidden">
+        {/* Imagen de fondo con overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/presa-huites-1.jpg"
+            alt="Presa Huites, Choix, Sinaloa"
+            className="w-full h-full object-cover opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background" />
+        </div>
+        <div className="container max-w-4xl relative z-10">
           <div className="text-center space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               Laboratorio Público de Análisis Estructural
@@ -131,6 +140,50 @@ export default function Home() {
                 </Link>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Galería Visual de Choix */}
+      <section className="py-16 bg-muted/30">
+        <div className="container max-w-6xl">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl font-bold tracking-tight">Choix, Sinaloa</h2>
+            <p className="text-lg text-muted-foreground">
+              Región de la Sierra Madre Occidental con infraestructura hídrica crítica
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="relative overflow-hidden rounded-lg aspect-video">
+              <img
+                src="/images/presa-huites-2.jpg"
+                alt="Presa Luis Donaldo Colosio (Huites)"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <p className="text-white text-sm font-medium">Presa Luis Donaldo Colosio (Huites)</p>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg aspect-video">
+              <img
+                src="/images/choix-landscape-2.jpg"
+                alt="Paisaje de Choix"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <p className="text-white text-sm font-medium">Paisaje de Choix</p>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg aspect-video">
+              <img
+                src="/images/choix-landscape-3.jpg"
+                alt="Embalse de Huites"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <p className="text-white text-sm font-medium">Embalse de Huites</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -2,12 +2,28 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { FileText, Calendar, Loader2 } from "lucide-react";
+import { FileText, Calendar, Loader2, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+
+const categorias = {
+  hidrologia: "Hidrología",
+  medio_ambiente: "Medio Ambiente",
+  infraestructura: "Infraestructura",
+  salud: "Salud",
+  educacion: "Educación",
+  transporte: "Transporte",
+};
 
 export default function Investigaciones() {
   const { data: investigaciones, isLoading } = trpc.investigaciones.list.useQuery();
+  const [categoriaFiltro, setCategoriaFiltro] = useState<string | null>(null);
+
+  const investigacionesFiltradas = investigaciones?.filter(
+    (inv) => !categoriaFiltro || inv.categoria === categoriaFiltro
+  );
 
   if (isLoading) {
     return (
@@ -25,15 +41,37 @@ export default function Investigaciones() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">Investigaciones</h1>
             <p className="text-lg text-muted-foreground">
-              Estudios técnicos con estructura fija de 9 secciones obligatorias. Cada investigación
+              Estudios técnicos con estructura fija de 7 secciones obligatorias. Cada investigación
               se basa en datos oficiales, modelación básica y fuentes verificables.
             </p>
           </div>
 
+          {/* Filtro por categoría */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            <Button
+              variant={categoriaFiltro === null ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => setCategoriaFiltro(null)}
+            >
+              Todas
+            </Button>
+            {Object.entries(categorias).map(([key, label]) => (
+              <Button
+                key={key}
+                variant={categoriaFiltro === key ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setCategoriaFiltro(key)}
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
+
           {/* Listado de Investigaciones */}
-          {investigaciones && investigaciones.length > 0 ? (
+          {investigacionesFiltradas && investigacionesFiltradas.length > 0 ? (
             <div className="grid gap-6">
-              {investigaciones.map((investigacion) => (
+              {investigacionesFiltradas.map((investigacion) => (
                 <Card
                   key={investigacion.id}
                   className="border-border hover:shadow-md transition-shadow"
@@ -44,6 +82,14 @@ export default function Investigaciones() {
                         <FileText className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1 space-y-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Badge variant="outline" className="font-mono text-xs">
+                            #{investigacion.numero.toString().padStart(2, "0")}
+                          </Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            {categorias[investigacion.categoria as keyof typeof categorias]}
+                          </Badge>
+                        </div>
                         <CardTitle className="text-xl">{investigacion.titulo}</CardTitle>
                         <CardDescription className="text-base">
                           {investigacion.resumenEjecutivo.substring(0, 250)}

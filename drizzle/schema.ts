@@ -31,6 +31,8 @@ export type InsertUser = typeof users.$inferInsert;
  */
 export const investigaciones = mysqlTable("investigaciones", {
   id: int("id").autoincrement().primaryKey(),
+  numero: int("numero").notNull(), // Número de investigación en la serie
+  categoria: mysqlEnum("categoria", ["hidrologia", "medio_ambiente", "infraestructura", "salud", "educacion", "transporte"]).notNull(),
   titulo: varchar("titulo", { length: 500 }).notNull(),
   slug: varchar("slug", { length: 500 }).notNull().unique(),
   resumenEjecutivo: text("resumenEjecutivo").notNull(),

@@ -98,3 +98,35 @@
 - [x] Fortalecer sección de brechas detectadas
 - [x] Refinar conclusiones estructurales (eliminar cualquier rastro narrativo)
 - [x] Agregar más referencias a fuentes oficiales
+
+
+## Optimización y Mejoras Visuales
+
+### Adaptación Móvil
+- [ ] Optimizar navegación para pantallas pequeñas
+- [ ] Ajustar tamaños de gráficas para móviles
+- [ ] Mejorar tipografía responsive
+- [ ] Optimizar cards y componentes para touch
+- [ ] Ajustar espaciado y padding en móviles
+
+### Modo Oscuro
+- [x] Implementar theme switcher en navegación
+- [x] Crear paleta de colores científica oscura
+- [x] Ajustar gráficas para modo oscuro
+- [x] Asegurar legibilidad en ambos modos
+- [x] Persistir preferencia de tema del usuario
+
+### Sistema de Categorías e Índice
+- [x] Agregar campo de categoría a investigaciones (Hidrología, Medio Ambiente, Infraestructura, etc.)
+- [x] Crear filtro por categoría en página de investigaciones
+- [x] Agregar número de investigación en la serie
+- [ ] Implementar índice de contenidos dentro de cada investigación
+- [ ] Mostrar investigaciones relacionadas por categoría
+
+### Imágenes y Contenido Visual
+- [x] Buscar imágenes de Presa Huites
+- [x] Buscar imágenes de paisajes de Choix, Sinaloa
+- [x] Buscar imágenes de infraestructura hídrica
+- [x] Integrar imágenes en página de inicio
+- [ ] Integrar imágenes en páginas de investigaciones
+- [x] Optimizar imágenes para web (compresión, formatos modernos)

@@ -2,13 +2,15 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
-import { Menu } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Navigation() {
   const [location] = useLocation();
   const { user, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const navLinks = [
     { href: "/", label: "Inicio" },
@@ -53,8 +55,20 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Autenticación */}
+          {/* Theme switcher y autenticación */}
           <div className="hidden md:flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="w-9 h-9 p-0"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
             {isAuthenticated ? (
               <>
                 {user?.role === "admin" && (
@@ -102,6 +116,18 @@ export default function Navigation() {
                   </Button>
                 </Link>
               ))}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="w-full justify-start"
+              >
+                {theme === "dark" ? (
+                  <><Sun className="h-4 w-4 mr-2" /> Modo Claro</>
+                ) : (
+                  <><Moon className="h-4 w-4 mr-2" /> Modo Oscuro</>
+                )}
+              </Button>
               {isAuthenticated ? (
                 <>
                   {user?.role === "admin" && (
