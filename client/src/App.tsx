@@ -11,6 +11,7 @@ import Investigaciones from "./pages/Investigaciones";
 import InvestigacionDetalle from "./pages/InvestigacionDetalle";
 import DatosAbiertos from "./pages/DatosAbiertos";
 import Participacion from "./pages/Participacion";
+import Agente from "./pages/Agente";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
         <Route path={"/investigaciones/:slug"} component={InvestigacionDetalle} />
         <Route path={"/datos-abiertos"} component={DatosAbiertos} />
         <Route path={"/participacion"} component={Participacion} />
+        <Route path={"/agente"} component={Agente} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

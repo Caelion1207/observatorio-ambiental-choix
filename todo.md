@@ -59,3 +59,15 @@
 - [x] Desarrollar modelo mínimo (balance acumulativo + índice de volatilidad)
 - [x] Redactar investigación completa con protocolo de 7 secciones
 - [x] Publicar segunda investigación en el sitio
+
+
+## Integración del Agente de Recolección y Evaluación Dinámica
+- [x] Analizar estructura del agente Python y mapear componentes
+- [x] Adaptar DataCollector para integración con APIs de CONAGUA/SMN
+- [x] Implementar DataValidator para validación de series temporales
+- [x] Crear HydroModel para simulación de balance hídrico
+- [x] Implementar ProblemEvaluator para evaluación de riesgo
+- [x] Crear RegimeLogger para registro de operaciones del agente
+- [x] Implementar ReportGenerator para generación automática de reportes
+- [x] Integrar agente con sistema de investigaciones existente
+- [x] Crear interfaz web para ejecución y visualización del agente
