@@ -45,13 +45,13 @@ export const appRouter = router({
     
     getRelated: publicProcedure
       .input(z.object({ 
-        categoria: z.string(),
+        dominioId: z.number(),
         currentSlug: z.string(),
         limit: z.number().optional().default(3)
       }))
       .query(async ({ input }) => {
         return await db.getInvestigacionesRelacionadas(
-          input.categoria, 
+          input.dominioId, 
           input.currentSlug, 
           input.limit
         );
@@ -138,23 +138,28 @@ export const appRouter = router({
     //   }),
   }),
 
-  fuentesOficiales: router({
+  dominios: router({
     list: publicProcedure.query(async () => {
-      return await db.getFuentesOficiales();
+      return await db.getDominios();
     }),
     
-    // CONGELADO: Nuevas publicaciones deshabilitadas
-    // create: adminProcedure
-    //   .input(z.object({
-    //     nombre: z.string(),
-    //     siglas: z.string(),
-    //     descripcion: z.string(),
-    //     sitioWeb: z.string().optional(),
-    //     tiposDatos: z.string(),
-    //   }))
-    //   .mutation(async ({ input }) => {
-    //     return await db.createFuenteOficial(input);
-    //   }),
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const dominio = await db.getDominioById(input.id);
+        if (!dominio) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Dominio no encontrado' });
+        }
+        return dominio;
+      }),
+  }),
+  
+  fuentes: router({
+    getByInvestigacionId: publicProcedure
+      .input(z.object({ investigacionId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getFuentesByInvestigacionId(input.investigacionId);
+      }),
   }),
 
   participaciones: router({

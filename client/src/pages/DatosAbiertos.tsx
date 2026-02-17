@@ -46,8 +46,8 @@ export default function DatosAbiertos() {
 
   const datosPorTipo = {
     csv: datosAbiertos?.filter((d) => d.tipo === "csv") || [],
-    imagen_satelital: datosAbiertos?.filter((d) => d.tipo === "imagen_satelital") || [],
-    enlace: datosAbiertos?.filter((d) => d.tipo === "enlace") || [],
+    imagen_satelital: [], // Tipo eliminado en v2, ahora está en imagenesSatelitales de investigaciones
+    enlace: [], // Tipo eliminado en v2, ahora se usa archivoUrl
   };
 
   return (
@@ -86,11 +86,10 @@ export default function DatosAbiertos() {
                           </div>
                           <CardDescription>{dato.descripcion}</CardDescription>
                           <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
-                            <Badge variant="secondary">{dato.fuenteOficial}</Badge>
-                            {dato.fechaDatos && (
+                            <Badge variant="secondary">{dato.formato || 'text/csv'}</Badge>
+                            {dato.tamano && (
                               <span>
-                                Datos de{" "}
-                                {format(new Date(dato.fechaDatos), "MMMM yyyy", { locale: es })}
+                                {(dato.tamano / 1024).toFixed(2)} KB
                               </span>
                             )}
                           </div>
@@ -113,8 +112,8 @@ export default function DatosAbiertos() {
             </div>
           )}
 
-          {/* Imágenes Satelitales */}
-          {datosPorTipo.imagen_satelital.length > 0 && (
+          {/* Imágenes Satelitales - Ahora en investigaciones */}
+          {false && datosPorTipo.imagen_satelital.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">Imágenes Satelitales</h2>
               <div className="grid gap-4">
@@ -129,13 +128,7 @@ export default function DatosAbiertos() {
                           </div>
                           <CardDescription>{dato.descripcion}</CardDescription>
                           <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
-                            <Badge variant="secondary">{dato.fuenteOficial}</Badge>
-                            {dato.fechaDatos && (
-                              <span>
-                                Captura de{" "}
-                                {format(new Date(dato.fechaDatos), "MMMM yyyy", { locale: es })}
-                              </span>
-                            )}
+                            <Badge variant="secondary">{dato.formato || 'Imagen'}</Badge>
                           </div>
                         </div>
                       </div>
@@ -156,8 +149,8 @@ export default function DatosAbiertos() {
             </div>
           )}
 
-          {/* Enlaces Externos */}
-          {datosPorTipo.enlace.length > 0 && (
+          {/* Enlaces Externos - Tipo eliminado en v2 */}
+          {false && datosPorTipo.enlace.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">Enlaces a Fuentes Oficiales</h2>
               <div className="grid gap-4">
@@ -172,14 +165,14 @@ export default function DatosAbiertos() {
                           </div>
                           <CardDescription>{dato.descripcion}</CardDescription>
                           <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
-                            <Badge variant="secondary">{dato.fuenteOficial}</Badge>
+                            <Badge variant="secondary">Fuente Oficial</Badge>
                           </div>
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      {dato.enlaceExterno && (
-                        <a href={dato.enlaceExterno} target="_blank" rel="noopener noreferrer">
+                      {dato.archivoUrl && (
+                        <a href={dato.archivoUrl} target="_blank" rel="noopener noreferrer">
                           <Button variant="secondary" className="w-full gap-2">
                             <ExternalLink className="h-4 w-4" />
                             Visitar Fuente Oficial

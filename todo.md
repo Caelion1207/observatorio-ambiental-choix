@@ -99,3 +99,42 @@
 - [x] Implementar botón de exportación en página de detalle de investigación
 - [x] Incluir todo el contenido estructurado en el PDF (protocolo, supuestos, IRM)
 - [ ] Probar generación de PDF con investigaciones existentes
+
+## Arquitectura Escalable 2.0 (Mejoras Duras)
+
+### Fase 1: Refactorización de Schema
+- [ ] Crear tabla `dominios` (id, nombre, slug, descripcion, variables_template, indices_config, escenarios_base)
+- [ ] Agregar campo `dominio_id` a tabla `investigaciones`
+- [ ] Crear tabla `fuentes` (id, investigacion_id, tipo, titulo, url, fecha_consulta)
+- [ ] Crear tabla `datos_abiertos` (id, investigacion_id, tipo, archivo_url, formato)
+
+### Fase 2: Sistema de Plantillas de Dominios
+- [ ] Crear estructura `/dominios/_template/` con modelo base reutilizable
+- [ ] Implementar 3 nuevos dominios: Finanzas, Agricultura, Ganadería
+- [ ] Crear seed de dominios con variables, índices y escenarios base
+
+### Fase 3: Agente Multidominio
+- [ ] Refactorizar agente para detectar dominio desde metadata de investigación
+- [ ] Implementar carga dinámica de modelo_base según dominio
+- [ ] Implementar motor de escenarios genérico (sin sliders hardcodeados)
+- [ ] Implementar motor de índices dinámico según dominio
+
+### Fase 4: Fuentes Separadas por Investigación
+- [ ] Crear componente `FuentesInvestigacion` con filtrado por tipo
+- [ ] Migrar fuentes actuales a estructura separada por investigación
+- [ ] Agregar endpoint tRPC para obtener fuentes por investigación
+
+### Fase 5: Datos Abiertos Descargables
+- [ ] Crear endpoint tRPC para generar CSV/JSON/GeoJSON por investigación
+- [ ] Implementar componente de descarga de datos abiertos
+- [ ] Agregar botón de descarga en página de detalle de investigación
+
+### Fase 6: Imágenes Satelitales Opcionales
+- [ ] Agregar campo `imagenes_satelitales` (JSON) a tabla investigaciones
+- [ ] Implementar condicional de visualización según dominio (NDWI/NDVI)
+- [ ] Crear componente `VisorSatelital` opcional
+
+### Fase 7: Migración de Investigaciones Existentes
+- [ ] Migrar 6 investigaciones actuales a nueva estructura
+- [ ] Asignar dominios correctos a investigaciones existentes
+- [ ] Separar fuentes por investigación

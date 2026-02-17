@@ -1,0 +1,8 @@
+{
+  "tabla": "fuentesOficiales",
+  "fecha_backup": "2026-02-17T23:39:00Z",
+  "version_sistema": "v2.0.0",
+  "registros": [],
+  "total_registros": 0,
+  "nota": "Tabla vacía al momento del backup. No se perdieron datos en la migración."
+}

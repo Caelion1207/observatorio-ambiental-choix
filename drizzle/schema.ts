@@ -1,17 +1,16 @@
 import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, decimal } from "drizzle-orm/mysql-core";
 
 /**
- * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
+ * ARQUITECTURA ESCALABLE 2.0
+ * Sistema de dominios ilimitados con investigaciones autónomas
  */
+
+// ============================================================================
+// USUARIOS Y AUTENTICACIÓN
+// ============================================================================
+
 export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
   id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
   openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
@@ -25,33 +24,85 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+// ============================================================================
+// DOMINIOS (ESCALABLE A N DOMINIOS)
+// ============================================================================
+
+/**
+ * Tabla de dominios del observatorio.
+ * Permite agregar dominios ilimitados sin modificar el core.
+ * Cada dominio define sus propias variables, índices y escenarios base.
+ */
+export const dominios = mysqlTable("dominios", {
+  id: int("id").autoincrement().primaryKey(),
+  nombre: varchar("nombre", { length: 255 }).notNull(), // "Hidrología", "Finanzas Públicas", etc.
+  slug: varchar("slug", { length: 255 }).notNull().unique(), // "hidrologia", "finanzas", etc.
+  descripcion: text("descripcion").notNull(),
+  icono: varchar("icono", { length: 50 }), // Nombre del ícono lucide-react
+  color: varchar("color", { length: 50 }), // Color hex o clase Tailwind
+  
+  // Configuración del dominio (JSON)
+  variablesTemplate: text("variablesTemplate"), // JSON: [{nombre, unidad, tipo, rango}]
+  indicesConfig: text("indicesConfig"), // JSON: [{nombre, formula, descripcion, umbral}]
+  escenariosBase: text("escenariosBase"), // JSON: [{nombre, descripcion, parametros}]
+  
+  // Configuración de imágenes satelitales (opcional)
+  requiereSatelital: boolean("requiereSatelital").default(false).notNull(),
+  tipoIndice: varchar("tipoIndice", { length: 50 }), // "NDWI", "NDVI", null
+  
+  activo: boolean("activo").default(true).notNull(),
+  orden: int("orden").default(0).notNull(), // Para ordenar en UI
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Dominio = typeof dominios.$inferSelect;
+export type InsertDominio = typeof dominios.$inferInsert;
+
+// ============================================================================
+// INVESTIGACIONES (AUTÓNOMAS)
+// ============================================================================
+
 /**
  * Investigaciones técnicas publicadas en el observatorio.
- * Cada investigación sigue el protocolo de 7 secciones obligatorias.
+ * Cada investigación es autónoma y referencia un dominio dinámicamente.
+ * Protocolo de 7 secciones obligatorias mantenido.
  */
 export const investigaciones = mysqlTable("investigaciones", {
   id: int("id").autoincrement().primaryKey(),
-  numero: int("numero").notNull(), // Número de investigación en la serie
-  categoria: mysqlEnum("categoria", ["hidrologia", "medio_ambiente", "infraestructura", "salud", "educacion", "transporte"]).notNull(),
+  numero: int("numero").notNull(),
+  dominioId: int("dominioId").notNull(), // Referencia a tabla dominios
   titulo: varchar("titulo", { length: 500 }).notNull(),
   slug: varchar("slug", { length: 500 }).notNull().unique(),
   resumenEjecutivo: text("resumenEjecutivo").notNull(),
+  
   // Protocolo de 7 secciones
-  definicionSistema: text("definicionSistema").notNull(), // 1. Definición del Sistema
-  tablaMaestra: text("tablaMaestra").notNull(), // 2. Tabla Maestra de Datos
-  supuestos: text("supuestos").notNull(), // 3. Supuestos Explícitos
-  modelo: text("modelo").notNull(), // 4. Modelo Mínimo
-  escenarios: text("escenarios").notNull(), // 5. Escenarios
-  brechas: text("brechas").notNull(), // 6. Brechas Detectadas
-  conclusion: text("conclusion").notNull(), // 7. Conclusión Estructural
-  fuentes: text("fuentes").notNull(),
+  definicionSistema: text("definicionSistema").notNull(),
+  tablaMaestra: text("tablaMaestra").notNull(),
+  supuestos: text("supuestos").notNull(),
+  modelo: text("modelo").notNull(),
+  escenarios: text("escenarios").notNull(),
+  brechas: text("brechas").notNull(),
+  conclusion: text("conclusion").notNull(),
+  
+  // Metadata de la investigación (JSON)
+  metadataJson: text("metadataJson"), // {ubicacion, periodo, alcance, etc.}
+  
+  // Configuración de escenarios e índices específicos de esta investigación
+  escenariosConfig: text("escenariosConfig"), // JSON: escenarios personalizados
+  indicesCalculados: text("indicesCalculados"), // JSON: resultados de índices
+  
+  // Imágenes satelitales (opcional, JSON)
+  imagenesSatelitales: text("imagenesSatelitales"), // JSON: {raw, procesadas, comparativas, metadatos}
+  
   // Blindaje metodológico
   versionProtocolo: varchar("versionProtocolo", { length: 20 }).default("1.0").notNull(),
   fechaCierreSemantico: timestamp("fechaCierreSemantico"),
   supuestosEstructurados: text("supuestosEstructurados"), // JSON: [{supuesto, impacto, sensibilidad, verificado}]
-  indiceRobustez: decimal("indiceRobustez", { precision: 3, scale: 2 }).default("0.00"), // IRM: 0.00 - 1.00
+  indiceRobustez: decimal("indiceRobustez", { precision: 3, scale: 2 }).default("0.00"),
+  
   publicada: boolean("publicada").default(false).notNull(),
-  autorId: int("autorId").default(1).notNull(), // Default a admin
+  autorId: int("autorId").default(1).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   publishedAt: timestamp("publishedAt"),
@@ -60,21 +111,51 @@ export const investigaciones = mysqlTable("investigaciones", {
 export type Investigacion = typeof investigaciones.$inferSelect;
 export type InsertInvestigacion = typeof investigaciones.$inferInsert;
 
+// ============================================================================
+// FUENTES (SEPARADAS POR INVESTIGACIÓN)
+// ============================================================================
+
 /**
- * Datos abiertos disponibles para descarga.
- * Incluye archivos CSV, enlaces a fuentes oficiales e imágenes satelitales.
+ * Fuentes utilizadas en cada investigación.
+ * Separación real: cada investigación tiene sus propias fuentes.
+ * Clasificadas por tipo: oficiales, técnicas, académicas, periodísticas.
+ */
+export const fuentes = mysqlTable("fuentes", {
+  id: int("id").autoincrement().primaryKey(),
+  investigacionId: int("investigacionId").notNull(),
+  tipo: mysqlEnum("tipo", ["oficial", "tecnica", "academica", "periodistica"]).notNull(),
+  titulo: varchar("titulo", { length: 500 }).notNull(),
+  autor: varchar("autor", { length: 255 }),
+  institucion: varchar("institucion", { length: 255 }),
+  url: text("url"),
+  fechaPublicacion: timestamp("fechaPublicacion"),
+  fechaConsulta: timestamp("fechaConsulta").notNull(),
+  notas: text("notas"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Fuente = typeof fuentes.$inferSelect;
+export type InsertFuente = typeof fuentes.$inferInsert;
+
+// ============================================================================
+// DATOS ABIERTOS (POR INVESTIGACIÓN)
+// ============================================================================
+
+/**
+ * Datos abiertos descargables por investigación.
+ * Formatos: CSV, JSON, GeoJSON, escenarios, índices.
  */
 export const datosAbiertos = mysqlTable("datosAbiertos", {
   id: int("id").autoincrement().primaryKey(),
+  investigacionId: int("investigacionId").notNull(),
+  tipo: mysqlEnum("tipo", ["csv", "json", "geojson", "escenarios", "indices"]).notNull(),
   titulo: varchar("titulo", { length: 500 }).notNull(),
   descripcion: text("descripcion").notNull(),
-  tipo: mysqlEnum("tipo", ["csv", "enlace", "imagen_satelital"]).notNull(),
-  archivoUrl: text("archivoUrl"),
-  archivoKey: text("archivoKey"),
-  enlaceExterno: text("enlaceExterno"),
-  fuenteOficial: varchar("fuenteOficial", { length: 255 }).notNull(),
-  fechaDatos: timestamp("fechaDatos"),
-  investigacionId: int("investigacionId"),
+  archivoUrl: text("archivoUrl"), // URL de S3
+  archivoKey: text("archivoKey"), // Key de S3
+  formato: varchar("formato", { length: 50 }).notNull(), // "text/csv", "application/json", etc.
+  tamano: int("tamano"), // Tamaño en bytes
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -82,28 +163,10 @@ export const datosAbiertos = mysqlTable("datosAbiertos", {
 export type DatoAbierto = typeof datosAbiertos.$inferSelect;
 export type InsertDatoAbierto = typeof datosAbiertos.$inferInsert;
 
-/**
- * Fuentes oficiales utilizadas en el observatorio.
- * Catálogo de instituciones y sus datos disponibles.
- */
-export const fuentesOficiales = mysqlTable("fuentesOficiales", {
-  id: int("id").autoincrement().primaryKey(),
-  nombre: varchar("nombre", { length: 255 }).notNull(),
-  siglas: varchar("siglas", { length: 50 }).notNull(),
-  descripcion: text("descripcion").notNull(),
-  sitioWeb: text("sitioWeb"),
-  tiposDatos: text("tiposDatos").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+// ============================================================================
+// PARTICIPACIONES CIUDADANAS
+// ============================================================================
 
-export type FuenteOficial = typeof fuentesOficiales.$inferSelect;
-export type InsertFuenteOficial = typeof fuentesOficiales.$inferInsert;
-
-/**
- * Participaciones ciudadanas estructuradas.
- * Sin comentarios abiertos, solo formularios estructurados por categoría.
- */
 export const participaciones = mysqlTable("participaciones", {
   id: int("id").autoincrement().primaryKey(),
   categoria: mysqlEnum("categoria", [
@@ -126,17 +189,16 @@ export const participaciones = mysqlTable("participaciones", {
 export type Participacion = typeof participaciones.$inferSelect;
 export type InsertParticipacion = typeof participaciones.$inferInsert;
 
-/**
- * Visualizaciones de datos ambientales.
- * Datos estructurados para gráficas y mapas técnicos.
- */
+// ============================================================================
+// VISUALIZACIONES
+// ============================================================================
+
 export const visualizaciones = mysqlTable("visualizaciones", {
   id: int("id").autoincrement().primaryKey(),
   titulo: varchar("titulo", { length: 500 }).notNull(),
-  tipo: mysqlEnum("tipo", ["grafica_hidrologica", "mapa_forestal", "serie_tiempo"]).notNull(),
+  tipo: mysqlEnum("tipo", ["grafica", "mapa", "serie_tiempo", "satelital"]).notNull(),
   descripcion: text("descripcion").notNull(),
   datosJson: text("datosJson").notNull(),
-  fuenteOficial: varchar("fuenteOficial", { length: 255 }).notNull(),
   investigacionId: int("investigacionId"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

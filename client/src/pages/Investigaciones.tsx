@@ -8,22 +8,19 @@ import { es } from "date-fns/locale";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
-const categorias = {
-  hidrologia: "Hidrología",
-  medio_ambiente: "Medio Ambiente",
-  infraestructura: "Infraestructura",
-  salud: "Salud",
-  educacion: "Educación",
-  transporte: "Transporte",
-};
+// Categorias legacy - ahora se obtienen dinámicamente de dominios
 
 export default function Investigaciones() {
   const { data: investigaciones, isLoading } = trpc.investigaciones.list.useQuery();
-  const [categoriaFiltro, setCategoriaFiltro] = useState<string | null>(null);
+  const { data: dominios } = trpc.dominios.list.useQuery();
+  const [dominioFiltro, setDominioFiltro] = useState<number | null>(null);
 
   const investigacionesFiltradas = investigaciones?.filter(
-    (inv) => !categoriaFiltro || inv.categoria === categoriaFiltro
+    (inv) => !dominioFiltro || inv.dominioId === dominioFiltro
   );
+  
+  // Crear mapa de dominios por ID
+  const dominiosMap = dominios?.reduce((acc, d) => ({ ...acc, [d.id]: d }), {} as Record<number, typeof dominios[0]>) || {};
 
   if (isLoading) {
     return (
@@ -50,20 +47,20 @@ export default function Investigaciones() {
           <div className="flex flex-wrap gap-2 items-center">
             <Filter className="h-4 w-4 text-muted-foreground" />
             <Button
-              variant={categoriaFiltro === null ? "secondary" : "ghost"}
+              variant={dominioFiltro === null ? "secondary" : "ghost"}
               size="sm"
-              onClick={() => setCategoriaFiltro(null)}
+              onClick={() => setDominioFiltro(null)}
             >
               Todas
             </Button>
-            {Object.entries(categorias).map(([key, label]) => (
+            {dominios?.map((dominio) => (
               <Button
-                key={key}
-                variant={categoriaFiltro === key ? "secondary" : "ghost"}
+                key={dominio.id}
+                variant={dominioFiltro === dominio.id ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setCategoriaFiltro(key)}
+                onClick={() => setDominioFiltro(dominio.id)}
               >
-                {label}
+                {dominio.nombre}
               </Button>
             ))}
           </div>
@@ -87,7 +84,7 @@ export default function Investigaciones() {
                             #{investigacion.numero.toString().padStart(2, "0")}
                           </Badge>
                           <Badge variant="secondary" className="text-xs">
-                            {categorias[investigacion.categoria as keyof typeof categorias]}
+                            {dominiosMap[investigacion.dominioId]?.nombre || 'Sin dominio'}
                           </Badge>
                         </div>
                         <CardTitle className="text-xl">{investigacion.titulo}</CardTitle>

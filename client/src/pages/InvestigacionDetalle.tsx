@@ -92,8 +92,18 @@ export default function InvestigacionDetalle() {
     { id: "escenarios", titulo: "5. Escenarios", contenido: investigacion.escenarios },
     { id: "brechas", titulo: "6. Brechas Detectadas", contenido: investigacion.brechas },
     { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusion },
-    { id: "fuentes", titulo: "Fuentes Primarias", contenido: investigacion.fuentes },
   ];
+  
+  // Obtener fuentes de la investigación desde tabla separada
+  const { data: fuentes } = trpc.fuentes.getByInvestigacionId.useQuery({ investigacionId: investigacion.id });
+  
+  // Agregar sección de fuentes si existen
+  if (fuentes && fuentes.length > 0) {
+    const fuentesContent = fuentes.map((f, i) => 
+      `${i + 1}. **${f.titulo}** ${f.institucion ? `(${f.institucion})` : ''} ${f.url ? `[Enlace](${f.url})` : ''}`
+    ).join('\n\n');
+    secciones.push({ id: "fuentes", titulo: "Fuentes Primarias", contenido: fuentesContent });
+  }
 
   const tocSections = secciones.map(s => ({ id: s.id, title: s.titulo }));
 
@@ -173,7 +183,7 @@ export default function InvestigacionDetalle() {
           )}
 
           {/* Imágenes de Contexto */}
-          {investigacion.categoria === "hidrologia" && (
+          {investigacion.dominioId === 1 && ( // Dominio Hidrología
             <InvestigacionImages
               images={[
                 {
@@ -207,7 +217,7 @@ export default function InvestigacionDetalle() {
           {/* Investigaciones Relacionadas */}
           <div className="mt-12 pt-8 border-t border-border">
             <RelatedInvestigaciones 
-              categoria={investigacion.categoria} 
+              dominioId={investigacion.dominioId} 
               currentSlug={investigacion.slug} 
             />
           </div>

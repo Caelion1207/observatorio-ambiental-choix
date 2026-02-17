@@ -5,29 +5,20 @@ import { Link } from "wouter";
 import { ArrowRight, Loader2 } from "lucide-react";
 
 interface RelatedInvestigacionesProps {
-  categoria: string;
+  dominioId: number;
   currentSlug: string;
 }
-
-const categoriaLabels: Record<string, string> = {
-  hidrologia: "Hidrología",
-  medio_ambiente: "Medio Ambiente",
-  infraestructura: "Infraestructura",
-  salud: "Salud",
-  educacion: "Educación",
-  transporte: "Transporte",
-};
 
 /**
  * Componente de investigaciones relacionadas por categoría
  * Muestra 2-3 investigaciones de la misma categoría
  */
 export default function RelatedInvestigaciones({
-  categoria,
+  dominioId,
   currentSlug,
 }: RelatedInvestigacionesProps) {
   const { data: related, isLoading } = trpc.investigaciones.getRelated.useQuery({
-    categoria,
+    dominioId,
     currentSlug,
     limit: 3,
   });
@@ -63,7 +54,7 @@ export default function RelatedInvestigaciones({
                     #{inv.numero}
                   </Badge>
                   <Badge variant="secondary" className="text-xs">
-                    {categoriaLabels[inv.categoria] || inv.categoria}
+                    Investigación #{inv.numero}
                   </Badge>
                 </div>
                 <CardTitle className="text-lg line-clamp-2">

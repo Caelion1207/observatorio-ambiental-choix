@@ -7,12 +7,14 @@ import {
   InsertInvestigacion,
   datosAbiertos,
   InsertDatoAbierto,
-  fuentesOficiales,
-  InsertFuenteOficial,
   participaciones,
   InsertParticipacion,
   visualizaciones,
-  InsertVisualizacion
+  InsertVisualizacion,
+  dominios,
+  InsertDominio,
+  fuentes,
+  InsertFuente
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -127,35 +129,30 @@ export async function getInvestigacionBySlug(slug: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function getInvestigacionesRelacionadas(
-  categoria: string, 
-  currentSlug: string, 
-  limit: number = 3
-) {
+export async function getInvestigacionesRelacionadas(dominioId: number, currentSlug: string, limit: number = 3) {
   const db = await getDb();
   if (!db) return [];
   
-  // Obtener todas las investigaciones publicadas de la misma categoría
   const allInvestigaciones = await db
     .select({
       id: investigaciones.id,
       titulo: investigaciones.titulo,
       slug: investigaciones.slug,
       resumenEjecutivo: investigaciones.resumenEjecutivo,
-      categoria: investigaciones.categoria,
+      dominioId: investigaciones.dominioId,
       numero: investigaciones.numero,
       publishedAt: investigaciones.publishedAt,
     })
     .from(investigaciones)
-    .where(eq(investigaciones.publicada, true))
-    .orderBy(desc(investigaciones.publishedAt));
+    .where(and(
+      eq(investigaciones.publicada, true),
+      eq(investigaciones.dominioId, dominioId),
+      ne(investigaciones.slug, currentSlug)
+    ))
+    .orderBy(desc(investigaciones.publishedAt))
+    .limit(limit);
   
-  // Filtrar por categoría y excluir la investigación actual
-  const result = allInvestigaciones
-    .filter(inv => inv.categoria === categoria && inv.slug !== currentSlug)
-    .slice(0, limit);
-  
-  return result;
+  return allInvestigaciones;
 }
 
 export async function createInvestigacion(data: InsertInvestigacion) {
@@ -210,19 +207,43 @@ export async function createDatoAbierto(data: InsertDatoAbierto) {
   return result;
 }
 
-// Fuentes Oficiales
-export async function getFuentesOficiales() {
+// Dominios
+export async function getDominios() {
   const db = await getDb();
   if (!db) return [];
   
-  return await db.select().from(fuentesOficiales).orderBy(fuentesOficiales.nombre);
+  return await db.select().from(dominios).where(eq(dominios.activo, true)).orderBy(dominios.orden);
 }
 
-export async function createFuenteOficial(data: InsertFuenteOficial) {
+export async function getDominioById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(dominios).where(eq(dominios.id, id)).limit(1);
+  return result[0] || null;
+}
+
+export async function createDominio(data: InsertDominio) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  const result = await db.insert(fuentesOficiales).values(data);
+  const result = await db.insert(dominios).values(data);
+  return result;
+}
+
+// Fuentes por Investigación
+export async function getFuentesByInvestigacionId(investigacionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(fuentes).where(eq(fuentes.investigacionId, investigacionId)).orderBy(fuentes.tipo);
+}
+
+export async function createFuente(data: InsertFuente) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(fuentes).values(data);
   return result;
 }
 
