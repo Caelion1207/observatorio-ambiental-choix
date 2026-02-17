@@ -57,6 +57,26 @@ export const appRouter = router({
         );
       }),
     
+    exportPDF: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .mutation(async ({ input }) => {
+        const investigacion = await db.getInvestigacionBySlug(input.slug);
+        if (!investigacion) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
+        }
+        
+        const { generarPDFInvestigacion } = await import('./services/pdfGenerator');
+        const pdfBuffer = await generarPDFInvestigacion(investigacion as any);
+        
+        // Convertir buffer a base64 para enviar al cliente
+        const pdfBase64 = pdfBuffer.toString('base64');
+        
+        return {
+          pdfBase64,
+          filename: `${investigacion.slug}.pdf`
+        };
+      }),
+    
     // CONGELADO: Nuevas publicaciones deshabilitadas
     // create: adminProcedure
     //   .input(z.object({

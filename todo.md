@@ -92,3 +92,10 @@
 - [x] Calcular IRM = 1 - (Supuestos Críticos No Verificados / Total de Supuestos)
 - [x] Mostrar IRM visible en cada investigación
 - [x] Agregar badge de robustez (IRM > 0.8 = Robusto, 0.6-0.8 = Moderado, < 0.6 = Débil)
+
+## Nueva Funcionalidad: Exportación PDF
+
+- [x] Crear endpoint tRPC para generar PDF de investigaciones
+- [x] Implementar botón de exportación en página de detalle de investigación
+- [x] Incluir todo el contenido estructurado en el PDF (protocolo, supuestos, IRM)
+- [ ] Probar generación de PDF con investigaciones existentes
