@@ -41,13 +41,13 @@ export default function InvestigacionDetalle() {
   }
 
   const secciones = [
-    { id: "definicion-sistema", titulo: "1. Definición del Sistema", contenido: investigacion.contexto },
-    { id: "tabla-maestra", titulo: "2. Tabla Maestra de Datos", contenido: investigacion.datosOficiales },
-    { id: "supuestos", titulo: "3. Supuestos Explícitos", contenido: investigacion.metodologia },
-    { id: "modelo-minimo", titulo: "4. Modelo Mínimo", contenido: investigacion.analisisTecnico },
-    { id: "escenarios", titulo: "5. Escenarios", contenido: investigacion.proyeccion + "\n\n" + investigacion.escenariosAlternativos },
-    { id: "brechas", titulo: "6. Brechas Detectadas", contenido: investigacion.limitaciones },
-    { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusiones },
+    { id: "definicion-sistema", titulo: "1. Definición del Sistema", contenido: investigacion.definicionSistema },
+    { id: "tabla-maestra", titulo: "2. Tabla Maestra de Datos", contenido: investigacion.tablaMaestra },
+    { id: "supuestos", titulo: "3. Supuestos Explícitos", contenido: investigacion.supuestos },
+    { id: "modelo-minimo", titulo: "4. Modelo Mínimo", contenido: investigacion.modelo },
+    { id: "escenarios", titulo: "5. Escenarios", contenido: investigacion.escenarios },
+    { id: "brechas", titulo: "6. Brechas Detectadas", contenido: investigacion.brechas },
+    { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusion },
     { id: "fuentes", titulo: "Fuentes Primarias", contenido: investigacion.fuentes },
   ];
 

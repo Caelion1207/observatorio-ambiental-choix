@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE investigaciones \n  CHANGE COLUMN contexto definicionSistema TEXT NOT NULL,\n  CHANGE COLUMN datosOficiales tablaMaestra TEXT NOT NULL,\n  CHANGE COLUMN metodologia supuestos TEXT NOT NULL,\n  CHANGE COLUMN analisisTecnico modelo TEXT NOT NULL,\n  CHANGE COLUMN proyeccion escenarios TEXT NOT NULL,\n  CHANGE COLUMN escenariosAlternativos brechas TEXT NOT NULL,\n  CHANGE COLUMN limitaciones conclusion TEXT NOT NULL,\n  DROP COLUMN conclusiones;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute ALTER TABLE investigaciones \n  CHANGE COLUMN contexto definicionSistema TEXT NOT NULL,\n  CHANGE COLUMN datosOficiales tablaMaestra TEXT NOT NULL,\n  CHANGE COLUMN metodologia supuestos TEXT NOT NULL,\n  CHANGE COLUMN analisisTecnico modelo TEXT NOT NULL,\n  CHANGE COLUMN proyeccion escenarios TEXT NOT NULL,\n  CHANGE COLUMN escenariosAlternativos brechas TEXT NOT NULL,\n  CHANGE COLUMN limitaciones conclusion TEXT NOT NULL,\n  DROP COLUMN conclusiones;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1236
+}

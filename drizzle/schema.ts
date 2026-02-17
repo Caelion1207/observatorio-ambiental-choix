@@ -27,7 +27,7 @@ export type InsertUser = typeof users.$inferInsert;
 
 /**
  * Investigaciones técnicas publicadas en el observatorio.
- * Cada investigación sigue una estructura fija de 9 secciones obligatorias.
+ * Cada investigación sigue el protocolo de 7 secciones obligatorias.
  */
 export const investigaciones = mysqlTable("investigaciones", {
   id: int("id").autoincrement().primaryKey(),
@@ -36,17 +36,17 @@ export const investigaciones = mysqlTable("investigaciones", {
   titulo: varchar("titulo", { length: 500 }).notNull(),
   slug: varchar("slug", { length: 500 }).notNull().unique(),
   resumenEjecutivo: text("resumenEjecutivo").notNull(),
-  contexto: text("contexto").notNull(),
-  datosOficiales: text("datosOficiales").notNull(),
-  metodologia: text("metodologia").notNull(),
-  analisisTecnico: text("analisisTecnico").notNull(),
-  proyeccion: text("proyeccion").notNull(),
-  escenariosAlternativos: text("escenariosAlternativos").notNull(),
-  limitaciones: text("limitaciones").notNull(),
-  conclusiones: text("conclusiones").notNull(),
+  // Protocolo de 7 secciones
+  definicionSistema: text("definicionSistema").notNull(), // 1. Definición del Sistema
+  tablaMaestra: text("tablaMaestra").notNull(), // 2. Tabla Maestra de Datos
+  supuestos: text("supuestos").notNull(), // 3. Supuestos Explícitos
+  modelo: text("modelo").notNull(), // 4. Modelo Mínimo
+  escenarios: text("escenarios").notNull(), // 5. Escenarios
+  brechas: text("brechas").notNull(), // 6. Brechas Detectadas
+  conclusion: text("conclusion").notNull(), // 7. Conclusión Estructural
   fuentes: text("fuentes").notNull(),
   publicada: boolean("publicada").default(false).notNull(),
-  autorId: int("autorId").notNull(),
+  autorId: int("autorId").default(1).notNull(), // Default a admin
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   publishedAt: timestamp("publishedAt"),
