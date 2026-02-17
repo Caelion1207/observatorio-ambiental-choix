@@ -1,0 +1,17 @@
+=== REGIME LOG - Agente de Recolección y Evaluación Dinámica ===
+Inicio de registro: 2026-02-17T09:38:42.781Z
+
+[2026-02-17T09:38:42.782Z] [INFO] [OPERATION] Iniciando operación: runEvaluation | Metadata: {"operationId":"gj_cS1ro3q9S5mkt9NLyO","miningWaterM3PerYear":1930,"projectYears":5,"logisticCapacityM3PerDay":150}
+[2026-02-17T09:38:42.782Z] [SUCCESS] [DATA_COLLECTOR] Datos recolectados exitosamente
+[2026-02-17T09:38:42.782Z] [SUCCESS] [DATA_VALIDATOR] Datos validados exitosamente | Metadata: {"precipitationWarnings":[],"presaWarnings":[]}
+[2026-02-17T09:38:42.783Z] [INFO] [METRICS] Métricas calculadas | Metadata: {"IVC":0.17218748587875501,"IVA":0.7320625,"ISD":0.003169129720853859,"BAS_millones_m3":304.49035}
+[2026-02-17T09:38:42.783Z] [INFO] [EVALUATION] Evaluación de riesgo: ESTABLE | Metadata: {"decliningYears":0,"totalYears":4,"decliningPercentage":0}
+[2026-02-17T09:38:42.783Z] [INFO] [LOGISTICS] Estado logístico: COLAPSO LOGÍSTICO | Metadata: {"dailyNeedM3":950.3,"dailyCapacityM3":150,"deficit":800.3}
+[2026-02-17T09:38:42.798Z] [SUCCESS] [OPERATION] Operación completada: runEvaluation | Metadata: {"operationId":"gj_cS1ro3q9S5mkt9NLyO","riskLevel":"ESTABLE","logisticStatus":"COLAPSO LOGÍSTICO","overallRisk":"CRÍTICO"}
+[2026-02-17T09:39:02.893Z] [INFO] [OPERATION] Iniciando operación: runEvaluation | Metadata: {"operationId":"P6Ji-pDumBlSzNnzBYP4B","miningWaterM3PerYear":728373,"projectYears":5,"logisticCapacityM3PerDay":150}
+[2026-02-17T09:39:02.894Z] [SUCCESS] [DATA_COLLECTOR] Datos recolectados exitosamente
+[2026-02-17T09:39:02.894Z] [SUCCESS] [DATA_VALIDATOR] Datos validados exitosamente | Metadata: {"precipitationWarnings":[],"presaWarnings":[]}
+[2026-02-17T09:39:02.894Z] [INFO] [METRICS] Métricas calculadas | Metadata: {"IVC":0.17218748587875501,"IVA":0.7320625,"ISD":1.1960147783251232,"BAS_millones_m3":300.858135}
+[2026-02-17T09:39:02.894Z] [INFO] [EVALUATION] Evaluación de riesgo: ESTABLE | Metadata: {"decliningYears":0,"totalYears":4,"decliningPercentage":0}
+[2026-02-17T09:39:02.894Z] [INFO] [LOGISTICS] Estado logístico: COLAPSO LOGÍSTICO | Metadata: {"dailyNeedM3":950.3,"dailyCapacityM3":150,"deficit":800.3}
+[2026-02-17T09:39:02.894Z] [SUCCESS] [OPERATION] Operación completada: runEvaluation | Metadata: {"operationId":"P6Ji-pDumBlSzNnzBYP4B","riskLevel":"ESTABLE","logisticStatus":"COLAPSO LOGÍSTICO","overallRisk":"CRÍTICO"}

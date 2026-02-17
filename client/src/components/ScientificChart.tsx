@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   TooltipProps,
 } from "recharts";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface ScientificChartProps {
   data: Array<Record<string, any>>;
@@ -41,6 +42,14 @@ export default function ScientificChart({
   yLabel,
   height = 300,
 }: ScientificChartProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  // Colores ajustados para modo oscuro
+  const textColor = isDark ? "#e5e7eb" : "#6b7280";
+  const gridColor = isDark ? "#374151" : "#e5e7eb";
+  const axisColor = isDark ? "#4b5563" : "#d1d5db";
+
   const defaultColors = [
     "hsl(var(--chart-1))",
     "hsl(var(--chart-2))",
@@ -77,27 +86,27 @@ export default function ScientificChart({
           data={data}
           margin={{ top: 5, right: 30, left: 20, bottom: 40 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+          <CartesianGrid strokeDasharray="3 3" stroke={gridColor} opacity={0.3} />
           <XAxis
             dataKey={xKey}
             label={{
               value: xLabel,
               position: "insideBottom",
               offset: -10,
-              style: { fontSize: "12px", fill: "hsl(var(--muted-foreground))" },
+              style: { fontSize: "12px", fill: textColor },
             }}
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
-            stroke="hsl(var(--border))"
+            tick={{ fontSize: 11, fill: textColor }}
+            stroke={axisColor}
           />
           <YAxis
             label={{
               value: yLabel,
               angle: -90,
               position: "insideLeft",
-              style: { fontSize: "12px", fill: "hsl(var(--muted-foreground))" },
+              style: { fontSize: "12px", fill: textColor },
             }}
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
-            stroke="hsl(var(--border))"
+            tick={{ fontSize: 11, fill: textColor }}
+            stroke={axisColor}
           />
           <Tooltip content={<CustomTooltip />} />
           <Legend

@@ -130,3 +130,11 @@
 - [x] Integrar imágenes en página de inicio
 - [ ] Integrar imágenes en páginas de investigaciones
 - [x] Optimizar imágenes para web (compresión, formatos modernos)
+
+
+## Corrección de Gráficas en Modo Oscuro
+- [x] Ajustar colores de texto en gráficas para modo oscuro
+- [x] Ajustar colores de ejes (X e Y) para modo oscuro
+- [x] Ajustar colores de grid para modo oscuro
+- [x] Ajustar colores de leyendas para modo oscuro
+- [x] Detectar tema actual en componentes de gráficas
