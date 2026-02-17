@@ -1,6 +1,19 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, 
+  users,
+  investigaciones,
+  InsertInvestigacion,
+  datosAbiertos,
+  InsertDatoAbierto,
+  fuentesOficiales,
+  InsertFuenteOficial,
+  participaciones,
+  InsertParticipacion,
+  visualizaciones,
+  InsertVisualizacion
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +102,145 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Investigaciones
+export async function getInvestigacionesPublicadas() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(investigaciones)
+    .where(eq(investigaciones.publicada, true))
+    .orderBy(desc(investigaciones.publishedAt));
+}
+
+export async function getInvestigacionBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db
+    .select()
+    .from(investigaciones)
+    .where(eq(investigaciones.slug, slug))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createInvestigacion(data: InsertInvestigacion) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(investigaciones).values(data);
+  return result;
+}
+
+export async function updateInvestigacion(id: number, data: Partial<InsertInvestigacion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(investigaciones).set(data).where(eq(investigaciones.id, id));
+}
+
+export async function publishInvestigacion(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(investigaciones).set({
+    publicada: true,
+    publishedAt: new Date()
+  }).where(eq(investigaciones.id, id));
+}
+
+// Datos Abiertos
+export async function getDatosAbiertos() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(datosAbiertos).orderBy(desc(datosAbiertos.createdAt));
+}
+
+export async function getDatosAbiertosByInvestigacion(investigacionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(datosAbiertos)
+    .where(eq(datosAbiertos.investigacionId, investigacionId))
+    .orderBy(desc(datosAbiertos.createdAt));
+}
+
+export async function createDatoAbierto(data: InsertDatoAbierto) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(datosAbiertos).values(data);
+  return result;
+}
+
+// Fuentes Oficiales
+export async function getFuentesOficiales() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(fuentesOficiales).orderBy(fuentesOficiales.nombre);
+}
+
+export async function createFuenteOficial(data: InsertFuenteOficial) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(fuentesOficiales).values(data);
+  return result;
+}
+
+// Participaciones Ciudadanas
+export async function getParticipaciones() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(participaciones).orderBy(desc(participaciones.createdAt));
+}
+
+export async function createParticipacion(data: InsertParticipacion) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(participaciones).values(data);
+  return result;
+}
+
+export async function updateParticipacion(id: number, data: Partial<InsertParticipacion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(participaciones).set(data).where(eq(participaciones.id, id));
+}
+
+// Visualizaciones
+export async function getVisualizaciones() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(visualizaciones).orderBy(desc(visualizaciones.createdAt));
+}
+
+export async function getVisualizacionesByInvestigacion(investigacionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(visualizaciones)
+    .where(eq(visualizaciones.investigacionId, investigacionId))
+    .orderBy(desc(visualizaciones.createdAt));
+}
+
+export async function createVisualizacion(data: InsertVisualizacion) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(visualizaciones).values(data);
+  return result;
+}
