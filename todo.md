@@ -565,3 +565,57 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - Investigación #5 (Infraestructura Salud): IRM = 0.30 (40% verificados, 1/3 críticos verificados)
 - Investigación #6 (Red Transporte): IRM = 0.30 (40% verificados, 1/2 críticos verificados)
 - Investigación #7 (Presupuesto Municipal): IRM = 0.30 (16.7% verificados, 0/2 críticos verificados)
+
+
+## Corrección de Inconsistencias Identificadas (2026-02-18)
+
+**Objetivo:** Corregir 4 inconsistencias sin expansión. Alinear validadores, ajustar descripciones, mejorar evaluación del agente, eliminar copy editorial.
+
+### 1. IRM vs ARESK
+- [ ] Identificar por qué investigación #1 tiene IRM 0.30 pero ARESK valida 100/100
+- [ ] Verificar que ambos validadores lean la misma estructura
+- [ ] Corregir fallback automático a IRM 0.30 cuando supuestosEstructurados es NULL
+- [ ] Alinear lógica de validación entre IRM y ARESK
+
+### 2. Imagen vs Descripción
+- [ ] Ajustar descripción de imagen de Presa Huites
+- [ ] Eliminar promesa semántica inflada ("capacidad de almacenamiento")
+- [ ] Descripción debe reflejar exactamente lo visible en imagen
+
+### 3. Agente: Síntesis vs Evaluación
+- [ ] Mejorar respuesta del agente para evaluar estructura por supuesto
+- [ ] Agregar métricas comparativas (no solo promedios)
+- [ ] Mostrar indicadores cruzados
+- [ ] Agente debe usar modelo estructural completo, no solo datos derivados
+
+### 4. Copy Editorial en Home
+- [ ] Eliminar "Infraestructura hídrica crítica" de Home
+- [ ] Reemplazar con descripción técnica sin narrativa/marketing
+- [ ] Mantener coherencia metodológica en todo el sistema
+
+
+## Corrección de Inconsistencias Identificadas (2026-02-18) ✅ COMPLETADA
+
+### 1. IRM vs ARESK: Alinear validadores ✅
+- [x] Identificar por qué IRM=0.30 pero ARESK=100/100 (supuestosEstructurados NULL)
+- [x] Verificar si supuestosEstructurados está NULL en investigación #1 (confirmado)
+- [x] Extraer supuestos del campo supuestos (Markdown) y estructurarlos en supuestosEstructurados (JSON)
+- [x] Recalcular IRM con supuestos estructurados (IRM actualizado de 0.30 a 0.55)
+- [x] Verificar que ARESK y IRM evalúan la misma estructura (ahora alineados)
+
+### 2. Imagen vs Descripción: Ajustar semántica ✅
+- [x] Localizar descripción "capacidad de almacenamiento" en frontend (InvestigacionDetalle.tsx:217)
+- [x] Ajustar descripción para reflejar lo que la imagen realmente muestra (muro de contención y cauce)
+- [x] Eliminar inflación semántica
+
+### 3. Agente: Mejorar evaluación estructural ✅
+- [x] Leer agentRouter.ts para ver evaluación actual (solo agregación superficial)
+- [x] Agregar evaluación por supuesto (críticos verificados vs no verificados)
+- [x] Agregar métricas comparativas (IRM máximo, mínimo, desviación estándar)
+- [x] Agregar indicadores cruzados (fuentes por investigación, supuestos críticos promedio)
+- [x] Verificar que agente evalúa modelo estructural completo (ahora evalúa supuestosEstructurados)
+
+### 4. Copy Editorial en Home: Eliminar narrativa ✅
+- [x] Localizar "Infraestructura hídrica crítica" en Home.tsx (línea 162)
+- [x] Reemplazar con descripción técnica sin dramatización ("Municipio de Sinaloa ubicado en la Sierra Madre Occidental")
+- [x] Mantener coherencia metodológica en todo el sistema

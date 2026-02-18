@@ -214,7 +214,7 @@ export default function InvestigacionDetalle() {
                 {
                   src: "/images/presa-huites-2.jpg",
                   alt: "Vista aérea de Presa Huites",
-                  caption: "Vista aérea mostrando la capacidad de almacenamiento y la infraestructura de la presa.",
+                  caption: "Vista aérea mostrando el muro de contención y el cauce del río aguas abajo de la presa.",
                 },
               ]}
             />

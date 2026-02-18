@@ -367,15 +367,64 @@ export const agentRouter = router({
         }
       }, 0);
 
-      // Generar reporte estructural
+      // Métricas comparativas
+      const irmValues = investigaciones.map((inv: any) => inv.indiceRobustez || 0);
+      const irmMax = Math.max(...irmValues);
+      const irmMin = Math.min(...irmValues);
+      const irmStdDev = Math.sqrt(
+        irmValues.reduce((sum: number, val: number) => sum + Math.pow(val - irmPromedio, 2), 0) / irmValues.length
+      );
+
+      // Evaluación por supuesto
+      let totalSupuestos = 0;
+      let totalCriticos = 0;
+      let criticosVerificados = 0;
+      let supuestosVerificados = 0;
+
+      investigaciones.forEach((inv: any) => {
+        try {
+          const supuestos = inv.supuestosEstructurados ? JSON.parse(inv.supuestosEstructurados) : [];
+          totalSupuestos += supuestos.length;
+          supuestos.forEach((s: any) => {
+            if (s.verificado) supuestosVerificados++;
+            if (s.sensibilidad === 'Crítico' || s.sensibilidad === 'crítica' || s.sensibilidad === 'alta' || s.impacto === 'Alto') {
+              totalCriticos++;
+              if (s.verificado) criticosVerificados++;
+            }
+          });
+        } catch {}
+      });
+
+      // Indicadores cruzados
+      const fuentes = await Promise.all(
+        investigaciones.map((inv: any) => dbQueries.getFuentesByInvestigacionId(inv.id))
+      );
+      const totalFuentes = fuentes.reduce((sum, f) => sum + f.length, 0);
+      const fuentesPromedio = totalFuentes / investigaciones.length;
+
+      // Generar reporte estructural mejorado
       const reporte = `SÍNTESIS ESTRUCTURAL - DOMINIO ${input.dominioId}
 
 INVESTIGACIONES ANALIZADAS: ${investigaciones.length}
 
-IRM PROMEDIO: ${irmPromedio.toFixed(2)}
-NIVEL DE ROBUSTEZ: ${irmPromedio >= 0.7 ? "Alto" : irmPromedio >= 0.5 ? "Moderado" : "Bajo"}
+MÉTRICAS DE ROBUSTEZ:
+- IRM Promedio: ${irmPromedio.toFixed(2)}
+- IRM Máximo: ${irmMax.toFixed(2)}
+- IRM Mínimo: ${irmMin.toFixed(2)}
+- Desviación Estándar: ${irmStdDev.toFixed(2)}
+- Nivel de Robustez: ${irmPromedio >= 0.7 ? "Alto" : irmPromedio >= 0.5 ? "Moderado" : "Bajo"}
 
-BRECHAS DETECTADAS: ${totalBrechas}
+EVALUACIÓN POR SUPUESTO:
+- Total Supuestos: ${totalSupuestos}
+- Supuestos Verificados: ${supuestosVerificados} (${totalSupuestos > 0 ? ((supuestosVerificados / totalSupuestos) * 100).toFixed(1) : 0}%)
+- Supuestos Críticos: ${totalCriticos}
+- Críticos Verificados: ${criticosVerificados} (${totalCriticos > 0 ? ((criticosVerificados / totalCriticos) * 100).toFixed(1) : 0}%)
+
+INDICADORES CRUZADOS:
+- Total Fuentes Primarias: ${totalFuentes}
+- Fuentes Promedio por Investigación: ${fuentesPromedio.toFixed(1)}
+- Brechas Detectadas: ${totalBrechas}
+- Brechas Promedio: ${(totalBrechas / investigaciones.length).toFixed(1)}
 
 RESUMEN POR INVESTIGACIÓN:
 ${investigaciones

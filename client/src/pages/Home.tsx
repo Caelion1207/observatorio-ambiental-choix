@@ -159,7 +159,7 @@ export default function Home() {
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-3xl font-bold tracking-tight">Choix, Sinaloa</h2>
             <p className="text-lg text-muted-foreground">
-              Región de la Sierra Madre Occidental con infraestructura hídrica crítica
+              Municipio de Sinaloa ubicado en la Sierra Madre Occidental
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
