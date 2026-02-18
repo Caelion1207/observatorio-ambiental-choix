@@ -58,19 +58,33 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
         reject(err);
       });
 
-      // Portada
-      doc.fontSize(24).font('Helvetica-Bold').text('Laboratorio Público de Análisis Estructural', { align: 'center' });
-      doc.fontSize(14).font('Helvetica').text('Choix, Sinaloa', { align: 'center' });
+      // Portada profesional
+      doc.moveDown(3);
+      doc.fontSize(28).font('Helvetica-Bold').text('Laboratorio Público de Análisis Estructural', { align: 'center' });
+      doc.fontSize(16).font('Helvetica').text('Choix, Sinaloa', { align: 'center' });
+      doc.moveDown(4);
+      
+      doc.fontSize(22).font('Helvetica-Bold').text(investigacion.titulo, { align: 'center' });
       doc.moveDown(2);
       
-      doc.fontSize(20).font('Helvetica-Bold').text(investigacion.titulo, { align: 'center' });
-      doc.moveDown(1);
+      doc.fontSize(14).font('Helvetica').text(`Investigación #${investigacion.numero}`, { align: 'center' });
+      doc.moveDown(3);
       
-      doc.fontSize(12).font('Helvetica').text(`Investigación #${investigacion.numero}`, { align: 'center' });
-      doc.moveDown(1);
-      
-      const fechaPublicacion = new Date(investigacion.fechaPublicacion);
-      doc.fontSize(10).text(`Fecha de publicación: ${fechaPublicacion.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}`, { align: 'center' });
+      // Corregir fecha: verificar si es string o Date
+      let fechaTexto = 'Fecha no disponible';
+      if (investigacion.fechaPublicacion) {
+        try {
+          const fecha = typeof investigacion.fechaPublicacion === 'string' 
+            ? new Date(investigacion.fechaPublicacion)
+            : investigacion.fechaPublicacion;
+          if (!isNaN(fecha.getTime())) {
+            fechaTexto = fecha.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+          }
+        } catch (e) {
+          console.error('[PDF] Error parseando fecha:', e);
+        }
+      }
+      doc.fontSize(11).text(`Fecha de publicación: ${fechaTexto}`, { align: 'center' });
       
       // Blindaje Metodológico
       doc.moveDown(2);
@@ -81,8 +95,16 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
       doc.text(`Protocolo: v${investigacion.versionProtocolo || '1.0'}`);
       
       if (investigacion.fechaCierreSemantico) {
-        const fechaCierre = new Date(investigacion.fechaCierreSemantico);
-        doc.text(`Cierre Semántico: ${fechaCierre.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}`);
+        try {
+          const fechaCierre = typeof investigacion.fechaCierreSemantico === 'string'
+            ? new Date(investigacion.fechaCierreSemantico)
+            : investigacion.fechaCierreSemantico;
+          if (!isNaN(fechaCierre.getTime())) {
+            doc.text(`Cierre Semántico: ${fechaCierre.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}`);
+          }
+        } catch (e) {
+          console.error('[PDF] Error parseando fecha cierre:', e);
+        }
       }
       
       if (investigacion.indiceRobustez) {
@@ -90,6 +112,33 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
         const estado = irm >= 0.8 ? 'Robusto' : irm >= 0.6 ? 'Moderado' : 'Débil';
         doc.text(`Índice de Robustez del Modelo (IRM): ${irm.toFixed(2)} - ${estado}`);
       }
+      
+      doc.addPage();
+      
+      // Índice (Tabla de Contenidos)
+      doc.fontSize(18).font('Helvetica-Bold').text('Índice', { align: 'center' });
+      doc.moveDown(1);
+      
+      const secciones = [
+        { titulo: 'Declaración de Neutralidad Técnica', pagina: 2 },
+        { titulo: 'Resumen Ejecutivo', pagina: 2 },
+        { titulo: 'Registro Público de Supuestos', pagina: 3 },
+        { titulo: '1. Definición del Sistema', pagina: 4 },
+        { titulo: '2. Tabla Maestra de Datos', pagina: 5 },
+        { titulo: '3. Supuestos Explícitos', pagina: 6 },
+        { titulo: '4. Modelo Mínimo', pagina: 7 },
+        { titulo: '5. Escenarios', pagina: 8 },
+        { titulo: '6. Brechas Detectadas', pagina: 9 },
+        { titulo: '7. Conclusión Estructural', pagina: 10 },
+        { titulo: 'Fuentes Primarias', pagina: 11 }
+      ];
+      
+      doc.fontSize(11).font('Helvetica');
+      secciones.forEach((seccion) => {
+        const dots = '.'.repeat(60 - seccion.titulo.length - seccion.pagina.toString().length);
+        doc.text(`${seccion.titulo} ${dots} ${seccion.pagina}`, { align: 'left' });
+        doc.moveDown(0.3);
+      });
       
       doc.addPage();
       
@@ -134,27 +183,23 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
         }
       }
       
-      // Protocolo de 7 Secciones
-      doc.addPage();
-      agregarSeccion(doc, '1. Definición del Sistema', investigacion.definicionSistema);
+      // Protocolo de 7 Secciones (agregar página solo si queda poco espacio)
+      const agregarSeccionConPaginacion = (titulo: string, contenido: string) => {
+        // Si queda menos de 100 puntos de altura, agregar nueva página
+        if (doc.y > doc.page.height - 100) {
+          doc.addPage();
+        }
+        agregarSeccion(doc, titulo, contenido);
+      };
       
       doc.addPage();
-      agregarSeccion(doc, '2. Tabla Maestra de Datos', investigacion.tablaMaestra);
-      
-      doc.addPage();
-      agregarSeccion(doc, '3. Supuestos Explícitos', investigacion.supuestos);
-      
-      doc.addPage();
-      agregarSeccion(doc, '4. Modelo Mínimo', investigacion.modelo);
-      
-      doc.addPage();
-      agregarSeccion(doc, '5. Escenarios', investigacion.escenarios);
-      
-      doc.addPage();
-      agregarSeccion(doc, '6. Brechas Detectadas', investigacion.brechas);
-      
-      doc.addPage();
-      agregarSeccion(doc, '7. Conclusión Estructural', investigacion.conclusion);
+      agregarSeccionConPaginacion('1. Definición del Sistema', investigacion.definicionSistema);
+      agregarSeccionConPaginacion('2. Tabla Maestra de Datos', investigacion.tablaMaestra);
+      agregarSeccionConPaginacion('3. Supuestos Explícitos', investigacion.supuestos);
+      agregarSeccionConPaginacion('4. Modelo Mínimo', investigacion.modelo);
+      agregarSeccionConPaginacion('5. Escenarios', investigacion.escenarios);
+      agregarSeccionConPaginacion('6. Brechas Detectadas', investigacion.brechas);
+      agregarSeccionConPaginacion('7. Conclusión Estructural', investigacion.conclusion);
       
       doc.addPage();
       // Formatear fuentes desde tabla separada
@@ -193,12 +238,90 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
   });
 }
 
+function renderizarTablaMarkdown(doc: PDFKit.PDFDocument, contenido: string): boolean {
+  // Detectar si el contenido tiene tabla Markdown
+  const lineas = contenido.split('\n');
+  const tablaInicio = lineas.findIndex(l => l.includes('|') && l.trim().startsWith('|'));
+  
+  if (tablaInicio === -1) return false;
+  
+  // Extraer filas de la tabla
+  const filasTabla = [];
+  for (let i = tablaInicio; i < lineas.length; i++) {
+    const linea = lineas[i].trim();
+    if (!linea.includes('|')) break;
+    if (linea.match(/^\|[\s\-:]+\|$/)) continue; // Saltar separador
+    const celdas = linea.split('|').map(c => c.trim()).filter(c => c !== '');
+    filasTabla.push(celdas);
+  }
+  
+  if (filasTabla.length === 0) return false;
+  
+  // Renderizar contenido antes de la tabla
+  const antesTabla = lineas.slice(0, tablaInicio).join('\n');
+  if (antesTabla.trim()) {
+    doc.fontSize(10).font('Helvetica').text(antesTabla, { align: 'justify' });
+    doc.moveDown(0.5);
+  }
+  
+  // Renderizar tabla
+  const anchoColumna = (doc.page.width - 100) / filasTabla[0].length;
+  const xInicio = 50;
+  let yActual = doc.y;
+  
+  // Encabezado de tabla
+  doc.fontSize(8).font('Helvetica-Bold');
+  filasTabla[0].forEach((celda, idx) => {
+    doc.text(celda, xInicio + (idx * anchoColumna), yActual, { width: anchoColumna - 5, align: 'left' });
+  });
+  yActual += 15;
+  
+  // Línea separadora
+  doc.moveTo(xInicio, yActual).lineTo(xInicio + (anchoColumna * filasTabla[0].length), yActual).stroke();
+  yActual += 5;
+  
+  // Filas de datos
+  doc.fontSize(7).font('Helvetica');
+  for (let i = 1; i < filasTabla.length; i++) {
+    const fila = filasTabla[i];
+    const alturaFila = Math.max(...fila.map(c => doc.heightOfString(c, { width: anchoColumna - 5 })));
+    
+    // Verificar si necesita nueva página
+    if (yActual + alturaFila > doc.page.height - 50) {
+      doc.addPage();
+      yActual = 50;
+    }
+    
+    fila.forEach((celda, idx) => {
+      doc.text(celda, xInicio + (idx * anchoColumna), yActual, { width: anchoColumna - 5, align: 'left' });
+    });
+    yActual += alturaFila + 3;
+  }
+  
+  doc.y = yActual + 10;
+  
+  // Renderizar contenido después de la tabla
+  const despuesTabla = lineas.slice(tablaInicio + filasTabla.length + 1).join('\n');
+  if (despuesTabla.trim()) {
+    doc.moveDown(0.5);
+    doc.fontSize(10).font('Helvetica').text(despuesTabla, { align: 'justify' });
+  }
+  
+  return true;
+}
+
 function agregarSeccion(doc: PDFKit.PDFDocument, titulo: string, contenido: string) {
   doc.fontSize(14).font('Helvetica-Bold').text(titulo, { underline: true });
   doc.moveDown(0.5);
   
   // Validación defensiva: si contenido es null/undefined, usar string vacío
   const contenidoSeguro = contenido || '';
+  
+  // Intentar renderizar como tabla Markdown
+  if (renderizarTablaMarkdown(doc, contenidoSeguro)) {
+    doc.moveDown(1);
+    return;
+  }
   
   // Convertir markdown básico a texto plano con formato
   const lineas = contenidoSeguro.split('\n');

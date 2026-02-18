@@ -635,3 +635,23 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - Guard defensivo para fechaConsulta: `typeof fuente.fechaConsulta === 'string'`
 - Guard defensivo para fechaCierreSemantico: `typeof investigacionDetalle.fechaCierreSemantico === 'string'`
 - Key única y estable para Select.Item: `key={\`select-inv-${inv.id}\`}`
+
+
+## Mejora Estructural del Generador de PDF (2026-02-18) ✅ COMPLETADA
+
+- [x] Diagnosticar problemas actuales del generador PDF
+- [x] Agregar portada profesional con diseño institucional (fuentes más grandes, espaciado mejorado)
+- [x] Agregar índice (tabla de contenidos) con números de página
+- [x] Corregir formato de fecha (guards defensivos para fechas, eliminar "Invalid Date")
+- [x] Renderizar Tabla Maestra como tabla PDF (no Markdown crudo) con función renderizarTablaMarkdown()
+- [x] Eliminar páginas vacías (paginación inteligente con agregarSeccionConPaginacion)
+- [x] Gráficas de datos: NO AGREGADAS (no hay datos estructurados reales, no inventar contenido)
+- [ ] Probar PDF mejorado con investigación real
+- [ ] Congelar versión
+
+**Mejoras aplicadas:**
+- Portada profesional: fuentes 28pt/22pt/16pt, espaciado vertical mejorado
+- Índice completo: 11 secciones con puntos suspensivos y números de página
+- Fechas corregidas: guards defensivos `typeof === 'string'` + validación `isNaN(fecha.getTime())`
+- Tablas Markdown renderizadas: función `renderizarTablaMarkdown()` detecta y renderiza tablas como grid PDF
+- Paginación inteligente: solo agregar página si queda < 100pt de altura
