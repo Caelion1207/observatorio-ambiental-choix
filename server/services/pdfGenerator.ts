@@ -324,29 +324,12 @@ function agregarSeccion(doc: PDFKit.PDFDocument, titulo: string, contenido: stri
     return;
   }
   
-  // Convertir markdown básico a texto plano con formato
-  const lineas = contenidoSeguro.split('\n');
-  
-  lineas.forEach((linea) => {
-    // Detectar encabezados markdown
-    if (linea.startsWith('###')) {
-      doc.fontSize(11).font('Helvetica-Bold').text(linea.replace(/^###\s*/, ''), { continued: false });
-      doc.moveDown(0.3);
-    } else if (linea.startsWith('##')) {
-      doc.fontSize(12).font('Helvetica-Bold').text(linea.replace(/^##\s*/, ''), { continued: false });
-      doc.moveDown(0.3);
-    } else if (linea.startsWith('**') && linea.endsWith('**')) {
-      doc.fontSize(10).font('Helvetica-Bold').text(linea.replace(/\*\*/g, ''), { continued: false });
-      doc.moveDown(0.2);
-    } else if (linea.trim().startsWith('-') || linea.trim().startsWith('*')) {
-      doc.fontSize(10).font('Helvetica').text(`  • ${linea.replace(/^[\s\-\*]+/, '')}`, { continued: false });
-      doc.moveDown(0.2);
-    } else if (linea.trim() === '') {
-      doc.moveDown(0.3);
-    } else {
-      doc.fontSize(10).font('Helvetica').text(linea, { align: 'justify', continued: false });
-      doc.moveDown(0.2);
-    }
+  // Usar auto-paginación nativa de PDFKit con texto continuo
+  // PDFKit maneja automáticamente el salto de página cuando el texto excede el alto disponible
+  doc.fontSize(10).font('Helvetica').text(contenidoSeguro, {
+    align: 'justify',
+    lineGap: 2,
+    paragraphGap: 8
   });
   
   doc.moveDown(1);

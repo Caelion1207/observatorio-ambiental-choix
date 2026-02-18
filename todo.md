@@ -668,3 +668,19 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 
 **Causa raíz:** Import incorrecto de PDFDocument causaba error de compilación TypeScript.
 **Solución:** Cambiar `import PDFDocument from 'pdfkit'` a `import * as PDFKit from 'pdfkit'; const PDFDocument = PDFKit.default || PDFKit;`
+
+
+## Corrección Final: Paginación Rota en Generador PDF (2026-02-18) ✅ CORREGIDA
+
+**Problema:** PDF generado tiene páginas vacías (página 4) y texto cortado entre páginas (supuestos en página 7).
+**Causa raíz:** Función `agregarSeccion()` renderizaba texto línea por línea sin usar auto-paginación nativa de PDFKit.
+
+- [x] Simplificar función `agregarSeccion()` para usar auto-paginación nativa de PDFKit
+- [x] Eliminar renderizado manual línea por línea (causaba páginas vacías)
+- [x] Usar `doc.text()` con `lineGap` y `paragraphGap` para auto-wrap y auto-paginación
+- [x] Mantener portada, índice y renderizado de tablas (funcionan correctamente)
+- [ ] Probar PDF corregido con investigación #3
+- [ ] Verificar que no hay páginas vacías ni texto cortado
+- [ ] Congelar versión estable SIN TOCAR MÁS EL GENERADOR
+
+**Solución:** Reemplazar renderizado manual de markdown (línea por línea) con `doc.text(contenidoSeguro, { align: 'justify', lineGap: 2, paragraphGap: 8 })`. PDFKit maneja automáticamente saltos de página cuando texto excede altura disponible.
