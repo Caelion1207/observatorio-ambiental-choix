@@ -728,3 +728,19 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Probar con investigación #4 (Sistema Educativo)
 - [x] Verificar: sin páginas vacías, sin texto cortado, tablas correctas
 - [x] Congelar versión estable
+
+
+## Estabilización Real del Generador PDF (Ruta 1 - CRÍTICO)
+
+- [x] Implementar logging detallado en puppeteerPdfGenerator.ts:
+  - error.message
+  - error.stack
+  - investigaciónId
+  - tamaño HTML generado
+  - timestamp
+- [x] Crear script de validación cruzada (test-all-pdfs.ts)
+- [x] Ejecutar generación automática de PDF para las 6 investigaciones (no 4, había 6)
+- [x] Documentar fallos específicos por investigación (0 fallos, 100% éxito)
+- [x] Implementar fallback: si falla PDF → descargar HTML formateado
+- [x] Validar que las 6 investigaciones generan PDF correctamente (100% éxito)
+- [x] Crear reporte de estabilización (ESTABILIZACION_PDF_REPORTE.md)

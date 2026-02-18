@@ -74,16 +74,36 @@ export const appRouter = router({
         // Obtener fuentes de la investigación desde tabla separada
         const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
         
-        const { generatePDFFromInvestigacion } = await import('./services/puppeteerPdfGenerator');
-        const pdfBuffer = await generatePDFFromInvestigacion(investigacion as any, fuentes);
-        
-        // Convertir buffer a base64 para enviar al cliente
-        const pdfBase64 = pdfBuffer.toString('base64');
-        
-        return {
-          pdfBase64,
-          filename: `${investigacion.slug}.pdf`
-        };
+        try {
+          // Intentar generar PDF con Puppeteer
+          const { generatePDFFromInvestigacion } = await import('./services/puppeteerPdfGenerator');
+          const pdfBuffer = await generatePDFFromInvestigacion(investigacion as any, fuentes);
+          
+          // Convertir buffer a base64 para enviar al cliente
+          const pdfBase64 = pdfBuffer.toString('base64');
+          
+          return {
+            format: 'pdf' as const,
+            pdfBase64,
+            filename: `${investigacion.slug}.pdf`
+          };
+        } catch (pdfError: any) {
+          // FALLBACK: Si falla PDF, generar HTML formateado
+          console.error(`[Export] Fallo al generar PDF, usando fallback HTML:`, pdfError.message);
+          
+          const { generateInvestigacionHTML } = await import('./services/htmlGenerator');
+          const html = generateInvestigacionHTML(investigacion as any, fuentes);
+          
+          // Convertir HTML a base64
+          const htmlBase64 = Buffer.from(html, 'utf-8').toString('base64');
+          
+          return {
+            format: 'html' as const,
+            htmlBase64,
+            filename: `${investigacion.slug}.html`,
+            fallbackReason: pdfError.message
+          };
+        }
       }),
     
     exportJSON: publicProcedure
