@@ -37,15 +37,20 @@ export default function Agente() {
     if (!investigaciones || investigaciones.length === 0) return null;
 
     const irmPromedio =
-      investigaciones.reduce((sum, inv) => sum + (typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez : 0), 0) / investigaciones.length;
+      investigaciones.reduce((sum, inv) => {
+        const irm = typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez : parseFloat(inv.indiceRobustez as string) || 0;
+        return sum + irm;
+      }, 0) / investigaciones.length;
 
     const totalBrechas = investigaciones.reduce((sum, inv) => {
       let brechas = [];
       try {
         brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
       } catch (e) {
-        // Campo brechas contiene texto narrativo, no JSON
-        brechas = [];
+        // Campo brechas contiene texto narrativo Markdown, contar ocurrencias de "**Brecha"
+        const brechasText = inv.brechas || '';
+        const matches = brechasText.match(/\*\*Brecha \d+:/g);
+        return sum + (matches ? matches.length : 0);
       }
       return sum + (Array.isArray(brechas) ? brechas.length : 0);
     }, 0);

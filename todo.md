@@ -216,14 +216,23 @@
 
 ## Test Cruzado: Validación Contrato Generador PDF ↔ Modelo
 
-- [ ] Crear investigación dummy con solo 3 variables (estructura mínima)
-- [ ] Insertar investigación dummy en base de datos
-- [ ] Exportar PDF de investigación dummy
-- [ ] Verificar si PDF se genera correctamente (no vacío)
-- [ ] Comparar comportamiento: dummy vs Finanzas vs otras investigaciones
-- [ ] Identificar deuda técnica exacta en generador PDF
-- [ ] Corregir generador PDF para soportar cualquier estructura
-- [ ] Validar que sistema está cerrado (todos los PDFs funcionan)
+- [x] Crear investigación dummy con solo 3 variables (estructura mínima)
+- [x] Insertar investigación dummy en base de datos
+- [x] Exportar PDF de investigación dummy
+- [x] Verificar si PDF se genera correctamente (no vacío)
+- [x] Comparar comportamiento: dummy vs Finanzas vs otras investigaciones
+- [x] Identificar deuda técnica exacta en generador PDF
+- [x] Corregir generador PDF para soportar cualquier estructura
+- [x] Validar que sistema está cerrado (todos los PDFs funcionan)
+
+## Corrección Bug: Tabla Maestra Markdown Malformado
+
+- [x] Identificar causa raíz: campo tablaMaestra con formato Markdown malformado
+- [x] Crear query SQL con formato correcto (line breaks, separadores únicos)
+- [x] Ejecutar actualización en base de datos
+- [x] Verificar render correcto en browser (tabla HTML, no raw Markdown)
+- [x] Confirmar que componente <Streamdown> funciona correctamente
+- [x] Documentar hallazgo y solución
 
 
 ---
@@ -408,3 +417,31 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Identificar línea exacta del JSON.parse que falla (líneas 43, 48, 222)
 - [x] Reportar causa exacta: Campo `brechas` contiene texto Markdown, no JSON
 - [x] Aplicar corrección mínima: Try-catch en 3 JSON.parse
+
+
+---
+
+## Corrección de Errores Visuales Persistentes
+
+### Error 1: Tabla Maestra Sin Formato (IMG_8279)
+- [ ] Auditar componente que renderiza tabla maestra en investigación Finanzas
+- [ ] Verificar si tabla está siendo parseada correctamente
+- [ ] Implementar formato tabular legible (columnas, filas, headers)
+- [ ] Eliminar texto plano con separadores "|---------|"
+
+### Error 2: Agente Muestra IRM 0.00 y 0 Brechas (IMG_8281)
+- [ ] Auditar endpoint `analizarDominio` en agentRouter.ts
+- [ ] Verificar que query retorna investigaciones correctas
+- [ ] Verificar cálculo de IRM promedio en frontend
+- [ ] Verificar parsing de brechas (try-catch puede estar retornando [] siempre)
+- [ ] Confirmar que investigaciones tienen indiceRobustez válido
+
+### Error 3: Filtro Hidrología Sigue Vacío (IMG_8278, IMG_8280)
+- [ ] Confirmar que investigaciones de Hidrología NO EXISTEN (ya auditado)
+- [ ] Documentar en UI que dominio Hidrología está pendiente de población
+- [ ] Considerar ocultar dominios sin investigaciones o mostrar mensaje específico
+
+### Error 4: Mensaje "2 errors" en Consola (IMG_8281)
+- [ ] Abrir consola del navegador para ver errores JavaScript
+- [ ] Identificar línea y archivo de errores
+- [ ] Corregir errores de runtime
