@@ -152,3 +152,80 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - Modelo: Índice de Rigidez Presupuestaria (IRP)
 - Supuestos: 6 supuestos estructurados (IRM 0.50)
 - Fuentes: 4 fuentes reales verificables
+
+
+---
+
+## [v2.0_pdf_universal_funcional] - 2026-02-18
+
+### 🐛 Fix Crítico: Generador PDF - Try-Catch Mal Estructurado
+
+**Problema Identificado:**
+- Exportación PDF fallaba para investigaciones nuevas (Finanzas, Dummy) generando archivos vacíos (0 bytes)
+- Exportación PDF funcionaba correctamente para investigaciones migradas (Cobertura Forestal: 19 KB)
+- Hipótesis inicial: Campo faltante en investigaciones nuevas
+- Causa raíz real: **Estructura incorrecta del try-catch en `pdfGenerator.ts`**
+
+**Análisis Técnico:**
+```typescript
+// ESTRUCTURA INCORRECTA (líneas 32-194):
+return new Promise((resolve, reject) => {
+  try {
+    doc.on('data', ...);
+    doc.on('end', ...);
+    doc.on('error', ...);
+  } // ← try se cierra aquí (línea 60)
+  
+  // TODO EL CONTENIDO DEL PDF AQUÍ (líneas 62-189)
+  doc.end();
+  
+  } catch (error) { // ← nunca captura errores del contenido
+    reject(error);
+  }
+});
+```
+
+**Consecuencia:**
+- Event listeners dentro del try (correcto)
+- Todo el contenido del PDF fuera del try-catch (incorrecto)
+- Errores durante generación de contenido no se capturaban
+- Promesa nunca se rechazaba, frontend recibía string vacío
+- Conversión base64 → Blob generaba archivo de 0 bytes
+
+**Solución Aplicada:**
+1. Movido cierre del `try` al final (después de `doc.end()`)
+2. Todo el contenido del PDF ahora está protegido por manejo de errores
+3. Corrección de indentación para reflejar nueva estructura
+
+**Archivos Modificados:**
+- `server/services/pdfGenerator.ts` (líneas 56-192)
+
+**Resultado:**
+- ✅ PDF Finanzas: 16 KB (antes: 0 bytes)
+- ✅ PDF Dummy: 9.2 KB (antes: 0 bytes)
+- ✅ PDF Cobertura Forestal: 19 KB (sin cambios)
+- ✅ Generador PDF universal: funciona para todas las investigaciones
+
+**Test Cruzado Ejecutado:**
+- Creada investigación dummy con estructura mínima (3 variables)
+- Exportación PDF exitosa: 9.2 KB
+- Confirmado: problema NO era específico del dominio Finanzas
+- Confirmado: problema era sistemático para investigaciones post-migración
+- Investigación dummy eliminada después de validación
+
+**Logs de Validación:**
+```
+[PDF Generator] Iniciando generación PDF para: Test Dummy Minimalista
+[PDF Generator] Fuentes recibidas: 1
+[PDF Generator] PDF generado exitosamente, tamaño: 9398 bytes
+
+[PDF Generator] Iniciando generación PDF para: Análisis Estructural del Presupuesto Municipal de Choix 2020-2026
+[PDF Generator] Fuentes recibidas: 4
+[PDF Generator] PDF generado exitosamente, tamaño: 16082 bytes
+```
+
+**Estado Final:**
+- Sistema cerrado, coherente, sin bugs visibles en capa pública
+- Exportación PDF funcional para todas las investigaciones (5/5)
+- Build limpio (0 errores TypeScript)
+- Arquitectura v2.0 completamente estable

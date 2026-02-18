@@ -1,0 +1,8 @@
+{
+  "query": "\nINSERT INTO fuentes (\n  investigacionId,\n  tipo,\n  autor,\n  institucion,\n  titulo,\n  url,\n  fechaPublicacion,\n  fechaConsulta\n) VALUES (\n  (SELECT id FROM investigaciones WHERE slug = 'test-dummy-minimalista' LIMIT 1),\n  'documento_tecnico',\n  'Sistema de Prueba',\n  'Laboratorio Interno',\n  'Documentación de Test Dummy',\n  'https://example.com/test',\n  '2026-02-18',\n  '2026-02-18'\n);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \nINSERT INTO fuentes (\n  investigacionId,\n  tipo,\n  autor,\n  institucion,\n  titulo,\n  url,\n  fechaPublicacion,\n  fechaConsulta\n) VALUES (\n  (SELECT id FROM investigaciones WHERE slug = 'test-dummy-minimalista' LIMIT 1),\n  'documento_tecnico',\n  'Sistema de Prueba',\n  'Laboratorio Interno',\n  'Documentación de Test Dummy',\n  'https://example.com/test',\n  '2026-02-18',\n  '2026-02-18'\n);\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1265 (01000) at line 2: Data truncated for column 'tipo' at row 1"
+  ]
+}

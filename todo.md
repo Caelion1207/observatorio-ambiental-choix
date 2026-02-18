@@ -212,3 +212,15 @@
 - [x] Implementar conteo de variables "estimado"
 - [x] Crear endpoint tRPC para ejecutar validaciones
 - [x] Integrar validaciones en panel de investigaciones
+
+
+## Test Cruzado: Validación Contrato Generador PDF ↔ Modelo
+
+- [ ] Crear investigación dummy con solo 3 variables (estructura mínima)
+- [ ] Insertar investigación dummy en base de datos
+- [ ] Exportar PDF de investigación dummy
+- [ ] Verificar si PDF se genera correctamente (no vacío)
+- [ ] Comparar comportamiento: dummy vs Finanzas vs otras investigaciones
+- [ ] Identificar deuda técnica exacta en generador PDF
+- [ ] Corregir generador PDF para soportar cualquier estructura
+- [ ] Validar que sistema está cerrado (todos los PDFs funcionan)
