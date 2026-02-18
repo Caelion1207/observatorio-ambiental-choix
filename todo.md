@@ -744,3 +744,34 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Implementar fallback: si falla PDF → descargar HTML formateado
 - [x] Validar que las 6 investigaciones generan PDF correctamente (100% éxito)
 - [x] Crear reporte de estabilización (ESTABILIZACION_PDF_REPORTE.md)
+
+
+## Migración a PDFMake (Eliminación de Puppeteer)
+
+- [ ] Desinstalar Puppeteer (pnpm remove puppeteer)
+- [ ] Instalar PDFMake (pnpm add pdfmake)
+- [ ] Crear server/services/pdfmakeGenerator.ts con estructura programática
+- [ ] Eliminar server/services/htmlGenerator.ts
+- [ ] Eliminar server/services/puppeteerPdfGenerator.ts
+- [ ] Eliminar fallback HTML en server/routers.ts
+- [ ] Actualizar endpoint exportPDF para usar PDFMake directo
+- [ ] Eliminar manejo de format: 'pdf' | 'html' en frontend
+- [ ] Probar con investigación #4 (Sistema Educativo)
+- [ ] Congelar versión estable
+
+
+---
+
+## Migración a PDFMake (Eliminar Puppeteer, Estructura Programática Pura) ✅ COMPLETADA
+
+- [x] Desinstalar Puppeteer (pnpm remove puppeteer)
+- [x] Instalar PDFMake (pnpm add pdfmake @types/pdfmake)
+- [x] Crear generador PDF con PDFMake (server/services/pdfmakeGenerator.ts)
+- [x] Eliminar htmlGenerator.ts y puppeteerPdfGenerator.ts
+- [x] Actualizar endpoint exportPDF para usar PDFMake directo
+- [x] Eliminar fallback HTML del frontend
+- [x] Probar con investigación #4 (Sistema Educativo)
+- [x] Verificar: PDF funciona en producción (194 KB, 18 páginas), sin páginas vacías, sin texto cortado
+- [x] Congelar versión estable
+
+**Resultado:** PDFMake funciona correctamente en producción. Biblioteca nativa Node.js sin dependencias externas pesadas (Chrome). Estructura programática pura. Paginación automática funcional.

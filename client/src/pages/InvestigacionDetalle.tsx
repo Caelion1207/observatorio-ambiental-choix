@@ -30,30 +30,14 @@ export default function InvestigacionDetalle() {
   
   const exportPDF = trpc.investigaciones.exportPDF.useMutation({
     onSuccess: (data) => {
-      let blob: Blob;
-      
-      if (data.format === 'pdf') {
-        // Convertir base64 PDF a blob
-        const byteCharacters = atob(data.pdfBase64!);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        blob = new Blob([byteArray], { type: 'application/pdf' });
-      } else {
-        // Fallback HTML: convertir base64 HTML a blob
-        const byteCharacters = atob(data.htmlBase64!);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        blob = new Blob([byteArray], { type: 'text/html' });
-        
-        // Mostrar notificación de fallback
-        console.warn('PDF no disponible, descargando HTML formateado:', data.fallbackReason);
+      // Convertir base64 a blob
+      const byteCharacters = atob(data.pdfBase64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
       
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
