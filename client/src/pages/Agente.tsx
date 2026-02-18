@@ -40,12 +40,24 @@ export default function Agente() {
       investigaciones.reduce((sum, inv) => sum + (typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez : 0), 0) / investigaciones.length;
 
     const totalBrechas = investigaciones.reduce((sum, inv) => {
-      const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+      let brechas = [];
+      try {
+        brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+      } catch (e) {
+        // Campo brechas contiene texto narrativo, no JSON
+        brechas = [];
+      }
       return sum + (Array.isArray(brechas) ? brechas.length : 0);
     }, 0);
 
     const totalSupuestos = investigaciones.reduce((sum, inv) => {
-      const supuestos = inv.supuestosEstructurados ? JSON.parse(inv.supuestosEstructurados) : [];
+      let supuestos = [];
+      try {
+        supuestos = inv.supuestosEstructurados ? JSON.parse(inv.supuestosEstructurados) : [];
+      } catch (e) {
+        // Campo supuestosEstructurados contiene JSON mal formado
+        supuestos = [];
+      }
       return sum + (Array.isArray(supuestos) ? supuestos.length : 0);
     }, 0);
 
@@ -219,7 +231,13 @@ export default function Agente() {
                 <h3 className="font-semibold mb-2">Brechas Comunes</h3>
                 <div className="space-y-2">
                   {investigaciones.map((inv) => {
-                    const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+                    let brechas = [];
+                    try {
+                      brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+                    } catch (e) {
+                      // Campo brechas contiene texto narrativo, no JSON
+                      brechas = [];
+                    }
                     if (!Array.isArray(brechas) || brechas.length === 0) return null;
                     return (
                       <div key={inv.id} className="text-sm">

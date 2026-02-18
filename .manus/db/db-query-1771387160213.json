@@ -1,0 +1,44 @@
+{
+  "query": "SELECT \n  id,\n  numero,\n  titulo,\n  SUBSTRING(brechas, 1, 100) AS brechas_preview,\n  SUBSTRING(supuestosEstructurados, 1, 100) AS supuestos_preview\nFROM investigaciones\nWHERE publicada = true\nORDER BY numero ASC\nLIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT \n  id,\n  numero,\n  titulo,\n  SUBSTRING(brechas, 1, 100) AS brechas_preview,\n  SUBSTRING(supuestosEstructurados, 1, 100) AS supuestos_preview\nFROM investigaciones\nWHERE publicada = true\nORDER BY numero ASC\nLIMIT 5;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "brechas_preview": "Durante la recopilación y análisis de información para esta investigación, se han identificado varia",
+      "supuestos_preview": "[{\"id\":1,\"supuesto\":\"Los datos de cobertura forestal de INEGI son representativos de la realidad loc"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "brechas_preview": "El desarrollo de esta investigación ha permitido identificar brechas significativas en la disponibil",
+      "supuestos_preview": "[{\"id\":1,\"supuesto\":\"Los datos de matrícula escolar de la SEP son completos y actualizados hasta el "
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "brechas_preview": "La investigación ha permitido identificar varias brechas significativas en la disponibilidad y acces",
+      "supuestos_preview": "[{\"id\":1,\"supuesto\":\"Los datos de infraestructura de salud de la Secretaría de Salud son actualizado"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "brechas_preview": "*   **Falta de Aforos Vehiculares Públicos:** No se encontraron datos públicos y actualizados de afo",
+      "supuestos_preview": "[{\"id\":1,\"supuesto\":\"Los datos de infraestructura vial de SCT son representativos del estado actual "
+    }
+  ],
+  "messages": [
+    "120002\t5\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t**Brecha 1: Datos temporales incompletos**",
+    "Cuenta Pública Municipal de Choix 2020-2025 **SÍ está di\t[",
+    "  {",
+    "    \"id\": \"S1\",",
+    "    \"supuesto\": \"Participaciones federales crecerán a tasa histórica promedio "
+  ],
+  "stdout": "id\tnumero\ttitulo\tbrechas_preview\tsupuestos_preview\n90001\t3\tCobertura Forestal Histórica de Choix 2015-2026\tDurante la recopilación y análisis de información para esta investigación, se han identificado varia\t[{\"id\":1,\"supuesto\":\"Los datos de cobertura forestal de INEGI son representativos de la realidad loc\n90002\t4\tSistema Educativo de Choix - Capacidad vs Demanda\tEl desarrollo de esta investigación ha permitido identificar brechas significativas en la disponibil\t[{\"id\":1,\"supuesto\":\"Los datos de matrícula escolar de la SEP son completos y actualizados hasta el \n120002\t5\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t**Brecha 1: Datos temporales incompletos**\n\nCuenta Pública Municipal de Choix 2020-2025 **SÍ está di\t[\n  {\n    \"id\": \"S1\",\n    \"supuesto\": \"Participaciones federales crecerán a tasa histórica promedio \n90003\t5\tInfraestructura de Salud en Choix - Análisis de Saturación\tLa investigación ha permitido identificar varias brechas significativas en la disponibilidad y acces\t[{\"id\":1,\"supuesto\":\"Los datos de infraestructura de salud de la Secretaría de Salud son actualizado\n90004\t6\tRed de Transporte de Choix - Identificación de Cuellos de Botella\t*   **Falta de Aforos Vehiculares Públicos:** No se encontraron datos públicos y actualizados de afo\t[{\"id\":1,\"supuesto\":\"Los datos de infraestructura vial de SCT son representativos del estado actual \n",
+  "stderr": "",
+  "execution_time_ms": 355
+}

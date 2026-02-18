@@ -1,0 +1,9 @@
+{
+  "query": "SELECT \n  i.id, \n  i.numero, \n  i.dominioId, \n  i.publicada, \n  i.slug, \n  i.titulo,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nWHERE i.titulo LIKE '%Estr%s Hídrico%' OR i.slug LIKE '%estres-hidrico%' OR d.slug = 'agua'\nORDER BY i.numero ASC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT \n  i.id, \n  i.numero, \n  i.dominioId, \n  i.publicada, \n  i.slug, \n  i.titulo,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nWHERE i.titulo LIKE '%Estr%s Hídrico%' OR i.slug LIKE '%estres-hidrico%' OR d.slug = 'agua'\nORDER BY i.numero ASC;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 356
+}

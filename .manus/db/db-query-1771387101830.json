@@ -1,0 +1,60 @@
+{
+  "query": "SELECT \n  i.id, \n  i.numero, \n  i.dominioId, \n  i.publicada, \n  i.slug, \n  i.titulo,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nORDER BY i.numero ASC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT \n  i.id, \n  i.numero, \n  i.dominioId, \n  i.publicada, \n  i.slug, \n  i.titulo,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nORDER BY i.numero ASC;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "dominioId": "5",
+      "publicada": "1",
+      "slug": "cobertura-forestal-historica-choix-2015-2026",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "dominio_nombre": "Medio Ambiente",
+      "dominio_slug": "medio_ambiente"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "dominioId": "2",
+      "publicada": "1",
+      "slug": "sistema-educativo-choix-capacidad-vs-demanda",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "dominio_nombre": "Educación",
+      "dominio_slug": "educacion"
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "dominioId": "3",
+      "publicada": "1",
+      "slug": "infraestructura-salud-choix-analisis-saturacion",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "dominio_nombre": "Salud",
+      "dominio_slug": "salud"
+    },
+    {
+      "id": "120002",
+      "numero": "5",
+      "dominioId": "6",
+      "publicada": "1",
+      "slug": "analisis-estructural-presupuesto-municipal-choix-2020-2026",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "dominio_nombre": "Finanzas Públicas",
+      "dominio_slug": "finanzas"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "dominioId": "4",
+      "publicada": "1",
+      "slug": "red-transporte-choix-cuellos-botella",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "dominio_nombre": "Infraestructura",
+      "dominio_slug": "infraestructura"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\tdominioId\tpublicada\tslug\ttitulo\tdominio_nombre\tdominio_slug\n90001\t3\t5\t1\tcobertura-forestal-historica-choix-2015-2026\tCobertura Forestal Histórica de Choix 2015-2026\tMedio Ambiente\tmedio_ambiente\n90002\t4\t2\t1\tsistema-educativo-choix-capacidad-vs-demanda\tSistema Educativo de Choix - Capacidad vs Demanda\tEducación\teducacion\n90003\t5\t3\t1\tinfraestructura-salud-choix-analisis-saturacion\tInfraestructura de Salud en Choix - Análisis de Saturación\tSalud\tsalud\n120002\t5\t6\t1\tanalisis-estructural-presupuesto-municipal-choix-2020-2026\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\tFinanzas Públicas\tfinanzas\n90004\t6\t4\t1\tred-transporte-choix-cuellos-botella\tRed de Transporte de Choix - Identificación de Cuellos de Botella\tInfraestructura\tinfraestructura\n",
+  "stderr": "",
+  "execution_time_ms": 438
+}

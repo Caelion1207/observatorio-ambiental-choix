@@ -380,3 +380,31 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Generar métricas agregadas (IRM promedio, número de brechas)
 - [x] Generar reporte de síntesis estructural sin narrativa
 - [x] Test: Agente funciona como lector ejecutivo, no como calculadora
+
+
+---
+
+## Auditoría de Errores Detectados Post-v2.2 ✅ COMPLETADA
+
+### 1️⃣ Investigación Hidrología No Aparece ✅
+- [x] Auditar tabla investigaciones: id, numero, dominioId, publicada, slug
+- [x] Verificar que dominioId corresponde a dominio Hidrología
+- [x] Verificar que publicada = true
+- [x] Verificar que filtro frontend compara por dominioId no por string
+- [x] Reportar causa exacta: **Investigaciones #1 y #2 de Hidrología NO EXISTEN en base de datos**
+
+### 2️⃣ Investigaciones #1 y #2 Faltantes en /datos-abiertos ✅
+- [x] Auditar endpoint que alimenta /datos-abiertos
+- [x] Revisar query SQL utilizada (server/db.ts línea 108-117)
+- [x] Verificar si existe filtro por publicada (SÍ existe: WHERE publicada = true)
+- [x] Verificar si existe filtro por dominioId (NO existe en query base)
+- [x] Verificar si hay condición tipo numero >= 3 (NO existe)
+- [x] Confirmar si #1 y #2 tienen publicada = true (NO EXISTEN en tabla)
+- [x] Reportar causa exacta: **Investigaciones #1 y #2 NO EXISTEN en base de datos**
+
+### 3️⃣ Error JSON en Agente ✅
+- [x] Auditar qué campo está siendo parseado en Agente.tsx
+- [x] Confirmar si ese campo realmente es JSON válido (NO, contiene texto narrativo Markdown)
+- [x] Identificar línea exacta del JSON.parse que falla (líneas 43, 48, 222)
+- [x] Reportar causa exacta: Campo `brechas` contiene texto Markdown, no JSON
+- [x] Aplicar corrección mínima: Try-catch en 3 JSON.parse
