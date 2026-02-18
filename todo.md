@@ -822,3 +822,75 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [ ] Investigar discrepancia en cálculo de IVE
 - [ ] Decidir si brechas deben ser entidades en BD o solo texto descriptivo
 - [ ] Congelar versión coherente
+
+
+---
+
+## Resolución de Inconsistencias Estructurales (Prioridad Crítica)
+
+### 1️⃣ Investigar Discrepancia IVE (0.45 vs 0.50)
+
+- [ ] Agregar logging detallado en `calcularIVE()` backend:
+  - totalSupuestos
+  - totalCriticos
+  - criticosVerificados
+  - peso aplicado (si existe)
+  - valor IVE calculado
+- [ ] Agregar logging detallado en `calcularIVE()` frontend
+- [ ] Ejecutar generación de síntesis en Agente y revisar logs del servidor
+- [ ] Confirmar si existe factor de ponderación adicional oculto
+- [ ] Verificar si frontend aplica redondeo o transformación
+- [ ] Garantizar que IVE mostrado proviene exclusivamente de función única centralizada
+- [ ] Documentar causa de discrepancia en AUDITORIA_INCONSISTENCIAS.md
+
+### 2️⃣ Unificar Arquitectura de Brechas
+
+- [ ] Definir oficialmente: `Brecha = Supuesto Crítico No Verificado`
+- [ ] Implementar cálculo único: `brechas = totalCriticos - criticosVerificados`
+- [ ] Eliminar conteo textual independiente de brechas
+- [ ] Actualizar vista de Agente para usar brechas derivadas
+- [ ] Actualizar vista de investigación individual para usar brechas derivadas
+- [ ] Verificar que número de brechas es consistente en todas las vistas
+
+### 3️⃣ Definir Rol de ARESK
+
+- [ ] Separar conceptualmente:
+  - Integridad estructural (ARESK)
+  - Robustez epistemológica (IVE)
+  - Incertidumbre Analítica
+- [ ] Definir reglas de bloqueo de publicación (solo por integridad estructural):
+  - Campos obligatorios vacíos
+  - IVE null
+  - Supuestos sin clasificación
+- [ ] NO bloquear publicación por IVE bajo
+- [ ] Documentar rol de ARESK en Metodología
+
+### 4️⃣ Verificación Final
+
+- [ ] Verificar IVE único y coherente en todas las vistas
+- [ ] Verificar brechas matemáticamente derivadas en todas las vistas
+- [ ] Verificar ARESK como validador estructural (no epistemológico)
+- [ ] Congelar versión coherente
+
+
+---
+
+## Eliminación Completa de Sección del Agente ✅ COMPLETADA
+
+- [x] Eliminar página client/src/pages/Agente.tsx
+- [x] Eliminar ruta /agente de client/src/App.tsx
+- [x] Eliminar enlace "Agente" del menú de navegación
+- [x] Eliminar server/agentRouter.ts
+- [x] Eliminar import de agentRouter en server/routers.ts
+- [x] Eliminar servicios no utilizados:
+  - server/services/dataCollector.ts
+  - server/services/dataValidator.ts
+  - server/services/hydroModel.ts
+  - server/services/problemEvaluator.ts
+  - server/services/regimeLogger.ts
+  - server/services/reportGenerator.ts
+- [x] Eliminar archivos de métricas creados para el Agente:
+  - server/services/metricas.ts
+  - client/src/lib/metricas.ts
+- [x] Verificar que sistema funciona sin errores TypeScript (0 errores LSP, 0 errores TypeScript)
+- [x] Congelar versión limpia

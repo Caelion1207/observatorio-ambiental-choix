@@ -17,7 +17,6 @@ export default function Navigation() {
     { href: "/investigaciones", label: "Investigaciones" },
     { href: "/metodologia", label: "Metodología" },
     { href: "/datos-abiertos", label: "Datos Abiertos" },
-    { href: "/agente", label: "Agente" },
     { href: "/participacion", label: "Participación" },
   ];
 

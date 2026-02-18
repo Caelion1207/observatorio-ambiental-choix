@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, titulo, indiceRobustez, supuestosEstructurados FROM investigaciones WHERE dominioId = (SELECT id FROM dominios WHERE slug = 'educacion') LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, titulo, indiceRobustez, supuestosEstructurados FROM investigaciones WHERE dominioId = (SELECT id FROM dominios WHERE slug = 'educacion') LIMIT 1;",
+  "rows": [
+    {
+      "id": "90002",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "indiceRobustez": "0.45",
+      "supuestosEstructurados": "[{\"id\":1,\"supuesto\":\"Los datos de matrícula escolar de la SEP son completos y actualizados hasta el ciclo 2024-2025\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":true},{\"id\":2,\"supuesto\":\"La tasa de crecimiento poblacional en edad escolar se mantiene constante en 2.5% anual\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":3,\"supuesto\":\"La capacidad instalada de infraestructura educativa no aumenta significativamente sin inversión pública\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":4,\"supuesto\":\"El índice de deserción escolar se mantiene en niveles históricos (15-20% en secundaria)\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":5,\"supuesto\":\"No se implementan programas masivos de educación a distancia que alteren la demanda de infraestructura física\",\"impacto\":\"Bajo\",\"sensibilidad\":\"Bajo\",\"verificado\":false}]"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitulo\tindiceRobustez\tsupuestosEstructurados\n90002\tSistema Educativo de Choix - Capacidad vs Demanda\t0.45\t[{\"id\":1,\"supuesto\":\"Los datos de matrícula escolar de la SEP son completos y actualizados hasta el ciclo 2024-2025\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":true},{\"id\":2,\"supuesto\":\"La tasa de crecimiento poblacional en edad escolar se mantiene constante en 2.5% anual\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":3,\"supuesto\":\"La capacidad instalada de infraestructura educativa no aumenta significativamente sin inversión pública\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":4,\"supuesto\":\"El índice de deserción escolar se mantiene en niveles históricos (15-20% en secundaria)\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":5,\"supuesto\":\"No se implementan programas masivos de educación a distancia que alteren la demanda de infraestructura física\",\"impacto\":\"Bajo\",\"sensibilidad\":\"Bajo\",\"verificado\":false}]\n",
+  "stderr": "",
+  "execution_time_ms": 356
+}
