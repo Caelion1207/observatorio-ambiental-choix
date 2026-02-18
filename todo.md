@@ -619,3 +619,19 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Localizar "Infraestructura hídrica crítica" en Home.tsx (línea 162)
 - [x] Reemplazar con descripción técnica sin dramatización ("Municipio de Sinaloa ubicado en la Sierra Madre Occidental")
 - [x] Mantener coherencia metodológica en todo el sistema
+
+
+## CRÍTICO: Error en Página Datos Abiertos (2026-02-18) ✅ CORREGIDO
+
+- [x] Revisar logs del navegador (browserConsole.log) para ver error completo
+- [x] Revisar logs del servidor (devserver.log) para ver errores backend
+- [x] Identificar causa raíz de error removeChild (fechas como objetos vacíos, keys no estables)
+- [x] Revisar componente DatosAbiertos.tsx para identificar problema
+- [x] Corregir error sin tocar core del sistema (guards defensivos para fechas, keys únicas)
+- [ ] Probar corrección en navegador
+- [ ] Congelar versión estable
+
+**Correcciones aplicadas:**
+- Guard defensivo para fechaConsulta: `typeof fuente.fechaConsulta === 'string'`
+- Guard defensivo para fechaCierreSemantico: `typeof investigacionDetalle.fechaCierreSemantico === 'string'`
+- Key única y estable para Select.Item: `key={\`select-inv-${inv.id}\`}`

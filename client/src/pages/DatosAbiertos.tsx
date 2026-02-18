@@ -72,7 +72,7 @@ export default function DatosAbiertos() {
                 </SelectTrigger>
                 <SelectContent>
                   {investigaciones?.map((inv) => (
-                    <SelectItem key={inv.id} value={inv.slug || `inv-${inv.id}`}>
+                    <SelectItem key={`select-inv-${inv.id}`} value={inv.slug || `inv-${inv.id}`}>
                       {inv.titulo}
                     </SelectItem>
                   ))}
@@ -114,7 +114,7 @@ export default function DatosAbiertos() {
                           {parseFloat(investigacionDetalle.indiceRobustez || "0").toFixed(2)}
                         </Badge>
                       </div>
-                      {investigacionDetalle.fechaCierreSemantico && (
+                      {investigacionDetalle.fechaCierreSemantico && typeof investigacionDetalle.fechaCierreSemantico === 'string' && (
                         <div>
                           <h3 className="font-semibold text-sm text-muted-foreground">Cierre Semántico</h3>
                           <p className="text-sm">
@@ -160,7 +160,7 @@ export default function DatosAbiertos() {
                               )}
                               <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
                                 <Badge variant="outline">{fuente.tipo}</Badge>
-                                {fuente.fechaConsulta && (
+                                {fuente.fechaConsulta && typeof fuente.fechaConsulta === 'string' && (
                                   <span>
                                     Consultado: {new Date(fuente.fechaConsulta).toLocaleDateString('es-MX')}
                                   </span>
