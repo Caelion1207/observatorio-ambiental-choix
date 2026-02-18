@@ -788,3 +788,11 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Desinstalar pdfmake y @types/pdfmake
 - [x] Verificar que sistema funciona sin errores TypeScript (0 errores LSP, 0 errores TypeScript)
 - [x] Congelar versión limpia
+
+
+## Eliminar Imágenes de Investigación Sistema Hídrico ✅ COMPLETADA
+
+- [x] Localizar investigación "Sistema Hídrico de Choix" en base de datos (id=1)
+- [x] Eliminar registros de imágenes (UPDATE imagenesSatelitales = NULL)
+- [x] Verificar que campo imagenesSatelitales está en NULL
+- [x] Congelar versión limpia

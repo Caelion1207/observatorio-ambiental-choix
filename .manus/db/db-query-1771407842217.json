@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, titulo, slug, imagenesSatelitales FROM investigaciones WHERE titulo LIKE '%Hídrico%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, titulo, slug, imagenesSatelitales FROM investigaciones WHERE titulo LIKE '%Hídrico%';",
+  "rows": [
+    {
+      "id": "180002",
+      "titulo": "Sistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación",
+      "slug": "sistema-hidrico-choix-resiliencia-amortiguacion",
+      "imagenesSatelitales": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitulo\tslug\timagenesSatelitales\n180002\tSistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación\tsistema-hidrico-choix-resiliencia-amortiguacion\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 368
+}
