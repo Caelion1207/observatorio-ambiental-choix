@@ -513,3 +513,55 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Probar ordenamiento por fecha en todas las vistas (ya implementado en backend)
 - [x] Probar exportación CSV y JSON (4 tests pasados: JSON completo, CSV completo, errores NOT_FOUND)
 - [ ] Congelar versión
+
+
+## Auditoría de Coherencia Operativa (2026-02-18)
+
+**Objetivo:** Verificar estabilidad verificable antes de cualquier expansión. No agregar features. Solo garantizar coherencia.
+
+### 1. Alineación Backend ↔ Base de Datos ↔ Frontend
+- [x] Verificar que schema de investigaciones en drizzle/schema.ts coincide con estructura real en DB
+- [x] Verificar que queries en server/db.ts retornan exactamente lo que frontend espera
+- [x] Verificar que tipos TypeScript en frontend coinciden con tipos de backend
+- [x] Identificar campos que existen en DB pero no se usan en frontend (o viceversa)
+
+### 2. Agente ↔ Tabla Investigaciones
+- [x] Verificar que agentRouter.ts consume datos desde tabla investigaciones
+- [x] Verificar que agente NO genera contenido dummy o hardcodeado
+- [x] Verificar que respuestas del agente referencian investigaciones reales por slug/ID
+- [x] Verificar que agente respeta estructura de 7 secciones del protocolo
+
+### 3. Dominios ↔ Contenido
+- [x] Contar investigaciones reales por dominio (6 investigaciones, 8 dominios, 2 vacíos)
+- [x] Identificar dominios sin contenido (Agricultura, Ganadería)
+- [ ] Verificar que filtro de dominios en frontend solo muestra dominios con contenido
+- [x] Verificar que no hay investigaciones huérfanas (sin dominio válido)
+
+### 4. Inconsistencias Identificadas
+- [x] Documentar todas las inconsistencias encontradas (AUDITORIA_COHERENCIA_OPERATIVA.md)
+- [x] Clasificar por severidad (0 críticas, 1 moderada, 2 cosméticas)
+- [x] Proponer correcciones mínimas sin expansión
+
+### 5. Reporte Final
+- [x] Generar reporte de coherencia operativa (AUDITORIA_COHERENCIA_OPERATIVA.md)
+- [x] Confirmar estabilidad verificable: 🟡 SISTEMA FUNCIONAL CON ADVERTENCIAS
+
+
+## Ajuste Final: Algoritmo de Cálculo de IRM (2026-02-18)
+
+**Objetivo:** Revisar y ajustar algoritmo de IRM para reflejar diferencias reales entre investigaciones. Congelar versión final sin tocar core.
+
+- [x] Revisar algoritmo actual de cálculo de IRM (recalcular_irm.ts)
+- [x] Identificar por qué todas las investigaciones tenían IRM = 1.00 (algoritmo no diferenciaba)
+- [x] Ajustar cálculo para reflejar diferencias reales en robustez metodológica
+- [x] Recalcular IRM de todas las investigaciones con nuevo algoritmo (recalcular_irm_ajustado.ts)
+- [x] Verificar que IRM refleja diferencias reales (IRM ahora: 0.30-0.45)
+- [ ] Congelar versión final sin tocar core del sistema
+
+**Resultados:**
+- Investigación #1 (Sistema Hídrico): IRM = 0.30 (sin supuestos estructurados)
+- Investigación #3 (Cobertura Forestal): IRM = 0.30 (40% verificados, 1/3 críticos verificados)
+- Investigación #4 (Sistema Educativo): IRM = 0.45 (60% verificados, 1/2 críticos verificados)
+- Investigación #5 (Infraestructura Salud): IRM = 0.30 (40% verificados, 1/3 críticos verificados)
+- Investigación #6 (Red Transporte): IRM = 0.30 (40% verificados, 1/2 críticos verificados)
+- Investigación #7 (Presupuesto Municipal): IRM = 0.30 (16.7% verificados, 0/2 críticos verificados)
