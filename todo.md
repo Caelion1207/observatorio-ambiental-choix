@@ -655,3 +655,16 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - Fechas corregidas: guards defensivos `typeof === 'string'` + validación `isNaN(fecha.getTime())`
 - Tablas Markdown renderizadas: función `renderizarTablaMarkdown()` detecta y renderiza tablas como grid PDF
 - Paginación inteligente: solo agregar página si queda < 100pt de altura
+
+
+## CRÍTICO: Error en Generación de PDF (2026-02-18) ✅ CORREGIDO
+
+- [x] Revisar logs del servidor (devserver.log) para ver error de generación PDF
+- [x] Revisar logs del navegador (browserConsole.log) para ver stack trace completo
+- [x] Identificar causa raíz del error en pdfGenerator.ts (import de PDFDocument incompatible)
+- [x] Corregir error sin romper mejoras aplicadas (import corregido a `import * as PDFKit`)
+- [ ] Probar generación de PDF con investigación real
+- [ ] Congelar versión corregida
+
+**Causa raíz:** Import incorrecto de PDFDocument causaba error de compilación TypeScript.
+**Solución:** Cambiar `import PDFDocument from 'pdfkit'` a `import * as PDFKit from 'pdfkit'; const PDFDocument = PDFKit.default || PDFKit;`

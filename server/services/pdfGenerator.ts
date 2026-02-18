@@ -1,4 +1,5 @@
-import PDFDocument from 'pdfkit';
+import * as PDFKit from 'pdfkit';
+const PDFDocument = PDFKit.default || PDFKit;
 import { Readable } from 'stream';
 
 interface Investigacion {
