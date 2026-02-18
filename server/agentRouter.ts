@@ -342,22 +342,29 @@ export const agentRouter = router({
   analizarDominio: publicProcedure
     .input(z.object({ dominioId: z.number() }))
     .mutation(async ({ input }) => {
-      // Consultar investigaciones del dominio
-      const investigaciones = await dbQueries.getInvestigacionesByDominio(input.dominioId);
+      try {
+        // Consultar investigaciones del dominio
+        const investigaciones = await dbQueries.getInvestigacionesByDominio(input.dominioId);
 
-      if (investigaciones.length === 0) {
-        return {
-          reporte: "No hay investigaciones publicadas en este dominio.",
-        };
-      }
+        if (investigaciones.length === 0) {
+          return {
+            reporte: "No hay investigaciones publicadas en este dominio.",
+          };
+        }
 
       // Calcular métricas agregadas
       const irmPromedio =
         investigaciones.reduce((sum: number, inv: any) => sum + (inv.indiceRobustez || 0), 0) / investigaciones.length;
 
       const totalBrechas = investigaciones.reduce((sum: number, inv: any) => {
-        const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
-        return sum + (Array.isArray(brechas) ? brechas.length : 0);
+        try {
+          const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+          return sum + (Array.isArray(brechas) ? brechas.length : 0);
+        } catch {
+          // Si brechas no es JSON válido, contar ocurrencias de "**Brecha"
+          const matches = (inv.brechas || '').match(/\*\*Brecha \d+:/g);
+          return sum + (matches ? matches.length : 0);
+        }
       }, 0);
 
       // Generar reporte estructural
@@ -382,7 +389,14 @@ CONCLUSIÓN ESTRUCTURAL:
 ${irmPromedio >= 0.7 ? "El dominio cuenta con investigaciones robustas y datos verificables." : irmPromedio >= 0.5 ? "El dominio requiere fortalecer fuentes y verificar supuestos críticos." : "El dominio presenta brechas significativas y requiere actualización de datos."}
 `;
 
-      return { reporte };
+        return { reporte };
+      } catch (error) {
+        // SIEMPRE devolver JSON válido, incluso en caso de error
+        return {
+          reporte: `ERROR AL ANALIZAR DOMINIO: ${error instanceof Error ? error.message : 'Error desconocido'}`,
+          error: true,
+        };
+      }
     }),
 
   /**

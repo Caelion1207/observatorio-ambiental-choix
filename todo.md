@@ -465,3 +465,14 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - ✅ IRM recalculado: todas las investigaciones tienen IRM 1.00
 - ✅ Numeración corregida (sin duplicados)
 - ✅ Sistema completamente estable
+
+
+## Congelamiento Final - Sin Expansión (2026-02-18)
+
+- [x] Dump completo de la base de datos actual (84.13 KB JSON)
+- [x] Lista exacta de registros en tabla investigaciones (5 registros)
+- [x] Lista exacta de registros en tabla dominios (8 registros)
+- [x] Verificar existencia y estado del campo publicado (todas publicada=1)
+- [x] Verificar que frontend y backend apunten a la misma DB (DATABASE_URL compartida)
+- [x] Corregir contrato API del agente para que SIEMPRE devuelva JSON válido (try-catch global agregado)
+- [x] Congelar versión final sin expansión
