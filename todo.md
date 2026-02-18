@@ -715,3 +715,16 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [ ] Verificar calidad institucional (no amateur)
 - [ ] Congelar versión SIN agregar visualizaciones (no hay datos estructurados reales)
 - [ ] NO agregar gráficas inventadas (violación de integridad de contenido)
+
+
+## Reemplazo Generador PDF: HTML + Puppeteer (Solución Profesional)
+
+- [x] Eliminar generador PDFKit roto (server/services/pdfGenerator.ts)
+- [x] Crear generador HTML estructurado (server/services/htmlGenerator.ts)
+- [x] Implementar CSS profesional con @page, márgenes y control de saltos
+- [x] Instalar Puppeteer (pnpm add puppeteer)
+- [x] Crear servicio de conversión HTML → PDF con Puppeteer
+- [x] Actualizar endpoint exportPDF para usar nuevo generador
+- [x] Probar con investigación #4 (Sistema Educativo)
+- [x] Verificar: sin páginas vacías, sin texto cortado, tablas correctas
+- [x] Congelar versión estable

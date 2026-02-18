@@ -74,8 +74,8 @@ export const appRouter = router({
         // Obtener fuentes de la investigación desde tabla separada
         const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
         
-        const { generarPDFInvestigacion } = await import('./services/pdfGenerator');
-        const pdfBuffer = await generarPDFInvestigacion(investigacion as any, fuentes);
+        const { generatePDFFromInvestigacion } = await import('./services/puppeteerPdfGenerator');
+        const pdfBuffer = await generatePDFFromInvestigacion(investigacion as any, fuentes);
         
         // Convertir buffer a base64 para enviar al cliente
         const pdfBase64 = pdfBuffer.toString('base64');
