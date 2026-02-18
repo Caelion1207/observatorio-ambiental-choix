@@ -1,0 +1,45 @@
+{
+  "query": "SELECT id, numero, titulo, dominioId, indiceRobustez FROM investigaciones ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, numero, titulo, dominioId, indiceRobustez FROM investigaciones ORDER BY id;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "dominioId": "5",
+      "indiceRobustez": "0.60"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "dominioId": "2",
+      "indiceRobustez": "0.80"
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "dominioId": "3",
+      "indiceRobustez": "0.60"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "dominioId": "4",
+      "indiceRobustez": "0.80"
+    },
+    {
+      "id": "120002",
+      "numero": "5",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "dominioId": "6",
+      "indiceRobustez": "0.60"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\ttitulo\tdominioId\tindiceRobustez\n90001\t3\tCobertura Forestal Histórica de Choix 2015-2026\t5\t0.60\n90002\t4\tSistema Educativo de Choix - Capacidad vs Demanda\t2\t0.80\n90003\t5\tInfraestructura de Salud en Choix - Análisis de Saturación\t3\t0.60\n90004\t6\tRed de Transporte de Choix - Identificación de Cuellos de Botella\t4\t0.80\n120002\t5\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t6\t0.60\n",
+  "stderr": "",
+  "execution_time_ms": 472
+}
