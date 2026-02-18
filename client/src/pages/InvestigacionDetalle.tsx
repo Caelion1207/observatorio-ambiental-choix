@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useRoute } from "wouter";
-import { ArrowLeft, Calendar, Loader2, FileDown } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Streamdown } from "streamdown";
@@ -28,37 +28,7 @@ export default function InvestigacionDetalle() {
     { enabled: !!investigacion?.id }
   );
   
-  const exportPDF = trpc.investigaciones.exportPDF.useMutation({
-    onSuccess: (data) => {
-      // Convertir base64 a blob
-      const byteCharacters = atob(data.pdfBase64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
-      
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = data.filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    },
-    onError: (error) => {
-      console.error('Error al exportar PDF:', error);
-      alert('Error al generar el PDF. Por favor, inténtalo de nuevo.');
-    }
-  });
-  
-  const handleExportPDF = () => {
-    if (slug) {
-      exportPDF.mutate({ slug });
-    }
-  };
+
 
   if (isLoading) {
     return (
@@ -131,32 +101,13 @@ export default function InvestigacionDetalle() {
           <div className="max-w-4xl">
         <div className="space-y-8">
           {/* Navegación */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <Link href="/investigaciones">
               <Button variant="ghost" size="sm" className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
                 Volver a Investigaciones
               </Button>
             </Link>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="gap-2"
-              onClick={handleExportPDF}
-              disabled={exportPDF.isPending}
-            >
-              {exportPDF.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Generando PDF...
-                </>
-              ) : (
-                <>
-                  <FileDown className="h-4 w-4" />
-                  Exportar PDF
-                </>
-              )}
-            </Button>
           </div>
 
           {/* Encabezado */}

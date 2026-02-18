@@ -63,29 +63,6 @@ export const appRouter = router({
         );
       }),
     
-    exportPDF: publicProcedure
-      .input(z.object({ slug: z.string() }))
-      .mutation(async ({ input }) => {
-        const investigacion = await db.getInvestigacionBySlug(input.slug);
-        if (!investigacion) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
-        }
-        
-        // Obtener fuentes de la investigación desde tabla separada
-        const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
-        
-        // Generar PDF con PDFMake
-        const { generatePDFFromInvestigacion } = await import('./services/pdfmakeGenerator');
-        const pdfBuffer = await generatePDFFromInvestigacion(investigacion as any, fuentes);
-        
-        // Convertir buffer a base64 para enviar al cliente
-        const pdfBase64 = pdfBuffer.toString('base64');
-        
-        return {
-          pdfBase64,
-          filename: `${investigacion.slug}.pdf`
-        };
-      }),
     
     exportJSON: publicProcedure
       .input(z.object({ slug: z.string() }))

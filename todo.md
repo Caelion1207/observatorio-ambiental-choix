@@ -775,3 +775,16 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Congelar versión estable
 
 **Resultado:** PDFMake funciona correctamente en producción. Biblioteca nativa Node.js sin dependencias externas pesadas (Chrome). Estructura programática pura. Paginación automática funcional.
+
+
+---
+
+## Eliminación Completa de Funcionalidad PDF ✅ COMPLETADA
+
+- [x] Eliminar botón "Exportar PDF" de InvestigacionDetalle.tsx
+- [x] Eliminar mutation exportPDF de InvestigacionDetalle.tsx
+- [x] Eliminar endpoint exportPDF de server/routers.ts
+- [x] Eliminar archivo server/services/pdfmakeGenerator.ts
+- [x] Desinstalar pdfmake y @types/pdfmake
+- [x] Verificar que sistema funciona sin errores TypeScript (0 errores LSP, 0 errores TypeScript)
+- [x] Congelar versión limpia
