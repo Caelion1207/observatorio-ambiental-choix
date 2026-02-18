@@ -488,3 +488,28 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Insertar investigación recuperada en base de datos con numeración #1
 - [x] Verificar que aparece en frontend (6 investigaciones totales, Hidrología con 1 investigación)
 - [x] Reportar recuperación completa al usuario
+
+
+## Refactorización: Numeración Ordinal Dinámica + Exportación Datos Abiertos (2026-02-18)
+
+### Backend: Ordenar por fecha en lugar de numero
+- [x] Modificar queries en server/db.ts para ordenar por createdAt/publishedAt (ya estaba implementado)
+- [x] Eliminar lógica que dependa de numero como secuencia (eliminado de getInvestigacionesRelacionadas)
+- [x] Mantener campo numero solo como referencia histórica
+
+### Frontend: Eliminar dependencia semántica de numero
+- [x] Refactorizar componentes para no mostrar numero como identificador principal (3 archivos)
+- [x] Usar slug/título como identificador visual
+- [x] Ordenar listados por fecha de publicación (ya implementado en backend)
+
+### Exportación de Datos Abiertos
+- [x] Implementar endpoint exportJSON (trpc.investigaciones.exportJSON)
+- [x] Implementar endpoint exportCSV (trpc.investigaciones.exportCSV)
+- [x] Probar exportación con investigación real (4 tests pasados)
+- [x] Crear tests unitarios para endpoints (exportacion.test.ts)
+
+### Validación Final
+- [x] Verificar que sistema funciona sin dependencia de numeración secuencial (tests pasados)
+- [x] Probar ordenamiento por fecha en todas las vistas (ya implementado en backend)
+- [x] Probar exportación CSV y JSON (4 tests pasados: JSON completo, CSV completo, errores NOT_FOUND)
+- [ ] Congelar versión

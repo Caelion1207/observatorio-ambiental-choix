@@ -80,9 +80,6 @@ export default function Investigaciones() {
                       </div>
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <Badge variant="outline" className="font-mono text-xs">
-                            #{investigacion.numero.toString().padStart(2, "0")}
-                          </Badge>
                           <Badge variant="secondary" className="text-xs">
                             {dominiosMap[investigacion.dominioId]?.nombre || 'Sin dominio'}
                           </Badge>

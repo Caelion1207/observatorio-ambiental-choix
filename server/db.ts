@@ -156,7 +156,6 @@ export async function getInvestigacionesRelacionadas(dominioId: number, currentS
       slug: investigaciones.slug,
       resumenEjecutivo: investigaciones.resumenEjecutivo,
       dominioId: investigaciones.dominioId,
-      numero: investigaciones.numero,
       publishedAt: investigaciones.publishedAt,
     })
     .from(investigaciones)

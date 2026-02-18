@@ -49,14 +49,6 @@ export default function RelatedInvestigaciones({
           <Link key={inv.id} href={`/investigaciones/${inv.slug}`}>
             <Card className="h-full hover:border-primary/50 transition-colors cursor-pointer">
               <CardHeader>
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <Badge variant="outline" className="text-xs">
-                    #{inv.numero}
-                  </Badge>
-                  <Badge variant="secondary" className="text-xs">
-                    Investigación #{inv.numero}
-                  </Badge>
-                </div>
                 <CardTitle className="text-lg line-clamp-2">
                   {inv.titulo}
                 </CardTitle>

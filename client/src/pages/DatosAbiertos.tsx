@@ -73,7 +73,7 @@ export default function DatosAbiertos() {
                 <SelectContent>
                   {investigaciones?.map((inv) => (
                     <SelectItem key={inv.id} value={inv.slug || `inv-${inv.id}`}>
-                      #{inv.numero} - {inv.titulo}
+                      {inv.titulo}
                     </SelectItem>
                   ))}
                 </SelectContent>

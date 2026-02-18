@@ -86,6 +86,97 @@ export const appRouter = router({
         };
       }),
     
+    exportJSON: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const investigacion = await db.getInvestigacionBySlug(input.slug);
+        if (!investigacion) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
+        }
+        
+        const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
+        const dominio = await db.getDominioById(investigacion.dominioId);
+        
+        return {
+          investigacion: {
+            id: investigacion.id,
+            titulo: investigacion.titulo,
+            slug: investigacion.slug,
+            dominio: dominio?.nombre || 'Sin dominio',
+            resumenEjecutivo: investigacion.resumenEjecutivo,
+            definicionSistema: investigacion.definicionSistema,
+            tablaMaestra: investigacion.tablaMaestra,
+            supuestos: investigacion.supuestos,
+            modelo: investigacion.modelo,
+            escenarios: investigacion.escenarios,
+            brechas: investigacion.brechas,
+            conclusion: investigacion.conclusion,
+            indiceRobustez: investigacion.indiceRobustez,
+            publishedAt: investigacion.publishedAt,
+          },
+          fuentes: fuentes.map(f => ({
+            tipo: f.tipo,
+            titulo: f.titulo,
+            autor: f.autor,
+            institucion: f.institucion,
+            url: f.url,
+            fechaPublicacion: f.fechaPublicacion,
+          })),
+          metadata: {
+            exportadoEn: new Date().toISOString(),
+            version: '1.0',
+            licencia: 'Datos Abiertos - Dominio Público',
+          }
+        };
+      }),
+    
+    exportCSV: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const investigacion = await db.getInvestigacionBySlug(input.slug);
+        if (!investigacion) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
+        }
+        
+        const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
+        const dominio = await db.getDominioById(investigacion.dominioId);
+        
+        // Generar CSV simple: metadata de investigación + fuentes
+        const csvLines: string[] = [];
+        
+        // Sección 1: Metadata de investigación
+        csvLines.push('METADATA DE INVESTIGACIÓN');
+        csvLines.push('Campo,Valor');
+        csvLines.push(`Título,"${investigacion.titulo.replace(/"/g, '""')}"`);
+        csvLines.push(`Dominio,"${dominio?.nombre || 'Sin dominio'}"`);
+        csvLines.push(`Slug,${investigacion.slug}`);
+        csvLines.push(`Índice de Robustez Metodológica,${investigacion.indiceRobustez}`);
+        csvLines.push(`Fecha de Publicación,${investigacion.publishedAt?.toISOString() || 'No publicada'}`);
+        csvLines.push('');
+        
+        // Sección 2: Fuentes primarias
+        csvLines.push('FUENTES PRIMARIAS');
+        csvLines.push('Tipo,Título,Autor,Institución,URL,Fecha Publicación');
+        fuentes.forEach(f => {
+          csvLines.push(
+            `${f.tipo},"${(f.titulo || '').replace(/"/g, '""')}","${(f.autor || '').replace(/"/g, '""')}","${(f.institucion || '').replace(/"/g, '""')}",${f.url || ''},${f.fechaPublicacion?.toISOString() || ''}`
+          );
+        });
+        csvLines.push('');
+        
+        // Sección 3: Metadata de exportación
+        csvLines.push('METADATA DE EXPORTACIÓN');
+        csvLines.push('Campo,Valor');
+        csvLines.push(`Exportado en,${new Date().toISOString()}`);
+        csvLines.push('Versión,1.0');
+        csvLines.push('Licencia,Datos Abiertos - Dominio Público');
+        
+        return {
+          csv: csvLines.join('\n'),
+          filename: `${investigacion.slug}.csv`
+        };
+      }),
+    
     validarIntegridad: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
