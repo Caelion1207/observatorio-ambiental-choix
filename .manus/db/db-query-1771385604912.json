@@ -1,0 +1,50 @@
+{
+  "query": "\nSELECT id, nombre, slug FROM dominios ORDER BY nombre;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \nSELECT id, nombre, slug FROM dominios ORDER BY nombre;\n",
+  "rows": [
+    {
+      "id": "7",
+      "nombre": "Agricultura",
+      "slug": "agricultura"
+    },
+    {
+      "id": "2",
+      "nombre": "Educación",
+      "slug": "educacion"
+    },
+    {
+      "id": "6",
+      "nombre": "Finanzas Públicas",
+      "slug": "finanzas"
+    },
+    {
+      "id": "8",
+      "nombre": "Ganadería",
+      "slug": "ganaderia"
+    },
+    {
+      "id": "1",
+      "nombre": "Hidrología",
+      "slug": "agua"
+    },
+    {
+      "id": "4",
+      "nombre": "Infraestructura",
+      "slug": "infraestructura"
+    },
+    {
+      "id": "5",
+      "nombre": "Medio Ambiente",
+      "slug": "medio_ambiente"
+    },
+    {
+      "id": "3",
+      "nombre": "Salud",
+      "slug": "salud"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnombre\tslug\n7\tAgricultura\tagricultura\n2\tEducación\teducacion\n6\tFinanzas Públicas\tfinanzas\n8\tGanadería\tganaderia\n1\tHidrología\tagua\n4\tInfraestructura\tinfraestructura\n5\tMedio Ambiente\tmedio_ambiente\n3\tSalud\tsalud\n",
+  "stderr": "",
+  "execution_time_ms": 372
+}

@@ -1,0 +1,8 @@
+{
+  "query": "\n-- Cobertura Forestal: Educación → Medio Ambiente\nUPDATE investigaciones \nSET dominioId = 'medio_ambiente' \nWHERE id = 'cobertura-forestal-historica-choix-2015-2026';\n\n-- Sistema Educativo: Infraestructura → Educación\nUPDATE investigaciones \nSET dominioId = 'educacion' \nWHERE id = 'sistema-educativo-choix-capacidad-vs-demanda';\n\n-- Red de Transporte: Medio Ambiente → Infraestructura\nUPDATE investigaciones \nSET dominioId = 'infraestructura' \nWHERE id = 'red-transporte-choix-identificacion-cuellos-botella';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \n-- Cobertura Forestal: Educación → Medio Ambiente\nUPDATE investigaciones \nSET dominioId = 'medio_ambiente' \nWHERE id = 'cobertura-forestal-historica-choix-2015-2026';\n\n-- Sistema Educativo: Infraestructura → Educación\nUPDATE investigaciones \nSET dominioId = 'educacion' \nWHERE id = 'sistema-educativo-choix-capacidad-vs-demanda';\n\n-- Red de Transporte: Medio Ambiente → Infraestructura\nUPDATE investigaciones \nSET dominioId = 'infraestructura' \nWHERE id = 'red-transporte-choix-identificacion-cuellos-botella';\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1292 (22007) at line 3: Truncated incorrect INTEGER value: 'cobertura-forestal-historica-choix-2015-2026'"
+  ]
+}

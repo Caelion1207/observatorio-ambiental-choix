@@ -371,3 +371,86 @@ return new Promise((resolve, reject) => {
 - Arquitectura real alineada con narrativa arquitectónica
 - Principio cumplido: **El dominio define el agente, no el agente define el dominio**
 - Build limpio (0 errores TypeScript)
+
+
+---
+
+## [v2.2_fallos_arquitectonicos_corregidos] - 2026-02-18
+
+### 🐛 Corrección de Fallos Arquitectónicos Detectados
+
+**Contexto:** Después de v2.1, se detectaron fallos residuales que contradecían la narrativa de "arquitectura multidominio completamente dinámica".
+
+#### Fase 1: Corregir Dominios en Investigaciones ✅
+**Problema:** Investigaciones mal categorizadas en base de datos.
+- Cobertura Forestal aparecía bajo badge "Educación" (debería ser "Medio Ambiente")
+- Sistema Educativo aparecía bajo badge "Infraestructura" (debería ser "Educación")
+- Red de Transporte aparecía bajo badge "Medio Ambiente" (debería ser "Infraestructura")
+
+**Solución:**
+- Actualizado `dominioId` en base de datos para 3 investigaciones
+- Validado que filtros frontend usan `dominioId` no label textual
+
+**Resultado:** Cada investigación aparece solo en su dominio correcto.
+
+#### Fase 2: Limpiar Nombres en Metodología y Agente ✅
+**Problema:** Slugs de iconos visibles como texto en UI.
+- "Droplets Hidrología" en vez de "Hidrología"
+- "GraduationCap Educación" en vez de "Educación"
+- "Heart Salud" en vez de "Salud"
+
+**Causa:** Frontend renderizaba `{icono} {nombre}` donde `icono` era string ("Droplets") en vez de componente React.
+
+**Solución:**
+- Implementado mapeo dinámico de iconos desde lucide-react
+- Corregido render en `Metodologia.tsx` y `Agente.tsx`
+- Ahora renderiza solo `{nombre}` con icono como componente
+
+**Resultado:** Solo nombres en español visibles, sin icon keys.
+
+#### Fase 3: Eliminar Hardcode de Agua en Datos Abiertos ✅
+**Verificación:** Confirmado que `VisualizacionHuites` fue eliminado correctamente en v2.1.
+- ✅ No existe visualización fija de presa
+- ✅ No existe serie temporal de almacenamiento
+- ✅ No existe texto referenciando CONAGUA
+- ✅ Selector dinámico de investigación funcional
+
+**Resultado:** Datos Abiertos completamente dinámico por investigación.
+
+#### Fase 4: Reescribir Agente como Lector Estructural ✅
+**Problema:** Agente seguía siendo calculadora de agua con inputs hardcodeados.
+- "Demanda Incremental Anual (m³/año)" - específico de agua
+- "Años de Proyecto" - específico de agua
+- "Capacidad Logística (m³/día)" - específico de agua
+- Tabs de datos recolectados: Precipitación, Presa, Población, Acuífero
+
+**Principio:** Usar lo que ya existe. El agente no simula, sintetiza.
+
+**Solución:**
+1. Eliminados todos los inputs manuales hardcodeados
+2. Eliminados tabs de datos recolectados específicos de agua
+3. Creado endpoint `analizarDominio` en `agentRouter.ts`
+4. Creada función `getInvestigacionesByDominio` en `db.ts`
+5. Modificado endpoint `investigaciones.list` para aceptar `dominioId` opcional
+6. Implementada extracción automática de métricas:
+   - IRM promedio del dominio
+   - Número total de brechas detectadas
+   - Estado general de investigaciones (robusto/moderado/débil)
+7. Generado reporte de síntesis estructural sin narrativa
+
+**Resultado:** Agente funciona como lector ejecutivo que sintetiza investigaciones existentes, no como calculadora que requiere inputs manuales.
+
+**Archivos Modificados:**
+- `client/src/pages/Agente.tsx` - Reescrito completamente
+- `client/src/pages/Metodologia.tsx` - Corregido render de iconos
+- `server/agentRouter.ts` - Agregado endpoint `analizarDominio`
+- `server/routers.ts` - Modificado `investigaciones.list` para filtro por dominio
+- `server/db.ts` - Agregada función `getInvestigacionesByDominio`
+- Base de datos: Corregido `dominioId` en 3 investigaciones
+
+**Estado Final:**
+- ✅ Arquitectura completamente coherente
+- ✅ Agente es lector ejecutivo, no calculadora
+- ✅ Sistema multidominio sin hardcode legacy residual
+- ✅ Build limpio (0 errores TypeScript)
+- ✅ Principio cumplido: **usar lo que ya existe, no inventar inputs**

@@ -1,0 +1,22 @@
+{
+  "query": "\n-- Primero consultar IDs de dominios necesarios\nSELECT id, nombre FROM dominios WHERE slug IN ('medio_ambiente', 'educacion', 'infraestructura');\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \n-- Primero consultar IDs de dominios necesarios\nSELECT id, nombre FROM dominios WHERE slug IN ('medio_ambiente', 'educacion', 'infraestructura');\n",
+  "rows": [
+    {
+      "id": "5",
+      "nombre": "Medio Ambiente"
+    },
+    {
+      "id": "2",
+      "nombre": "Educación"
+    },
+    {
+      "id": "4",
+      "nombre": "Infraestructura"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnombre\n5\tMedio Ambiente\n2\tEducación\n4\tInfraestructura\n",
+  "stderr": "",
+  "execution_time_ms": 362
+}

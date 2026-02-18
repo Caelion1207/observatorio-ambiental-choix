@@ -30,9 +30,14 @@ export const appRouter = router({
   }),
 
   investigaciones: router({
-    list: publicProcedure.query(async () => {
-      return await db.getInvestigacionesPublicadas();
-    }),
+    list: publicProcedure
+      .input(z.object({ dominioId: z.number().optional() }).optional())
+      .query(async ({ input }) => {
+        if (input?.dominioId) {
+          return await db.getInvestigacionesByDominio(input.dominioId);
+        }
+        return await db.getInvestigacionesPublicadas();
+      }),
     
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string() }))

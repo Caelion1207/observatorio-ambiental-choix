@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Droplets, GraduationCap, Heart, Building2, Trees, DollarSign, Wheat, Beef } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
 export default function Metodologia() {
@@ -184,9 +184,19 @@ export default function Metodologia() {
                     <Card key={dominio.id}>
                       <CardHeader>
                         <CardTitle className="text-base flex items-center gap-2">
-                          {dominio.icono && (
-                            <span className="text-2xl">{dominio.icono}</span>
-                          )}
+                          {dominio.icono && (() => {
+                            const iconMap: Record<string, React.ReactNode> = {
+                              'Droplets': <Droplets className="h-5 w-5" />,
+                              'GraduationCap': <GraduationCap className="h-5 w-5" />,
+                              'Heart': <Heart className="h-5 w-5" />,
+                              'Building2': <Building2 className="h-5 w-5" />,
+                              'Trees': <Trees className="h-5 w-5" />,
+                              'DollarSign': <DollarSign className="h-5 w-5" />,
+                              'Wheat': <Wheat className="h-5 w-5" />,
+                              'Beef': <Beef className="h-5 w-5" />,
+                            };
+                            return iconMap[dominio.icono] || null;
+                          })()}
                           {dominio.nombre}
                         </CardTitle>
                         <CardDescription>

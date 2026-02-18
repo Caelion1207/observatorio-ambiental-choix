@@ -345,3 +345,38 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Confirmar que no hay contenido de agua donde no debe haber agua
 - [x] Ejecutar build limpio (0 errores TypeScript)
 - [x] Guardar checkpoint v2.1 con coherencia arquitectónica completa
+
+
+---
+
+## Corrección de Fallos Arquitectónicos Detectados ✅ COMPLETADA
+
+### Fase 1: Corregir Dominios en Investigaciones ✅
+- [x] Verificar `dominioId` en todas las investigaciones en DB
+- [x] Corregir investigaciones mal categorizadas (Cobertura Forestal, Sistema Educativo, Red Transporte)
+- [x] Validar filtros frontend usan `dominioId` no label textual
+- [x] Test: Cada investigación aparece solo en su dominio correcto
+
+### Fase 2: Limpiar Nombres en Metodología y Agente ✅
+- [x] Eliminar slugs visibles en Metodología (Droplets, GraduationCap, etc.)
+- [x] Eliminar slugs visibles en selector de Agente
+- [x] Implementar mapeo de iconos dinámico desde lucide-react
+- [x] Test: Solo nombres en español, sin icon keys visibles
+
+### Fase 3: Eliminar Hardcode de Agua en Datos Abiertos ✅
+- [x] Verificar que VisualizacionHuites fue eliminado correctamente (ya eliminado en v2.1)
+- [x] Verificar que no existe visualización fija de presa
+- [x] Verificar que no existe texto referenciando CONAGUA
+- [x] Test: Datos Abiertos dinámico por investigación seleccionada
+
+### Fase 4: Reescribir Agente como Lector Estructural ✅
+- [x] Eliminar inputs manuales de agua (m³/año, capacidad logística)
+- [x] Eliminar sliders hardcodeados
+- [x] Eliminar tabs de datos recolectados (Precipitación, Presa, Población, Acuífero)
+- [x] Implementar query a investigaciones por dominio
+- [x] Crear endpoint `analizarDominio` en agentRouter.ts
+- [x] Crear función `getInvestigacionesByDominio` en db.ts
+- [x] Implementar extracción automática: supuestos, IRM, brechas
+- [x] Generar métricas agregadas (IRM promedio, número de brechas)
+- [x] Generar reporte de síntesis estructural sin narrativa
+- [x] Test: Agente funciona como lector ejecutivo, no como calculadora

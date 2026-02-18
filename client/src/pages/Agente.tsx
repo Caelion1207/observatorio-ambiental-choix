@@ -1,481 +1,269 @@
-import { useState, useEffect } from "react";
-import { trpc } from "@/lib/trpc";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Play, AlertTriangle, CheckCircle2, Info } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Streamdown } from "streamdown";
-import AgenteCharts from "@/components/AgenteCharts";
-import OperationalZonesChart from "@/components/OperationalZonesChart";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { trpc } from "@/lib/trpc";
+import { AlertTriangle, CheckCircle2, TrendingUp, FileText, Database } from "lucide-react";
 
 export default function Agente() {
-  // Estado dinámico por dominio
-  const [dominioSlug, setDominioSlug] = useState<string>("agua");
-  const [variables, setVariables] = useState<Record<string, any>>({});
+  const [selectedDominio, setSelectedDominio] = useState<string>("");
+  const [analisisGenerado, setAnalisisGenerado] = useState(false);
 
-  // Obtener dominios disponibles
+  // Obtener dominios activos
   const { data: dominios } = trpc.dominios.list.useQuery();
 
-  // Obtener configuración del dominio seleccionado
-  const { data: config, isLoading: configLoading } = trpc.agent.getConfig.useQuery(
-    { slug: dominioSlug },
-    { enabled: !!dominioSlug }
+  // Obtener investigaciones del dominio seleccionado
+  const { data: investigaciones, isLoading: investigacionesLoading } = trpc.investigaciones.list.useQuery(
+    { dominioId: selectedDominio ? parseInt(selectedDominio) : undefined },
+    { enabled: !!selectedDominio }
   );
 
-  // Ejecutar evaluación
-  const runEvaluation = trpc.agent.runEvaluation.useMutation();
-
-  // Datos recolectados (solo para agua)
-  const collectedData = trpc.agent.getCollectedData.useQuery(undefined, {
-    enabled: dominioSlug === "agua",
+  // Generar análisis estructural
+  const generarAnalisis = trpc.agent.analizarDominio.useMutation({
+    onSuccess: () => {
+      setAnalisisGenerado(true);
+    },
   });
 
-  // Inicializar variables con valores por defecto cuando cambia configuración
-  useEffect(() => {
-    if (config) {
-      const defaultVariables: Record<string, any> = {};
-      config.variables.forEach((v: any) => {
-        defaultVariables[v.key] = v.default;
-      });
-      setVariables(defaultVariables);
-    }
-  }, [config]);
-
-  const handleRunEvaluation = () => {
-    runEvaluation.mutate({
-      slug: dominioSlug,
-      variables,
-    });
+  const handleGenerarAnalisis = () => {
+    if (!selectedDominio) return;
+    generarAnalisis.mutate({ dominioId: parseInt(selectedDominio) });
   };
 
-  const getRiskColor = (level: string) => {
-    switch (level) {
-      case "ESTABLE":
-        return "text-green-600";
-      case "RIESGO MODERADO":
-        return "text-yellow-600";
-      case "RIESGO ALTO":
-        return "text-orange-600";
-      case "CRÍTICO":
-        return "text-red-600";
-      default:
-        return "text-gray-600";
-    }
+  // Calcular métricas agregadas
+  const calcularMetricas = () => {
+    if (!investigaciones || investigaciones.length === 0) return null;
+
+    const irmPromedio =
+      investigaciones.reduce((sum, inv) => sum + (typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez : 0), 0) / investigaciones.length;
+
+    const totalBrechas = investigaciones.reduce((sum, inv) => {
+      const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+      return sum + (Array.isArray(brechas) ? brechas.length : 0);
+    }, 0);
+
+    const totalSupuestos = investigaciones.reduce((sum, inv) => {
+      const supuestos = inv.supuestosEstructurados ? JSON.parse(inv.supuestosEstructurados) : [];
+      return sum + (Array.isArray(supuestos) ? supuestos.length : 0);
+    }, 0);
+
+    return {
+      irmPromedio: irmPromedio.toFixed(2),
+      totalInvestigaciones: investigaciones.length,
+      totalBrechas,
+      totalSupuestos,
+      nivelRiesgo: irmPromedio >= 0.7 ? "Bajo" : irmPromedio >= 0.5 ? "Moderado" : "Alto",
+    };
   };
 
-  const getRiskIcon = (level: string) => {
-    switch (level) {
-      case "ESTABLE":
-        return <CheckCircle2 className="h-5 w-5 text-green-600" />;
-      case "RIESGO MODERADO":
-        return <Info className="h-5 w-5 text-yellow-600" />;
-      case "RIESGO ALTO":
-      case "CRÍTICO":
-        return <AlertTriangle className="h-5 w-5 text-red-600" />;
-      default:
-        return null;
-    }
-  };
+  const metricas = calcularMetricas();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Agente de Recolección y Evaluación Dinámica
-          </h1>
-          <p className="text-gray-600 max-w-3xl">
-            Sistema automatizado de análisis estructural basado en extracción de datos públicos,
-            modelado explícito, supuestos declarados, simulación transparente y variables auditables.
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto py-8 space-y-8">
+        {/* Header */}
+        <div>
+          <h1 className="text-4xl font-bold mb-2">Agente de Síntesis Estructural</h1>
+          <p className="text-muted-foreground">
+            Lector ejecutivo automático que sintetiza investigaciones existentes por dominio. No simula, no calcula, solo
+            extrae y resume estructura.
           </p>
         </div>
-      </div>
 
-      <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Panel de configuración */}
-          <div className="lg:col-span-1">
+        {/* Selector de Dominio */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seleccionar Dominio</CardTitle>
+            <CardDescription>
+              Elige un dominio para analizar todas las investigaciones asociadas
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-4 items-end">
+              <div className="flex-1">
+                <label className="text-sm font-medium mb-2 block">Dominio de Análisis</label>
+                <Select value={selectedDominio} onValueChange={setSelectedDominio}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona un dominio" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {dominios
+                      ?.filter((d) => d.activo)
+                      .map((dominio) => (
+                        <SelectItem key={dominio.id} value={dominio.id.toString()}>
+                          {dominio.nombre}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button
+                onClick={handleGenerarAnalisis}
+                disabled={!selectedDominio || investigacionesLoading || generarAnalisis.isPending}
+              >
+                {generarAnalisis.isPending ? "Generando..." : "Generar Síntesis"}
+              </Button>
+            </div>
+
+            {selectedDominio && !investigacionesLoading && investigaciones && investigaciones.length === 0 && (
+              <Alert>
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  No hay investigaciones publicadas en este dominio. El agente requiere al menos una investigación para
+                  generar síntesis.
+                </AlertDescription>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Métricas Agregadas */}
+        {metricas && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle>Configuración del Agente</CardTitle>
-                <CardDescription>
-                  Selecciona dominio y ajusta parámetros de simulación
-                </CardDescription>
+              <CardHeader className="pb-2">
+                <CardDescription>Investigaciones</CardDescription>
+                <CardTitle className="text-3xl">{metricas.totalInvestigaciones}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Selector de Dominio */}
-                <div className="space-y-2">
-                  <Label htmlFor="dominio">Dominio de Análisis</Label>
-                  <Select
-                    value={dominioSlug}
-                    onValueChange={(value) => setDominioSlug(value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un dominio" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {dominios
-                        ?.filter((d) => d.activo)
-                        .map((dominio) => (
-                          <SelectItem key={dominio.id} value={dominio.slug}>
-                            {dominio.icono} {dominio.nombre}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <CardContent>
+                <p className="text-xs text-muted-foreground">Publicadas en este dominio</p>
+              </CardContent>
+            </Card>
 
-                {/* Variables Dinámicas */}
-                {configLoading ? (
-                  <div className="text-center text-muted-foreground py-4">
-                    <Loader2 className="h-6 w-6 animate-spin mx-auto" />
-                  </div>
-                ) : config ? (
-                  <>
-                    {config.variables.map((variable: any) => (
-                      <div key={variable.key} className="space-y-2">
-                        <Label htmlFor={variable.key}>{variable.label}</Label>
-                        <Input
-                          id={variable.key}
-                          type={variable.type}
-                          value={variables[variable.key] || variable.default}
-                          onChange={(e) =>
-                            setVariables({
-                              ...variables,
-                              [variable.key]:
-                                variable.type === "number"
-                                  ? Number(e.target.value)
-                                  : e.target.value,
-                            })
-                          }
-                          min={variable.min}
-                          max={variable.max}
-                          step={variable.step}
-                        />
-                        <p className="text-xs text-gray-500">
-                          Valor por defecto: {variable.default}
-                        </p>
-                      </div>
-                    ))}
-                  </>
-                ) : null}
-
-                <Button
-                  onClick={handleRunEvaluation}
-                  disabled={runEvaluation.isPending || !config}
-                  className="w-full"
+            <Card>
+              <CardHeader className="pb-2">
+                <CardDescription>IRM Promedio</CardDescription>
+                <CardTitle className="text-3xl">{metricas.irmPromedio}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Badge
+                  variant={
+                    Number(metricas.irmPromedio) >= 0.7
+                      ? "default"
+                      : Number(metricas.irmPromedio) >= 0.5
+                      ? "secondary"
+                      : "destructive"
+                  }
                 >
-                  {runEvaluation.isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Ejecutando...
-                    </>
-                  ) : (
-                    <>
-                      <Play className="mr-2 h-4 w-4" />
-                      Ejecutar Evaluación
-                    </>
-                  )}
-                </Button>
+                  {Number(metricas.irmPromedio) >= 0.7
+                    ? "Robusto"
+                    : Number(metricas.irmPromedio) >= 0.5
+                    ? "Moderado"
+                    : "Débil"}
+                </Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardDescription>Brechas Detectadas</CardDescription>
+                <CardTitle className="text-3xl">{metricas.totalBrechas}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xs text-muted-foreground">Datos faltantes o no públicos</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardDescription>Nivel de Riesgo</CardDescription>
+                <CardTitle className="text-3xl">{metricas.nivelRiesgo}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xs text-muted-foreground">Basado en IRM promedio</p>
               </CardContent>
             </Card>
           </div>
+        )}
 
-          {/* Panel de resultados */}
-          <div className="lg:col-span-2 space-y-6">
-            {runEvaluation.data && (
-              <Tabs defaultValue="resumen" className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="resumen">Resumen</TabsTrigger>
-                  <TabsTrigger value="metricas">Métricas</TabsTrigger>
-                  <TabsTrigger value="reporte">Reporte</TabsTrigger>
-                </TabsList>
+        {/* Resumen Estructural */}
+        {investigaciones && investigaciones.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Resumen Estructural
+              </CardTitle>
+              <CardDescription>Síntesis automática de investigaciones en el dominio</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h3 className="font-semibold mb-2">Qué evalúa el dominio</h3>
+                <p className="text-sm text-muted-foreground">
+                  {dominios?.find((d) => d.id === parseInt(selectedDominio))?.descripcion}
+                </p>
+              </div>
 
-                <TabsContent value="resumen" className="space-y-4">
-                  {/* Resultado Genérico */}
-                  {runEvaluation.data && 'dominio' in runEvaluation.data ? (
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Resultado de Evaluación</CardTitle>
-                        <CardDescription>
-                          Dominio: {runEvaluation.data.dominio}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div>
-                          <h3 className="font-semibold text-sm text-muted-foreground mb-2">
-                            Variables Evaluadas
-                          </h3>
-                          <pre className="text-xs bg-gray-100 p-3 rounded">
-                            {JSON.stringify(runEvaluation.data.variables, null, 2)}
-                          </pre>
-                        </div>
-                        <Alert>
-                          <Info className="h-4 w-4" />
-                          <AlertTitle>Estado del Modelo</AlertTitle>
-                          <AlertDescription>
-                            {runEvaluation.data.mensaje}
-                          </AlertDescription>
-                        </Alert>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <>
-                      {/* Resultado Hídrico (legacy) */}
-                      {runEvaluation.data && 'waterStress' in runEvaluation.data && (
-                        <>
-                          <Card>
-                            <CardHeader>
-                              <CardTitle className="flex items-center gap-2">
-                                {getRiskIcon(runEvaluation.data.waterStress.riskLevel)}
-                                Nivel de Riesgo Hídrico
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <div className="space-y-2">
-                                <div
-                                  className={`text-2xl font-bold ${getRiskColor(
-                                    runEvaluation.data.waterStress.riskLevel
-                                  )}`}
-                                >
-                                  {runEvaluation.data.waterStress.riskLevel}
-                                </div>
-                                <p className="text-sm text-gray-600">
-                                  {runEvaluation.data.waterStress.decliningYears} de{" "}
-                                  {runEvaluation.data.waterStress.totalYears} años con
-                                  tendencia decreciente (
-                                  {runEvaluation.data.waterStress.decliningPercentage.toFixed(
-                                    1
-                                  )}
-                                  %)
-                                </p>
-                              </div>
-                            </CardContent>
-                          </Card>
-
-                          <Card>
-                            <CardHeader>
-                              <CardTitle>Estado Logístico</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <div className="space-y-2">
-                                <div
-                                  className={`text-xl font-semibold ${
-                                    runEvaluation.data.logisticPressure.status ===
-                                    "CAPACIDAD SUFICIENTE"
-                                      ? "text-green-600"
-                                      : "text-red-600"
-                                  }`}
-                                >
-                                  {runEvaluation.data.logisticPressure.status}
-                                </div>
-                                <div className="text-sm text-gray-600 space-y-1">
-                                  <p>
-                                    Necesidad diaria:{" "}
-                                    {runEvaluation.data.logisticPressure.dailyNeedM3.toFixed(
-                                      2
-                                    )}{" "}
-                                    m³/día
-                                  </p>
-                                  <p>
-                                    Capacidad:{" "}
-                                    {runEvaluation.data.logisticPressure.dailyCapacityM3}{" "}
-                                    m³/día
-                                  </p>
-                                  {runEvaluation.data.logisticPressure.deficit > 0 && (
-                                    <p className="text-red-600 font-medium">
-                                      Déficit:{" "}
-                                      {runEvaluation.data.logisticPressure.deficit.toFixed(
-                                        2
-                                      )}{" "}
-                                      m³/día
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </>
+              <div>
+                <h3 className="font-semibold mb-2">Estado General</h3>
+                <ul className="space-y-2">
+                  {investigaciones.map((inv) => (
+                    <li key={inv.id} className="flex items-start gap-2 text-sm">
+                      {typeof inv.indiceRobustez === 'number' && inv.indiceRobustez >= 0.7 ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      ) : (
+                        <AlertTriangle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
                       )}
-                    </>
-                  )}
-                </TabsContent>
-
-                <TabsContent value="metricas" className="space-y-4">
-                  {runEvaluation.data && 'metrics' in runEvaluation.data ? (
-                    <>
-                      <Card>
-                        <CardHeader>
-                          <CardTitle>Métricas Calculadas</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <div className="text-sm text-gray-600">IVC</div>
-                              <div className="text-2xl font-bold">
-                                {runEvaluation.data.metrics.ivc.toFixed(3)}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-sm text-gray-600">IVA</div>
-                              <div className="text-2xl font-bold">
-                                {runEvaluation.data.metrics.iva.toFixed(3)}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-sm text-gray-600">ISD</div>
-                              <div className="text-2xl font-bold">
-                                {runEvaluation.data.metrics.isd.toFixed(3)}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-sm text-gray-600">
-                                BAS (millones m³)
-                              </div>
-                              <div className="text-2xl font-bold">
-                                {(runEvaluation.data.metrics.bas / 1_000_000).toFixed(
-                                  2
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      {runEvaluation.data && 'scenarios' in runEvaluation.data && 'metrics' in runEvaluation.data && (
-                        <AgenteCharts 
-                          scenarios={runEvaluation.data.scenarios}
-                          metrics={runEvaluation.data.metrics}
-                        />
-                      )}
-
-                      {runEvaluation.data && 'engineeringEvaluation' in runEvaluation.data && 'metrics' in runEvaluation.data && (
-                        <OperationalZonesChart
-                          isd={runEvaluation.data.metrics.isd}
-                          legitimacy={runEvaluation.data.engineeringEvaluation.legitimacy}
-                          operationalZone={runEvaluation.data.engineeringEvaluation.operationalZone}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <Card>
-                      <CardContent className="py-12 text-center">
-                        <Info className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold mb-2">
-                          Métricas no disponibles
-                        </h3>
-                        <p className="text-muted-foreground">
-                          Este dominio aún no tiene métricas implementadas.
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )}
-                </TabsContent>
-
-                <TabsContent value="reporte">
-                  {runEvaluation.data && 'report' in runEvaluation.data ? (
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Reporte de Evaluación</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="prose prose-sm max-w-none">
-                          <Streamdown>{runEvaluation.data.report}</Streamdown>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <Card>
-                      <CardContent className="py-12 text-center">
-                        <Info className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold mb-2">
-                          Reporte no disponible
-                        </h3>
-                        <p className="text-muted-foreground">
-                          Este dominio aún no genera reportes automáticos.
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )}
-                </TabsContent>
-              </Tabs>
-            )}
-
-            {!runEvaluation.data && !runEvaluation.isPending && (
-              <Card>
-                <CardContent className="py-12 text-center">
-                  <Play className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">
-                    Ejecuta una evaluación
-                  </h3>
-                  <p className="text-gray-600">
-                    Selecciona un dominio, ajusta los parámetros y presiona
-                    "Ejecutar Evaluación" para comenzar.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Datos recolectados (solo agua) */}
-            {dominioSlug === "agua" && collectedData.data && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Datos Recolectados</CardTitle>
-                  <CardDescription>
-                    Información extraída de fuentes oficiales
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Tabs defaultValue="precipitacion">
-                    <TabsList className="grid w-full grid-cols-4">
-                      <TabsTrigger value="precipitacion">Precipitación</TabsTrigger>
-                      <TabsTrigger value="presa">Presa</TabsTrigger>
-                      <TabsTrigger value="poblacion">Población</TabsTrigger>
-                      <TabsTrigger value="acuifero">Acuífero</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="precipitacion">
-                      <div className="text-sm">
-                        <pre className="bg-gray-100 p-3 rounded overflow-auto max-h-64">
-                          {JSON.stringify(collectedData.data.precipitation, null, 2)}
-                        </pre>
+                      <div>
+                        <span className="font-medium">{inv.titulo}</span>
+                        <span className="text-muted-foreground"> - IRM: {inv.indiceRobustez ? Number(inv.indiceRobustez).toFixed(2) : "N/A"}</span>
                       </div>
-                    </TabsContent>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                    <TabsContent value="presa">
-                      <div className="text-sm">
-                        <pre className="bg-gray-100 p-3 rounded overflow-auto max-h-64">
-                          {JSON.stringify(collectedData.data.presaLevels, null, 2)}
-                        </pre>
+              <div>
+                <h3 className="font-semibold mb-2">Brechas Comunes</h3>
+                <div className="space-y-2">
+                  {investigaciones.map((inv) => {
+                    const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+                    if (!Array.isArray(brechas) || brechas.length === 0) return null;
+                    return (
+                      <div key={inv.id} className="text-sm">
+                        <p className="font-medium text-muted-foreground">{inv.titulo}:</p>
+                        <ul className="list-disc list-inside ml-4 text-muted-foreground">
+                          {brechas.slice(0, 2).map((brecha: string, idx: number) => (
+                            <li key={idx}>{brecha}</li>
+                          ))}
+                        </ul>
                       </div>
-                    </TabsContent>
+                    );
+                  })}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-                    <TabsContent value="poblacion">
-                      <div className="text-sm">
-                        <pre className="bg-gray-100 p-3 rounded overflow-auto max-h-64">
-                          {JSON.stringify(collectedData.data.population, null, 2)}
-                        </pre>
-                      </div>
-                    </TabsContent>
+        {/* Reporte de Síntesis */}
+        {analisisGenerado && generarAnalisis.data && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Reporte de Síntesis
+              </CardTitle>
+              <CardDescription>Análisis estructural sin narrativa</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="prose prose-sm max-w-none">
+                <p className="text-sm whitespace-pre-wrap">{generarAnalisis.data.reporte}</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-                    <TabsContent value="acuifero">
-                      <div className="text-sm">
-                        <pre className="bg-gray-100 p-3 rounded overflow-auto max-h-64">
-                          {JSON.stringify(collectedData.data.aquifer, null, 2)}
-                        </pre>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </div>
+        {/* Nota Metodológica */}
+        <Alert>
+          <Database className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Nota:</strong> Este agente no simula ni calcula. Solo extrae y sintetiza información de
+            investigaciones existentes. No requiere inputs manuales porque usa lo que ya está en la plataforma.
+          </AlertDescription>
+        </Alert>
       </div>
     </div>
   );

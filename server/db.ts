@@ -129,6 +129,22 @@ export async function getInvestigacionBySlug(slug: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getInvestigacionesByDominio(dominioId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const allInvestigaciones = await db
+    .select()
+    .from(investigaciones)
+    .where(and(
+      eq(investigaciones.publicada, true),
+      eq(investigaciones.dominioId, dominioId)
+    ))
+    .orderBy(desc(investigaciones.publishedAt));
+  
+  return allInvestigaciones;
+}
+
 export async function getInvestigacionesRelacionadas(dominioId: number, currentSlug: string, limit: number = 3) {
   const db = await getDb();
   if (!db) return [];

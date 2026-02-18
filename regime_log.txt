@@ -23,3 +23,11 @@ Inicio de registro: 2026-02-17T09:38:42.781Z
 [2026-02-18T02:43:37.084Z] [INFO] [LOGISTICS] Estado logístico: COLAPSO LOGÍSTICO | Metadata: {"dailyNeedM3":950.3,"dailyCapacityM3":150,"deficit":800.3}
 [2026-02-18T02:43:37.085Z] [SUCCESS] [PROBLEM_EVALUATOR] Métricas ingenieriles calculadas | Metadata: {"operationalZone":"DÉFICIT","legitimacy":false}
 [2026-02-18T02:43:37.094Z] [SUCCESS] [OPERATION] Operación completada: runEvaluation | Metadata: {"operationId":"LiDNQv6r5VALf-gNoCsy7","riskLevel":"ESTABLE","logisticStatus":"COLAPSO LOGÍSTICO","overallRisk":"CRÍTICO"}
+[2026-02-18T03:20:39.644Z] [INFO] [OPERATION] Iniciando operación: modeloHidrico | Metadata: {"operationId":"FzcryNFYZ5CbCjUynZve5","variables":{"demanda_incremental":19300000,"anos_proyecto":22,"capacidad_logistica":150}}
+[2026-02-18T03:20:39.645Z] [SUCCESS] [DATA_COLLECTOR] Datos recolectados exitosamente
+[2026-02-18T03:20:39.645Z] [SUCCESS] [DATA_VALIDATOR] Datos validados exitosamente | Metadata: {"precipitationWarnings":[],"presaWarnings":[]}
+[2026-02-18T03:20:39.645Z] [INFO] [METRICS] Métricas calculadas | Metadata: {"IVC":0.17218748587875501,"IVA":0.7320625,"ISD":31.69129720853859,"BAS_millones_m3":915.2}
+[2026-02-18T03:20:39.646Z] [INFO] [EVALUATION] Evaluación de riesgo: ESTABLE | Metadata: {"decliningYears":0,"totalYears":21,"decliningPercentage":0}
+[2026-02-18T03:20:39.646Z] [INFO] [LOGISTICS] Estado logístico: COLAPSO LOGÍSTICO | Metadata: {"dailyNeedM3":950.3,"dailyCapacityM3":150,"deficit":800.3}
+[2026-02-18T03:20:39.646Z] [SUCCESS] [PROBLEM_EVALUATOR] Métricas ingenieriles calculadas | Metadata: {"operationalZone":"DÉFICIT","legitimacy":false}
+[2026-02-18T03:20:39.692Z] [SUCCESS] [OPERATION] Operación completada: modeloHidrico | Metadata: {"operationId":"FzcryNFYZ5CbCjUynZve5","riskLevel":"ESTABLE","logisticStatus":"COLAPSO LOGÍSTICO","overallRisk":"CRÍTICO"}

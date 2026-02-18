@@ -12,6 +12,7 @@ import { ProblemEvaluator } from "./services/problemEvaluator";
 import { RegimeLogger } from "./services/regimeLogger";
 import { ReportGenerator } from "./services/reportGenerator";
 import { nanoid } from "nanoid";
+import * as dbQueries from "./db";
 import fs from "fs";
 import path from "path";
 
@@ -333,6 +334,55 @@ export const agentRouter = router({
     )
     .mutation(async ({ input }) => {
       return await ejecutarEscenario(input.slug, input.variables);
+    }),
+
+  /**
+   * Analiza todas las investigaciones de un dominio y genera síntesis estructural
+   */
+  analizarDominio: publicProcedure
+    .input(z.object({ dominioId: z.number() }))
+    .mutation(async ({ input }) => {
+      // Consultar investigaciones del dominio
+      const investigaciones = await dbQueries.getInvestigacionesByDominio(input.dominioId);
+
+      if (investigaciones.length === 0) {
+        return {
+          reporte: "No hay investigaciones publicadas en este dominio.",
+        };
+      }
+
+      // Calcular métricas agregadas
+      const irmPromedio =
+        investigaciones.reduce((sum: number, inv: any) => sum + (inv.indiceRobustez || 0), 0) / investigaciones.length;
+
+      const totalBrechas = investigaciones.reduce((sum: number, inv: any) => {
+        const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
+        return sum + (Array.isArray(brechas) ? brechas.length : 0);
+      }, 0);
+
+      // Generar reporte estructural
+      const reporte = `SÍNTESIS ESTRUCTURAL - DOMINIO ${input.dominioId}
+
+INVESTIGACIONES ANALIZADAS: ${investigaciones.length}
+
+IRM PROMEDIO: ${irmPromedio.toFixed(2)}
+NIVEL DE ROBUSTEZ: ${irmPromedio >= 0.7 ? "Alto" : irmPromedio >= 0.5 ? "Moderado" : "Bajo"}
+
+BRECHAS DETECTADAS: ${totalBrechas}
+
+RESUMEN POR INVESTIGACIÓN:
+${investigaciones
+  .map(
+    (inv: any, idx: number) =>
+      `\n${idx + 1}. ${inv.titulo}\n   IRM: ${typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez.toFixed(2) : "N/A"}\n   Estado: ${typeof inv.indiceRobustez === 'number' && inv.indiceRobustez >= 0.7 ? "Robusto" : "Requiere fortalecimiento"}`
+  )
+  .join("")}
+
+CONCLUSIÓN ESTRUCTURAL:
+${irmPromedio >= 0.7 ? "El dominio cuenta con investigaciones robustas y datos verificables." : irmPromedio >= 0.5 ? "El dominio requiere fortalecer fuentes y verificar supuestos críticos." : "El dominio presenta brechas significativas y requiere actualización de datos."}
+`;
+
+      return { reporte };
     }),
 
   /**

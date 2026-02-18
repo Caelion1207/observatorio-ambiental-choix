@@ -1,0 +1,35 @@
+{
+  "query": "\n-- Cobertura Forestal: dominioId 3 (Educación) → 5 (Medio Ambiente)\nUPDATE investigaciones \nSET dominioId = 5 \nWHERE numero = 3;\n\n-- Sistema Educativo: dominioId 4 (Infraestructura) → 2 (Educación)\nUPDATE investigaciones \nSET dominioId = 2 \nWHERE numero = 4;\n\n-- Red de Transporte: dominioId 5 (Medio Ambiente) → 4 (Infraestructura)\nUPDATE investigaciones \nSET dominioId = 4 \nWHERE numero = 6;\n\n-- Verificar corrección\nSELECT numero, titulo, dominioId FROM investigaciones ORDER BY numero;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \n-- Cobertura Forestal: dominioId 3 (Educación) → 5 (Medio Ambiente)\nUPDATE investigaciones \nSET dominioId = 5 \nWHERE numero = 3;\n\n-- Sistema Educativo: dominioId 4 (Infraestructura) → 2 (Educación)\nUPDATE investigaciones \nSET dominioId = 2 \nWHERE numero = 4;\n\n-- Red de Transporte: dominioId 5 (Medio Ambiente) → 4 (Infraestructura)\nUPDATE investigaciones \nSET dominioId = 4 \nWHERE numero = 6;\n\n-- Verificar corrección\nSELECT numero, titulo, dominioId FROM investigaciones ORDER BY numero;\n",
+  "rows": [
+    {
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "dominioId": "5"
+    },
+    {
+      "numero": "4",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "dominioId": "2"
+    },
+    {
+      "numero": "5",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "dominioId": "3"
+    },
+    {
+      "numero": "5",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "dominioId": "6"
+    },
+    {
+      "numero": "6",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "dominioId": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "numero\ttitulo\tdominioId\n3\tCobertura Forestal Histórica de Choix 2015-2026\t5\n4\tSistema Educativo de Choix - Capacidad vs Demanda\t2\n5\tInfraestructura de Salud en Choix - Análisis de Saturación\t3\n5\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t6\n6\tRed de Transporte de Choix - Identificación de Cuellos de Botella\t4\n",
+  "stderr": "",
+  "execution_time_ms": 523
+}
