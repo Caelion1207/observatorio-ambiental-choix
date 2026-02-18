@@ -1,38 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ExternalLink, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 export default function Metodologia() {
-  const fuentesOficiales = [
-    {
-      nombre: "Comisión Nacional del Agua",
-      siglas: "CONAGUA",
-      descripcion:
-        "Datos hidrológicos, disponibilidad de acuíferos, almacenamiento de presas, precipitación y caudales.",
-      sitioWeb: "https://www.gob.mx/conagua",
-    },
-    {
-      nombre: "Secretaría de Medio Ambiente y Recursos Naturales",
-      siglas: "SEMARNAT",
-      descripcion:
-        "Manifestaciones de Impacto Ambiental, autorizaciones ambientales, estudios de riesgo y normativa aplicable.",
-      sitioWeb: "https://www.gob.mx/semarnat",
-    },
-    {
-      nombre: "Comisión Nacional Forestal",
-      siglas: "CONAFOR",
-      descripcion:
-        "Cobertura forestal, deforestación, incendios forestales, inventarios nacionales forestales y de suelos.",
-      sitioWeb: "https://www.gob.mx/conafor",
-    },
-    {
-      nombre: "Instituto Nacional de Estadística y Geografía",
-      siglas: "INEGI",
-      descripcion:
-        "Datos demográficos, socioeconómicos, cartografía, uso de suelo y vegetación, censos de población.",
-      sitioWeb: "https://www.inegi.org.mx",
-    },
-  ];
+  // Obtener dominios activos desde base de datos
+  const { data: dominios, isLoading: dominiosLoading } = trpc.dominios.list.useQuery();
 
   const protocoloSecciones = [
     {
@@ -190,84 +163,40 @@ export default function Metodologia() {
             </div>
           </div>
 
-          {/* Replicabilidad a Otros Dominios */}
+          {/* Dominios Activos - Render Dinámico */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Replicabilidad a Otros Dominios</h2>
+            <h2 className="text-2xl font-semibold">Dominios de Análisis</h2>
             <p className="text-muted-foreground">
-              Este protocolo no sirve solo para análisis hídrico. Se puede aplicar a cualquier 
-              problemática local con impacto sistémico:
+              Este protocolo se aplica a múltiples dominios de problemáticas locales con impacto sistémico. 
+              Cada dominio mantiene la misma estructura metodológica pero con variables y modelos específicos.
             </p>
-            <div className="grid md:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Educación</CardTitle>
-                  <CardDescription>
-                    Tasa de abandono, capacidad docente, infraestructura, presupuesto ejecutado, 
-                    resultado proyectado a 5 años.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Salud</CardTitle>
-                  <CardDescription>
-                    Camas hospitalarias, personal médico, demanda demográfica, cobertura real, 
-                    vulnerabilidad sistémica.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Agua</CardTitle>
-                  <CardDescription>
-                    Balance hídrico, capacidad logística, demanda proyectada, escenarios de estrés, 
-                    brechas en datos públicos.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Transporte</CardTitle>
-                  <CardDescription>
-                    Capacidad de infraestructura, flujo vehicular, cuellos de botella, saturación 
-                    proyectada, escenarios de colapso.
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
-          </div>
-
-          {/* Fuentes Oficiales */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Fuentes Oficiales Utilizadas</h2>
-            <p className="text-muted-foreground">
-              Solo se utilizan datos de instituciones gubernamentales con mandato oficial para la 
-              recopilación y publicación de información.
-            </p>
-            <div className="grid gap-4">
-              {fuentesOficiales.map((fuente) => (
-                <Card key={fuente.siglas}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-lg">
-                          {fuente.nombre} ({fuente.siglas})
+            
+            {dominiosLoading ? (
+              <div className="text-center text-muted-foreground py-8">
+                Cargando dominios...
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-4">
+                {dominios
+                  ?.filter(d => d.activo)
+                  .sort((a, b) => a.orden - b.orden)
+                  .map((dominio) => (
+                    <Card key={dominio.id}>
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center gap-2">
+                          {dominio.icono && (
+                            <span className="text-2xl">{dominio.icono}</span>
+                          )}
+                          {dominio.nombre}
                         </CardTitle>
-                        <CardDescription>{fuente.descripcion}</CardDescription>
-                      </div>
-                      <a
-                        href={fuente.sitioWeb}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline flex items-center gap-1"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
+                        <CardDescription>
+                          {dominio.descripcion}
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+                  ))}
+              </div>
+            )}
           </div>
 
           {/* Auditoría por Método Constante */}

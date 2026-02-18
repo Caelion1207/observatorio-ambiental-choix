@@ -301,3 +301,47 @@ Elevar IRM desde 0.50 hacia su valor real verificable mediante búsqueda de fuen
 - [ ] Actualizar CHANGELOG.md con resultado de Fase 1
 - [ ] Guardar checkpoint con descripción técnica completa
 - [ ] Entregar resultado al usuario con IRM final y análisis de transparencia
+
+
+---
+
+## Reestructuración Correctiva v2.1 - Coherencia Arquitectónica ✅ COMPLETADA
+
+### Objetivo
+Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo legacy y estableciendo coherencia completa entre backend dinámico v2.0 y frontend.
+
+### Fase A: Auditoría de Coherencia de Datos ✅
+- [x] Verificar que todas las investigaciones tienen `dominioId` correcto en DB
+- [x] Buscar y eliminar referencias a `categoria` en frontend (no encontradas)
+- [x] Validar relación investigación → dominio en todas las queries
+- [x] Eliminar cualquier mapeo hardcodeado tipo `if (categoria === "Hidrología")` (no encontrado)
+
+### Fase B: Metodología Dinámica ✅
+- [x] Separar `/metodologia` en protocolo base (estático) + dominios dinámicos
+- [x] Remover bloques hardcodeados de ejemplos de agua
+- [x] Implementar query a tabla `dominios` para renderizar dominios activos
+- [x] Renderizar por cada dominio: nombre, descripción, icono
+- [x] Eliminar cualquier contenido fijo específico de agua
+
+### Fase C: Datos Abiertos Dinámicos ✅
+- [x] Eliminar contenido fijo de agua en `/datos-abiertos` (VisualizacionHuites eliminado)
+- [x] Crear selector de investigación dinámico
+- [x] Implementar render dinámico por investigación
+- [x] Renderizar: metadatos, fuentes oficiales, archivos CSV por investigación
+
+### Fase D: Agente Modular por Dominio ✅
+- [x] Crear estructura `/domains/{slug}.json` para cada dominio (6 dominios)
+- [x] Implementar loader dinámico `getDomainConfig(slug)` en backend
+- [x] Refactorizar motor de escenarios genérico `ejecutarEscenario(slug, variables)`
+- [x] Eliminar sliders hardcodeados de agua (miningWaterM3PerYear, projectYears, logisticCapacityM3PerDay)
+- [x] Implementar render dinámico de inputs según configuración de dominio
+- [x] Implementar selector de dominio en frontend
+- [x] Agregar type guards para manejar respuestas de diferentes dominios
+
+### Fase E: Validación de Coherencia Arquitectónica ✅
+- [x] Verificar que Metodología refleja dominios reales desde DB
+- [x] Verificar que Datos Abiertos cambia según investigación seleccionada
+- [x] Verificar que Agente cambia según dominio seleccionado
+- [x] Confirmar que no hay contenido de agua donde no debe haber agua
+- [x] Ejecutar build limpio (0 errores TypeScript)
+- [x] Guardar checkpoint v2.1 con coherencia arquitectónica completa

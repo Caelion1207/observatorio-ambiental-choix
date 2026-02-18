@@ -1,0 +1,23 @@
+{
+  "slug": "salud",
+  "nombre": "Salud",
+  "variables": [
+    {
+      "key": "camas_disponibles",
+      "label": "Camas hospitalarias disponibles",
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "step": 1
+    },
+    {
+      "key": "personal_medico",
+      "label": "Personal médico",
+      "type": "number",
+      "default": 20,
+      "min": 0,
+      "step": 1
+    }
+  ],
+  "escenario": "modelo_salud_base"
+}

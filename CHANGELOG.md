@@ -310,3 +310,64 @@ return new Promise((resolve, reject) => {
 - Brechas originales refutadas con evidencia documental
 - Sistema demuestra que **no maquilla datos ni oculta brechas**
 - Fase 1 cerrada con consolidación estratégica exitosa
+
+
+---
+
+## [v2.1_coherencia_arquitectonica_completa] - 2026-02-18
+
+### 🏗️ Reestructuración Correctiva: Coherencia Arquitectónica Completa
+
+**Objetivo:** Eliminar hardcodeo legacy y establecer coherencia completa entre backend dinámico v2.0 y frontend.
+
+**Principio de Control:** El dominio define el agente, no el agente define el dominio.
+
+#### Fase A: Auditoría de Coherencia de Datos ✅
+- Verificada relación investigación → dominio en todas las queries
+- Confirmado que no existen referencias legacy a `categoria` en frontend
+- Validado `dominioId` correcto en todas las investigaciones (5 investigaciones, 0 errores)
+
+#### Fase B: Metodología Dinámica ✅
+- Eliminado array `fuentesOficiales` hardcodeado (4 instituciones fijas)
+- Eliminadas cards hardcodeadas de dominios (Educación, Salud, Agua, Transporte)
+- Implementado `trpc.dominios.list.useQuery()` para renderizar dominios desde DB
+- Sección "Fuentes Oficiales" eliminada (ahora cada dominio define sus fuentes)
+- **Resultado:** `/metodologia` ahora refleja dominios reales desde base de datos
+
+#### Fase C: Datos Abiertos Dinámicos ✅
+- Eliminado `import VisualizacionHuites` (componente específico de agua)
+- Eliminada sección hardcodeada "Visualización: Presa Luis Donaldo Colosio (Huites)"
+- Implementado selector de investigación dinámico
+- Renderizado dinámico de metadatos, fuentes oficiales y archivos CSV por investigación
+- **Resultado:** `/datos-abiertos` funciona como selector dinámico por investigación
+
+#### Fase D: Agente Modular por Dominio ✅
+- Creada estructura `/domains/*.json` con configuración por dominio (6 dominios: agua, finanzas, agricultura, ganadería, educación, salud)
+- Implementado loader dinámico `getDomainConfig(slug)` en backend
+- Refactorizado motor de escenarios genérico `ejecutarEscenario(slug, variables)`
+- Eliminadas variables hardcodeadas: `miningWaterM3PerYear`, `projectYears`, `logisticCapacityM3PerDay`
+- Implementado render dinámico de inputs según configuración de dominio
+- Agregados type guards para manejar respuestas de diferentes dominios
+- **Resultado:** Agente completamente multidominio con carga dinámica por `dominioId`
+
+#### Fase E: Validación de Coherencia Arquitectónica ✅
+- ✅ No existe variable con "m3" en código global
+- ✅ No existe palabra "mina" en agente
+- ✅ No existe texto fijo de agua en metodología
+- ✅ Config se carga dinámicamente desde `/domains/*.json`
+- ✅ El agente cambia inputs según dominio
+- ✅ Datos abiertos cambian según investigación
+- ✅ Build limpio (0 errores TypeScript)
+
+**Archivos Modificados:**
+- `client/src/pages/Metodologia.tsx` - Eliminado hardcode de dominios
+- `client/src/pages/DatosAbiertos.tsx` - Implementado selector dinámico
+- `client/src/pages/Agente.tsx` - Refactorizado a arquitectura modular
+- `server/agentRouter.ts` - Implementado loader dinámico y motor genérico
+- `domains/*.json` - Creadas configuraciones para 6 dominios
+
+**Resultado Final:**
+- Sistema completamente multidominio sin hardcodeo legacy
+- Arquitectura real alineada con narrativa arquitectónica
+- Principio cumplido: **El dominio define el agente, no el agente define el dominio**
+- Build limpio (0 errores TypeScript)

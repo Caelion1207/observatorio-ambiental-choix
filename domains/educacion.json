@@ -1,0 +1,24 @@
+{
+  "slug": "educacion",
+  "nombre": "Educación",
+  "variables": [
+    {
+      "key": "matricula_total",
+      "label": "Matrícula total",
+      "type": "number",
+      "default": 5000,
+      "min": 0,
+      "step": 100
+    },
+    {
+      "key": "tasa_desercion",
+      "label": "Tasa de deserción (%)",
+      "type": "number",
+      "default": 15,
+      "min": 0,
+      "max": 100,
+      "step": 0.5
+    }
+  ],
+  "escenario": "modelo_educativo_base"
+}

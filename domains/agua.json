@@ -1,0 +1,32 @@
+{
+  "slug": "agua",
+  "nombre": "Hidrología",
+  "variables": [
+    {
+      "key": "demanda_incremental",
+      "label": "Demanda Incremental Anual (m³/año)",
+      "type": "number",
+      "default": 19300000,
+      "min": 0,
+      "step": 100000
+    },
+    {
+      "key": "anos_proyecto",
+      "label": "Años de Proyecto",
+      "type": "number",
+      "default": 22,
+      "min": 1,
+      "max": 50,
+      "step": 1
+    },
+    {
+      "key": "capacidad_logistica",
+      "label": "Capacidad Logística (m³/día)",
+      "type": "number",
+      "default": 150,
+      "min": 0,
+      "step": 10
+    }
+  ],
+  "escenario": "modelo_hidrico_base"
+}

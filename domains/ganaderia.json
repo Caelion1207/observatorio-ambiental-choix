@@ -1,0 +1,23 @@
+{
+  "slug": "ganaderia",
+  "nombre": "Ganadería",
+  "variables": [
+    {
+      "key": "cabezas_ganado",
+      "label": "Cabezas de ganado",
+      "type": "number",
+      "default": 10000,
+      "min": 0,
+      "step": 100
+    },
+    {
+      "key": "peso_promedio",
+      "label": "Peso promedio (kg)",
+      "type": "number",
+      "default": 450,
+      "min": 0,
+      "step": 10
+    }
+  ],
+  "escenario": "modelo_ganadero_base"
+}

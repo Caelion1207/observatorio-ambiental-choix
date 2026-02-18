@@ -1,0 +1,50 @@
+{
+  "query": "SELECT \n  i.id,\n  i.numero,\n  i.titulo,\n  i.dominioId,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nORDER BY i.numero;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT \n  i.id,\n  i.numero,\n  i.titulo,\n  i.dominioId,\n  d.nombre AS dominio_nombre,\n  d.slug AS dominio_slug\nFROM investigaciones i\nLEFT JOIN dominios d ON i.dominioId = d.id\nORDER BY i.numero;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "dominioId": "2",
+      "dominio_nombre": "Educación",
+      "dominio_slug": "educacion"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "dominioId": "4",
+      "dominio_nombre": "Infraestructura",
+      "dominio_slug": "infraestructura"
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "dominioId": "3",
+      "dominio_nombre": "Salud",
+      "dominio_slug": "salud"
+    },
+    {
+      "id": "120002",
+      "numero": "5",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "dominioId": "6",
+      "dominio_nombre": "Finanzas Públicas",
+      "dominio_slug": "finanzas"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "dominioId": "5",
+      "dominio_nombre": "Medio Ambiente",
+      "dominio_slug": "medio_ambiente"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\ttitulo\tdominioId\tdominio_nombre\tdominio_slug\n90001\t3\tCobertura Forestal Histórica de Choix 2015-2026\t2\tEducación\teducacion\n90002\t4\tSistema Educativo de Choix - Capacidad vs Demanda\t4\tInfraestructura\tinfraestructura\n90003\t5\tInfraestructura de Salud en Choix - Análisis de Saturación\t3\tSalud\tsalud\n120002\t5\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t6\tFinanzas Públicas\tfinanzas\n90004\t6\tRed de Transporte de Choix - Identificación de Cuellos de Botella\t5\tMedio Ambiente\tmedio_ambiente\n",
+  "stderr": "",
+  "execution_time_ms": 528
+}
