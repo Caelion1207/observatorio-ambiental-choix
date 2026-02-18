@@ -1,0 +1,28 @@
+{
+  "query": "SELECT id, slug, titulo, indiceRobustez, supuestosEstructurados, brechas FROM investigaciones WHERE slug = 'analisis-estructural-presupuesto-municipal-choix-2020-2026';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, slug, titulo, indiceRobustez, supuestosEstructurados, brechas FROM investigaciones WHERE slug = 'analisis-estructural-presupuesto-municipal-choix-2020-2026';",
+  "rows": [
+    {
+      "id": "120002",
+      "slug": "analisis-estructural-presupuesto-municipal-choix-2020-2026",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "indiceRobustez": "0.50",
+      "supuestosEstructurados": "[{\"id\":\"S1\",\"supuesto\":\"La proporción de transferencias federales (85%-92%) se mantendrá estable durante 2020-2026\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":true},{\"id\":\"S2\",\"supuesto\":\"La recaudación de ingresos propios crecerá a tasa histórica (2% anual real)\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":\"S3\",\"supuesto\":\"El gasto en nómina representa una proporción fija del gasto operativo total\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":\"S4\",\"supuesto\":\"No ocurrirán eventos catastróficos que requieran erogaciones >20% del presupuesto anual\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":\"S5\",\"supuesto\":\"Las tendencias estatales de Sinaloa son aplicables al municipio de Choix\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":false},{\"id\":\"S6\",\"supuesto\":\"No existe deuda no documentada o pasivos contingentes significativos\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false}]",
+      "brechas": "**Brecha 1: Datos desagregados 2023-2026**"
+    }
+  ],
+  "messages": [
+    "La Cuenta Pública Municipal de Choix no está disponible para el periodo 2023-2026, limitando la capacidad de validar tendencias recientes.",
+    "**Brecha 2: Información sobre deuda pública**",
+    "No existe información pública detallada sobre el monto total de deuda municipal, tasas de interés, plazos de amortización ni pasivos contingentes.",
+    "**Brecha 3: Transparencia en gasto operativo**",
+    "El desglose del gasto operativo (nómina vs. servicios básicos vs. otros) no está disponible en formato abierto, requiriendo estimaciones basadas en promedios estatales.",
+    "**Brecha 4: Proyecciones oficiales de mediano plazo**",
+    "El municipio no publica proyecciones presupuestarias a mediano plazo (3-5 años), dificultando el análisis de sostenibilidad fiscal.",
+    "**Brecha 5: Datos sobre eficiencia recaudatoria**",
+    "No existen datos públicos sobre la tasa de recaudación efectiva del predial ni sobre el padrón de contribuyentes, limitando el análisis de potencial de ingresos propios."
+  ],
+  "stdout": "id\tslug\ttitulo\tindiceRobustez\tsupuestosEstructurados\tbrechas\n120002\tanalisis-estructural-presupuesto-municipal-choix-2020-2026\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\t0.50\t[{\"id\":\"S1\",\"supuesto\":\"La proporción de transferencias federales (85%-92%) se mantendrá estable durante 2020-2026\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":true},{\"id\":\"S2\",\"supuesto\":\"La recaudación de ingresos propios crecerá a tasa histórica (2% anual real)\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":\"S3\",\"supuesto\":\"El gasto en nómina representa una proporción fija del gasto operativo total\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":true},{\"id\":\"S4\",\"supuesto\":\"No ocurrirán eventos catastróficos que requieran erogaciones >20% del presupuesto anual\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false},{\"id\":\"S5\",\"supuesto\":\"Las tendencias estatales de Sinaloa son aplicables al municipio de Choix\",\"impacto\":\"Medio\",\"sensibilidad\":\"Moderado\",\"verificado\":false},{\"id\":\"S6\",\"supuesto\":\"No existe deuda no documentada o pasivos contingentes significativos\",\"impacto\":\"Alto\",\"sensibilidad\":\"Crítico\",\"verificado\":false}]\t**Brecha 1: Datos desagregados 2023-2026**\n\nLa Cuenta Pública Municipal de Choix no está disponible para el periodo 2023-2026, limitando la capacidad de validar tendencias recientes.\n\n**Brecha 2: Información sobre deuda pública**\n\nNo existe información pública detallada sobre el monto total de deuda municipal, tasas de interés, plazos de amortización ni pasivos contingentes.\n\n**Brecha 3: Transparencia en gasto operativo**\n\nEl desglose del gasto operativo (nómina vs. servicios básicos vs. otros) no está disponible en formato abierto, requiriendo estimaciones basadas en promedios estatales.\n\n**Brecha 4: Proyecciones oficiales de mediano plazo**\n\nEl municipio no publica proyecciones presupuestarias a mediano plazo (3-5 años), dificultando el análisis de sostenibilidad fiscal.\n\n**Brecha 5: Datos sobre eficiencia recaudatoria**\n\nNo existen datos públicos sobre la tasa de recaudación efectiva del predial ni sobre el padrón de contribuyentes, limitando el análisis de potencial de ingresos propios.\n",
+  "stderr": "",
+  "execution_time_ms": 346
+}

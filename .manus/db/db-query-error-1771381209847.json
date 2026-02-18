@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, slug, titulo, irm, supuestos, fuentes, brechas FROM investigaciones WHERE slug = 'analisis-estructural-presupuesto-municipal-choix-2020-2026';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, slug, titulo, irm, supuestos, fuentes, brechas FROM investigaciones WHERE slug = 'analisis-estructural-presupuesto-municipal-choix-2020-2026';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'irm' in 'field list'"
+  ]
+}

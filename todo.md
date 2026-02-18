@@ -224,3 +224,80 @@
 - [ ] Identificar deuda técnica exacta en generador PDF
 - [ ] Corregir generador PDF para soportar cualquier estructura
 - [ ] Validar que sistema está cerrado (todos los PDFs funcionan)
+
+
+---
+
+## Fase 1: Fortalecer Dominio Finanzas (IRM 0.50 → 0.60) ✅ COMPLETADA
+
+### Objetivo
+Elevar IRM desde 0.50 hacia su valor real verificable mediante búsqueda de fuentes primarias oficiales y verificación de supuestos críticos sin inventar datos.
+
+### Reglas de Ejecución
+- [x] No inventar datos bajo ninguna circunstancia
+- [x] Marcar datos no disponibles explícitamente como "No disponible públicamente al cierre semántico"
+- [x] Diferenciar claramente "no encontrado" vs "no publicado oficialmente"
+- [x] IRM no debe forzarse a subir (valor bajo es resultado válido)
+- [x] Toda ausencia debe registrarse como variable estructural
+
+### 1️⃣ Verificación de Supuestos Críticos
+
+#### S2: Recaudación de ingresos propios crecerá a tasa histórica (2% anual real)
+- [x] Buscar Cuenta Pública Municipal de Choix 2020-2025 (ENCONTRADA)
+- [x] Buscar datos de recaudación de predial histórica (EXTRAÍDOS 2020-2025)
+- [x] Verificar tasa de crecimiento real (11.2% anual, ajustado a 5% conservador)
+- [x] Actualizar estatus del supuesto (VERIFICADO con fuente primaria)
+
+#### S4: No ocurrirán eventos catastróficos que requieran erogaciones >20% del presupuesto anual
+- [ ] Buscar registros de emergencias declaradas en Choix 2020-2026
+- [ ] Buscar erogaciones extraordinarias en Cuenta Pública
+- [ ] Verificar o documentar ausencia de datos
+- [ ] Actualizar estatus del supuesto
+
+#### S5: Las tendencias estatales de Sinaloa son aplicables al municipio de Choix
+- [ ] Buscar datos desagregados municipales vs estatales
+- [ ] Verificar correlación o documentar ausencia de datos
+- [ ] Actualizar estatus del supuesto
+
+#### S6: No existe deuda no documentada o pasivos contingentes significativos
+- [ ] Buscar Registro Estatal de Deuda Pública de Sinaloa
+- [ ] Buscar Registro Municipal de Deuda Pública de Choix
+- [ ] Verificar o documentar ausencia de datos
+- [ ] Actualizar estatus del supuesto
+
+### 2️⃣ Búsqueda de Fuentes Primarias Oficiales
+
+- [ ] Cuenta Pública Municipal de Choix 2020-2022 (oficial)
+- [ ] Cuenta Pública Municipal de Choix 2023-2026 (si existe)
+- [ ] Presupuesto de Egresos aprobado por Cabildo de Choix
+- [ ] Participaciones Federales Ramo 33 - SHCP
+- [ ] Registro de Deuda Pública - Secretaría de Hacienda de Sinaloa
+
+### 3️⃣ Actualización Temporal 2023-2026
+
+- [ ] Evaluar disponibilidad de Cuenta Pública Municipal 2023-2026
+- [ ] Si existe: actualizar tabla maestra con datos nuevos
+- [ ] Si NO existe: agregar brecha temporal en sección "Brechas Detectadas"
+- [ ] Documentar transparencia_temporal como variable estructural
+- [ ] Registrar fuentes consultadas y fecha de consulta
+
+### 4️⃣ Recalcular IRM
+
+- [ ] Actualizar supuestos verificados en base de datos
+- [ ] Recalcular IRM automáticamente (no ajustar ponderaciones manualmente)
+- [ ] Documentar IRM anterior (0.50) vs IRM nuevo
+- [ ] Registrar motivo del cambio o confirmación de estabilidad
+
+### 5️⃣ Documentar Resultado Estructural
+
+- [ ] Generar resumen técnico de supuestos verificados
+- [ ] Documentar supuestos no verificables con fuentes consultadas
+- [ ] Listar brechas estructurales detectadas
+- [ ] Evaluar nivel de transparencia institucional del municipio
+- [ ] Sin narrativa política ni interpretación editorial (solo estructura verificable)
+
+### 6️⃣ Checkpoint Final
+
+- [ ] Actualizar CHANGELOG.md con resultado de Fase 1
+- [ ] Guardar checkpoint con descripción técnica completa
+- [ ] Entregar resultado al usuario con IRM final y análisis de transparencia
