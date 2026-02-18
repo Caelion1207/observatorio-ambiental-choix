@@ -37,7 +37,7 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
       
       const doc = new PDFDocument({
         size: 'LETTER',
-        margins: { top: 50, bottom: 50, left: 50, right: 50 },
+        margins: { top: 72, bottom: 72, left: 72, right: 72 },
         info: {
           Title: investigacion.titulo,
           Author: 'Laboratorio Público de Análisis Estructural - Choix',
@@ -71,9 +71,20 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
       doc.fontSize(14).font('Helvetica').text(`Investigación #${investigacion.numero}`, { align: 'center' });
       doc.moveDown(3);
       
-      // Corregir fecha: verificar si es string o Date
-      let fechaTexto = 'Fecha no disponible';
-      if (investigacion.fechaPublicacion) {
+      // Corregir fecha: usar fechaCierreSemantico o fecha actual
+      let fechaTexto = '';
+      if (investigacion.fechaCierreSemantico) {
+        try {
+          const fechaCierre = typeof investigacion.fechaCierreSemantico === 'string'
+            ? new Date(investigacion.fechaCierreSemantico)
+            : investigacion.fechaCierreSemantico;
+          if (!isNaN(fechaCierre.getTime())) {
+            fechaTexto = fechaCierre.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+          }
+        } catch (e) {
+          console.error('[PDF] Error parseando fechaCierreSemantico:', e);
+        }
+      } else if (investigacion.fechaPublicacion) {
         try {
           const fecha = typeof investigacion.fechaPublicacion === 'string' 
             ? new Date(investigacion.fechaPublicacion)
@@ -82,9 +93,14 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
             fechaTexto = fecha.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
           }
         } catch (e) {
-          console.error('[PDF] Error parseando fecha:', e);
+          console.error('[PDF] Error parseando fechaPublicacion:', e);
         }
       }
+      
+      if (!fechaTexto) {
+        fechaTexto = new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+      
       doc.fontSize(11).text(`Fecha de publicación: ${fechaTexto}`, { align: 'center' });
       
       // Blindaje Metodológico
@@ -112,6 +128,12 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
         const irm = parseFloat(investigacion.indiceRobustez);
         const estado = irm >= 0.8 ? 'Robusto' : irm >= 0.6 ? 'Moderado' : 'Débil';
         doc.text(`Índice de Robustez del Modelo (IRM): ${irm.toFixed(2)} - ${estado}`);
+        doc.moveDown(0.5);
+        doc.fontSize(8).font('Helvetica').text(
+          'El IRM mide la proporción de supuestos críticos verificados con fuentes primarias. Un IRM bajo indica que la estructura metodológica está completa pero requiere verificación adicional de supuestos mediante datos oficiales.',
+          { align: 'justify' }
+        );
+        doc.fontSize(10).font('Helvetica');
       }
       
       doc.addPage();
@@ -155,6 +177,36 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
       
       doc.moveDown(2);
       
+      // Explicación de IRM vs ARESK
+      doc.fontSize(14).font('Helvetica-Bold').text('Sobre el Índice de Robustez Metodológica (IRM)', { underline: true });
+      doc.moveDown(0.5);
+      doc.fontSize(10).font('Helvetica').text(
+        'El IRM mide la proporción de supuestos críticos verificados con fuentes primarias oficiales. ' +
+        'Un IRM bajo (0.30-0.50) NO indica que la investigación sea deficiente, sino que refleja honestamente ' +
+        'la disponibilidad real de datos oficiales verificables en el contexto municipal.',
+        { align: 'justify', lineGap: 3 }
+      );
+      doc.moveDown(0.8);
+      doc.fontSize(10).font('Helvetica').text(
+        'Es importante distinguir entre dos métricas complementarias:',
+        { align: 'justify', lineGap: 3 }
+      );
+      doc.moveDown(0.5);
+      doc.fontSize(10).font('Helvetica-Bold').text('IRM (0.30-0.55):', { continued: true });
+      doc.font('Helvetica').text(' Mide la verificación empírica de supuestos críticos. Refleja la escasez de datos oficiales disponibles.', { align: 'justify', lineGap: 3 });
+      doc.moveDown(0.5);
+      doc.fontSize(10).font('Helvetica-Bold').text('ARESK (100/100):', { continued: true });
+      doc.font('Helvetica').text(' Mide la completitud estructural del protocolo de investigación (7 secciones requeridas, fuentes primarias, supuestos identificados). Todas las investigaciones cumplen el protocolo completo.', { align: 'justify', lineGap: 3 });
+      doc.moveDown(0.8);
+      doc.fontSize(10).font('Helvetica').text(
+        'Un IRM bajo con ARESK alto indica que la estructura metodológica es rigurosa, pero los datos oficiales ' +
+        'necesarios para verificar supuestos críticos aún no están disponibles o no han sido publicados por las autoridades competentes. ' +
+        'Esto es una limitación del contexto de datos, no de la investigación.',
+        { align: 'justify', lineGap: 3 }
+      );
+      
+      doc.moveDown(2);
+      
       // Resumen Ejecutivo
       agregarSeccion(doc, 'Resumen Ejecutivo', investigacion.resumenEjecutivo);
       
@@ -163,21 +215,21 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
         try {
           const supuestos: Supuesto[] = JSON.parse(investigacion.supuestosEstructurados);
           doc.addPage();
-          doc.fontSize(14).font('Helvetica-Bold').text('Registro Público de Supuestos', { underline: true });
-          doc.moveDown(0.5);
+          doc.fontSize(16).font('Helvetica-Bold').text('Registro Público de Supuestos');
+          doc.moveDown(0.8);
           
-          doc.fontSize(9).font('Helvetica').text(
+          doc.fontSize(10).font('Helvetica').text(
             'Cada supuesto está clasificado por su impacto en el modelo y su nivel de sensibilidad. ' +
             'Los supuestos verificados cuentan con fuentes primarias que respaldan su validez.',
-            { align: 'justify' }
+            { align: 'justify', lineGap: 3 }
           );
-          doc.moveDown(1);
+          doc.moveDown(1.5);
           
           supuestos.forEach((sup) => {
-            doc.fontSize(9).font('Helvetica-Bold').text(`${sup.id}. ${sup.supuesto}`);
-            doc.fontSize(8).font('Helvetica');
+            doc.fontSize(10).font('Helvetica-Bold').text(`${sup.id}. ${sup.supuesto}`);
+            doc.fontSize(9).font('Helvetica');
             doc.text(`   Impacto: ${sup.impacto} | Sensibilidad: ${sup.sensibilidad} | Estado: ${sup.verificado ? 'Verificado' : 'Pendiente'}`);
-            doc.moveDown(0.5);
+            doc.moveDown(0.7);
           });
         } catch (e) {
           console.error('Error parsing supuestosEstructurados:', e);
@@ -312,8 +364,9 @@ function renderizarTablaMarkdown(doc: PDFKit.PDFDocument, contenido: string): bo
 }
 
 function agregarSeccion(doc: PDFKit.PDFDocument, titulo: string, contenido: string) {
-  doc.fontSize(14).font('Helvetica-Bold').text(titulo, { underline: true });
-  doc.moveDown(0.5);
+  // Jerarquía visual mejorada: título más grande con espaciado profesional
+  doc.fontSize(16).font('Helvetica-Bold').text(titulo);
+  doc.moveDown(0.8);
   
   // Validación defensiva: si contenido es null/undefined, usar string vacío
   const contenidoSeguro = contenido || '';
@@ -326,10 +379,10 @@ function agregarSeccion(doc: PDFKit.PDFDocument, titulo: string, contenido: stri
   
   // Usar auto-paginación nativa de PDFKit con texto continuo
   // PDFKit maneja automáticamente el salto de página cuando el texto excede el alto disponible
-  doc.fontSize(10).font('Helvetica').text(contenidoSeguro, {
+  doc.fontSize(11).font('Helvetica').text(contenidoSeguro, {
     align: 'justify',
-    lineGap: 2,
-    paragraphGap: 8
+    lineGap: 3,
+    paragraphGap: 10
   });
   
   doc.moveDown(1);

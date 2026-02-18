@@ -684,3 +684,34 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [ ] Congelar versión estable SIN TOCAR MÁS EL GENERADOR
 
 **Solución:** Reemplazar renderizado manual de markdown (línea por línea) con `doc.text(contenidoSeguro, { align: 'justify', lineGap: 2, paragraphGap: 8 })`. PDFKit maneja automáticamente saltos de página cuando texto excede altura disponible.
+
+
+## Elevación Institucional del Generador PDF (Crítica ChatGPT 2026-02-18)
+
+**Diagnóstico:** PDF actual es "render automático sin dirección editorial". Contenido metodológico sólido pero mal presentado. No apto para entrega institucional seria.
+
+### Fase 1: Problemas Críticos de Portada y Formato Básico
+- [ ] Corregir "Fecha no disponible" en portada (usar fechaCierreSemantico o fecha actual)
+- [ ] Calibrar márgenes institucionales (top: 72pt, bottom: 72pt, left: 72pt, right: 72pt)
+- [ ] Mejorar alineación de puntos de relleno en índice
+- [ ] Agregar logo institucional en portada (si existe)
+
+### Fase 2: Jerarquía Visual y Tipografía
+- [ ] Implementar jerarquía tipográfica clara (Títulos: 16pt bold, Subtítulos: 12pt bold, Cuerpo: 10pt)
+- [ ] Agregar "respiración tipográfica" (lineGap: 4, paragraphGap: 12)
+- [ ] Formatear supuestos como lista numerada (S1, S2, S3...) no texto continuo
+- [ ] Mejorar diseño de Tabla Maestra (headers con fondo gris, bordes visibles)
+- [ ] Agregar sección "Resumen Ejecutivo" destacada en primera página después de portada
+
+### Fase 3: Resolver Disonancia Cognitiva IRM vs ARESK
+- [ ] Agregar nota explicativa en sección Blindaje Metodológico:
+  * IRM mide robustez de supuestos verificados
+  * ARESK mide completitud estructural de campos
+  * Son métricas complementarias, no contradictorias
+- [ ] Documentar que IRM 0.30 + ARESK 100 = "Estructura completa con supuestos pendientes de verificación"
+
+### Fase 4: Congelamiento Sin Expansión
+- [ ] Probar PDF mejorado con investigación #3
+- [ ] Verificar calidad institucional (no amateur)
+- [ ] Congelar versión SIN agregar visualizaciones (no hay datos estructurados reales)
+- [ ] NO agregar gráficas inventadas (violación de integridad de contenido)
