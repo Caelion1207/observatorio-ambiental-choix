@@ -59,3 +59,29 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - Salud
 - Educación
 - Transporte
+
+---
+
+## [v2.0.1] - 2026-02-17
+
+### 🐛 Fix: Exportación PDF
+
+**Problema:**
+- El PDF exportado estaba vacío (0 bytes)
+- Causa: `generarPDFInvestigacion` intentaba acceder a `investigacion.fuentes`, campo eliminado en migración v2.0
+
+**Solución:**
+1. Modificado endpoint `exportPDF` en `server/routers.ts` para obtener fuentes desde tabla separada
+2. Modificada firma de `generarPDFInvestigacion` para aceptar `fuentes` como segundo parámetro
+3. Reemplazado acceso directo a `investigacion.fuentes` por formateo de fuentes desde array
+
+**Resultado:**
+- ✅ PDF generado correctamente: 19 KB, 12 páginas
+- ✅ Incluye todas las secciones del protocolo
+- ✅ Fuentes primarias formateadas desde tabla separada
+- ✅ Footer con numeración de páginas
+
+**Archivos Modificados:**
+- `server/routers.ts` (línea 69-72)
+- `server/services/pdfGenerator.ts` (línea 31, 152-166)
+

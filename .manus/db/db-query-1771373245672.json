@@ -1,0 +1,26 @@
+{
+  "query": "\n-- Actualizar fuentes de investigación #3 (Cobertura Forestal) -> ID real: 90001\nUPDATE fuentes SET investigacionId = 90001 WHERE investigacionId = 3;\n\n-- Actualizar fuentes de investigación #4 (Sistema Educativo) -> ID real: 90002\nUPDATE fuentes SET investigacionId = 90002 WHERE investigacionId = 4;\n\n-- Actualizar fuentes de investigación #5 (Infraestructura Salud) -> ID real: 90003\nUPDATE fuentes SET investigacionId = 90003 WHERE investigacionId = 5;\n\n-- Actualizar fuentes de investigación #6 (Red Transporte) -> ID real: 90004\nUPDATE fuentes SET investigacionId = 90004 WHERE investigacionId = 6;\n\n-- Verificar\nSELECT investigacionId, COUNT(*) as total FROM fuentes GROUP BY investigacionId;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \n-- Actualizar fuentes de investigación #3 (Cobertura Forestal) -> ID real: 90001\nUPDATE fuentes SET investigacionId = 90001 WHERE investigacionId = 3;\n\n-- Actualizar fuentes de investigación #4 (Sistema Educativo) -> ID real: 90002\nUPDATE fuentes SET investigacionId = 90002 WHERE investigacionId = 4;\n\n-- Actualizar fuentes de investigación #5 (Infraestructura Salud) -> ID real: 90003\nUPDATE fuentes SET investigacionId = 90003 WHERE investigacionId = 5;\n\n-- Actualizar fuentes de investigación #6 (Red Transporte) -> ID real: 90004\nUPDATE fuentes SET investigacionId = 90004 WHERE investigacionId = 6;\n\n-- Verificar\nSELECT investigacionId, COUNT(*) as total FROM fuentes GROUP BY investigacionId;\n",
+  "rows": [
+    {
+      "investigacionId": "90003",
+      "total": "5"
+    },
+    {
+      "investigacionId": "90002",
+      "total": "5"
+    },
+    {
+      "investigacionId": "90004",
+      "total": "5"
+    },
+    {
+      "investigacionId": "90001",
+      "total": "5"
+    }
+  ],
+  "messages": [],
+  "stdout": "investigacionId\ttotal\n90003\t5\n90002\t5\n90004\t5\n90001\t5\n",
+  "stderr": "",
+  "execution_time_ms": 627
+}

@@ -44,11 +44,8 @@ export default function DatosAbiertos() {
     }
   };
 
-  const datosPorTipo = {
-    csv: datosAbiertos?.filter((d) => d.tipo === "csv") || [],
-    imagen_satelital: [], // Tipo eliminado en v2, ahora está en imagenesSatelitales de investigaciones
-    enlace: [], // Tipo eliminado en v2, ahora se usa archivoUrl
-  };
+  // Filtrar solo tipos válidos en v2
+  const datosCSV = datosAbiertos?.filter((d) => d.tipo === "csv") || [];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -71,11 +68,11 @@ export default function DatosAbiertos() {
           </div>
 
           {/* Archivos CSV */}
-          {datosPorTipo.csv.length > 0 && (
+          {datosCSV.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">Archivos CSV</h2>
               <div className="grid gap-4">
-                {datosPorTipo.csv.map((dato) => (
+                {datosCSV.map((dato) => (
                   <Card key={dato.id} className="border-border hover:shadow-md transition-shadow">
                     <CardHeader>
                       <div className="flex items-start justify-between">
@@ -112,79 +109,7 @@ export default function DatosAbiertos() {
             </div>
           )}
 
-          {/* Imágenes Satelitales - Ahora en investigaciones */}
-          {false && datosPorTipo.imagen_satelital.length > 0 && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">Imágenes Satelitales</h2>
-              <div className="grid gap-4">
-                {datosPorTipo.imagen_satelital.map((dato) => (
-                  <Card key={dato.id} className="border-border hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2">
-                            {getTipoIcon(dato.tipo)}
-                            <CardTitle className="text-lg">{dato.titulo}</CardTitle>
-                          </div>
-                          <CardDescription>{dato.descripcion}</CardDescription>
-                          <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
-                            <Badge variant="secondary">{dato.formato || 'Imagen'}</Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      {dato.archivoUrl && (
-                        <a href={dato.archivoUrl} target="_blank" rel="noopener noreferrer">
-                          <Button variant="secondary" className="w-full gap-2">
-                            <Image className="h-4 w-4" />
-                            Ver Imagen
-                          </Button>
-                        </a>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
 
-          {/* Enlaces Externos - Tipo eliminado en v2 */}
-          {false && datosPorTipo.enlace.length > 0 && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">Enlaces a Fuentes Oficiales</h2>
-              <div className="grid gap-4">
-                {datosPorTipo.enlace.map((dato) => (
-                  <Card key={dato.id} className="border-border hover:shadow-md transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2">
-                            {getTipoIcon(dato.tipo)}
-                            <CardTitle className="text-lg">{dato.titulo}</CardTitle>
-                          </div>
-                          <CardDescription>{dato.descripcion}</CardDescription>
-                          <div className="flex items-center gap-3 text-sm text-muted-foreground pt-2">
-                            <Badge variant="secondary">Fuente Oficial</Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      {dato.archivoUrl && (
-                        <a href={dato.archivoUrl} target="_blank" rel="noopener noreferrer">
-                          <Button variant="secondary" className="w-full gap-2">
-                            <ExternalLink className="h-4 w-4" />
-                            Visitar Fuente Oficial
-                          </Button>
-                        </a>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Estado vacío */}
           {datosAbiertos && datosAbiertos.length === 0 && (

@@ -1,0 +1,42 @@
+{
+  "query": "SELECT id, investigacionId, tipo, titulo, autor, institucion FROM fuentes WHERE investigacionId = 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, investigacionId, tipo, titulo, autor, institucion FROM fuentes WHERE investigacionId = 3;",
+  "rows": [
+    {
+      "id": "5",
+      "investigacionId": "3",
+      "tipo": "oficial",
+      "titulo": "Inventario Nacional Forestal y de Suelos 2015-2020",
+      "autor": "CONAFOR",
+      "institucion": "Comisión Nacional Forestal"
+    },
+    {
+      "id": "6",
+      "investigacionId": "3",
+      "tipo": "tecnica",
+      "titulo": "Monitoreo de la Cobertura Forestal en México mediante Imágenes Landsat",
+      "autor": "Mas, Jean-François; Velázquez, Alejandro",
+      "institucion": "Instituto de Geografía, UNAM"
+    },
+    {
+      "id": "7",
+      "investigacionId": "3",
+      "tipo": "oficial",
+      "titulo": "Estrategia Nacional para la Reducción de Emisiones por Deforestación y Degradación Forestal (ENAREDD+)",
+      "autor": "CONAFOR",
+      "institucion": "Comisión Nacional Forestal"
+    },
+    {
+      "id": "8",
+      "investigacionId": "3",
+      "tipo": "academica",
+      "titulo": "Análisis de Cambio de Cobertura Forestal en Sinaloa 2000-2020",
+      "autor": "Rodríguez-Gallegos, Hugo B.; Valdez-Lazalde, J. René",
+      "institucion": "Colegio de Postgraduados"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tinvestigacionId\ttipo\ttitulo\tautor\tinstitucion\n5\t3\toficial\tInventario Nacional Forestal y de Suelos 2015-2020\tCONAFOR\tComisión Nacional Forestal\n6\t3\ttecnica\tMonitoreo de la Cobertura Forestal en México mediante Imágenes Landsat\tMas, Jean-François; Velázquez, Alejandro\tInstituto de Geografía, UNAM\n7\t3\toficial\tEstrategia Nacional para la Reducción de Emisiones por Deforestación y Degradación Forestal (ENAREDD+)\tCONAFOR\tComisión Nacional Forestal\n8\t3\tacademica\tAnálisis de Cambio de Cobertura Forestal en Sinaloa 2000-2020\tRodríguez-Gallegos, Hugo B.; Valdez-Lazalde, J. René\tColegio de Postgraduados\n",
+  "stderr": "",
+  "execution_time_ms": 345
+}

@@ -138,3 +138,31 @@
 - [ ] Migrar 6 investigaciones actuales a nueva estructura
 - [ ] Asignar dominios correctos a investigaciones existentes
 - [ ] Separar fuentes por investigación
+
+## Estabilización Final v2.0
+
+### Fase 1: Corrección DatosAbiertos.tsx
+- [x] Eliminar secciones obsoletas de imagen_satelital y enlace
+- [x] Corregir tipos never en arrays vacíos
+- [x] Ejecutar build limpio
+- [x] Confirmar 0 errores TypeScript
+- [x] Confirmar 0 warnings críticos
+
+### Fase 2: Fuentes Reales
+- [x] Reemplazar fuentes placeholder en investigación #3 (Cobertura Forestal)
+- [x] Reemplazar fuentes placeholder en investigación #4 (Sistema Educativo)
+- [x] Reemplazar fuentes placeholder en investigación #5 (Infraestructura Salud)
+- [x] Reemplazar fuentes placeholder en investigación #6 (Red Transporte)
+- [x] Validar mínimo 3 fuentes reales por investigación
+- [x] Formato normalizado: autor, institución, título, año, URL, fecha_acceso
+
+### Fase 3: Tests de Integridad
+- [x] Test 1: Render investigación detalle (5 fuentes reales mostradas correctamente)
+- [x] Test 2: Render datos abiertos (sin loading infinito, visualización funcional)
+- [x] Test 3: Generar PDF (19 KB, 12 páginas, fuentes desde tabla separada)
+- [x] Confirmar integridad completa (0 errores TypeScript, 0 bugs visibles)
+
+### Fase 4: Demostración Escalabilidad
+- [ ] Crear 1 investigación nueva en dominio Finanzas
+- [ ] Confirmar que no se tocó el core
+- [ ] Validar que usa plantilla de dominio

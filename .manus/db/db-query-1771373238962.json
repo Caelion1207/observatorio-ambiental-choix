@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, numero, slug FROM investigaciones ORDER BY numero;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, numero, slug FROM investigaciones ORDER BY numero;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "slug": "cobertura-forestal-historica-choix-2015-2026"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "slug": "sistema-educativo-choix-capacidad-vs-demanda"
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "slug": "infraestructura-salud-choix-analisis-saturacion"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "slug": "red-transporte-choix-cuellos-botella"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\tslug\n90001\t3\tcobertura-forestal-historica-choix-2015-2026\n90002\t4\tsistema-educativo-choix-capacidad-vs-demanda\n90003\t5\tinfraestructura-salud-choix-analisis-saturacion\n90004\t6\tred-transporte-choix-cuellos-botella\n",
+  "stderr": "",
+  "execution_time_ms": 345
+}

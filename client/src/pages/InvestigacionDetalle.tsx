@@ -21,6 +21,12 @@ export default function InvestigacionDetalle() {
     { enabled: !!slug }
   );
   
+  // Obtener fuentes de la investigación desde tabla separada (DEBE estar antes de cualquier return)
+  const { data: fuentes } = trpc.fuentes.getByInvestigacionId.useQuery(
+    { investigacionId: investigacion?.id || 0 },
+    { enabled: !!investigacion?.id }
+  );
+  
   const exportPDF = trpc.investigaciones.exportPDF.useMutation({
     onSuccess: (data) => {
       // Convertir base64 a blob y descargar
@@ -84,6 +90,7 @@ export default function InvestigacionDetalle() {
     }
   }
 
+  // Construir secciones con fuentes si existen
   const secciones = [
     { id: "definicion-sistema", titulo: "1. Definición del Sistema", contenido: investigacion.definicionSistema },
     { id: "tabla-maestra", titulo: "2. Tabla Maestra de Datos", contenido: investigacion.tablaMaestra },
@@ -94,14 +101,23 @@ export default function InvestigacionDetalle() {
     { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusion },
   ];
   
-  // Obtener fuentes de la investigación desde tabla separada
-  const { data: fuentes } = trpc.fuentes.getByInvestigacionId.useQuery({ investigacionId: investigacion.id });
-  
   // Agregar sección de fuentes si existen
   if (fuentes && fuentes.length > 0) {
-    const fuentesContent = fuentes.map((f, i) => 
-      `${i + 1}. **${f.titulo}** ${f.institucion ? `(${f.institucion})` : ''} ${f.url ? `[Enlace](${f.url})` : ''}`
-    ).join('\n\n');
+    console.log('[DEBUG] Fuentes recibidas:', fuentes);
+    console.log('[DEBUG] Número de fuentes:', fuentes.length);
+    const fuentesContent = fuentes.map((f, i) => {
+      const partes = [];
+      partes.push(`**${i + 1}. ${f.titulo}**`);
+      if (f.autor) partes.push(`\n   - **Autor:** ${f.autor}`);
+      if (f.institucion) partes.push(`\n   - **Institución:** ${f.institucion}`);
+      if (f.tipo) partes.push(`\n   - **Tipo:** ${f.tipo}`);
+      if (f.url) partes.push(`\n   - **URL:** [${f.url}](${f.url})`);
+      if (f.fechaPublicacion) {
+        const fecha = new Date(f.fechaPublicacion);
+        partes.push(`\n   - **Fecha de Publicación:** ${format(fecha, 'MMMM yyyy', { locale: es })}`);
+      }
+      return partes.join('');
+    }).join('\n\n');
     secciones.push({ id: "fuentes", titulo: "Fuentes Primarias", contenido: fuentesContent });
   }
 

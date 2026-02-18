@@ -40,7 +40,7 @@ export default function RelatedInvestigaciones({
       <div>
         <h2 className="text-2xl font-bold">Investigaciones Relacionadas</h2>
         <p className="text-sm text-muted-foreground mt-1">
-          Otros análisis en {categoriaLabels[categoria] || categoria}
+          Otros análisis del mismo dominio
         </p>
       </div>
 

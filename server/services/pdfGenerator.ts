@@ -4,7 +4,6 @@ import { Readable } from 'stream';
 interface Investigacion {
   numero: number;
   titulo: string;
-  categoria: string;
   resumenEjecutivo: string;
   definicionSistema: string;
   tablaMaestra: string;
@@ -29,7 +28,7 @@ interface Supuesto {
   verificado: boolean;
 }
 
-export async function generarPDFInvestigacion(investigacion: Investigacion): Promise<Buffer> {
+export async function generarPDFInvestigacion(investigacion: Investigacion, fuentes?: any[]): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({
       size: 'LETTER',
@@ -38,7 +37,7 @@ export async function generarPDFInvestigacion(investigacion: Investigacion): Pro
         Title: investigacion.titulo,
         Author: 'Laboratorio Público de Análisis Estructural - Choix',
         Subject: `Investigación ${investigacion.numero}: ${investigacion.titulo}`,
-        Keywords: `análisis estructural, ${investigacion.categoria}, Choix, Sinaloa`,
+        Keywords: `análisis estructural, Choix, Sinaloa`,
         CreationDate: new Date()
       }
     });
@@ -60,7 +59,6 @@ export async function generarPDFInvestigacion(investigacion: Investigacion): Pro
     doc.moveDown(1);
     
     doc.fontSize(12).font('Helvetica').text(`Investigación #${investigacion.numero}`, { align: 'center' });
-    doc.fontSize(12).text(`Categoría: ${investigacion.categoria.charAt(0).toUpperCase() + investigacion.categoria.slice(1)}`, { align: 'center' });
     doc.moveDown(1);
     
     const fechaPublicacion = new Date(investigacion.fechaPublicacion);
@@ -151,7 +149,21 @@ export async function generarPDFInvestigacion(investigacion: Investigacion): Pro
     agregarSeccion(doc, '7. Conclusión Estructural', investigacion.conclusion);
     
     doc.addPage();
-    agregarSeccion(doc, 'Fuentes Primarias', investigacion.fuentes);
+    // Formatear fuentes desde tabla separada
+    let fuentesTexto = '';
+    if (fuentes && fuentes.length > 0) {
+      fuentesTexto = fuentes.map((f, idx) => {
+        let texto = `${idx + 1}. ${f.titulo}`;
+        if (f.autor) texto += ` - ${f.autor}`;
+        if (f.institucion) texto += ` (${f.institucion})`;
+        if (f.url) texto += `\n   URL: ${f.url}`;
+        if (f.fechaPublicacion) texto += `\n   Fecha: ${new Date(f.fechaPublicacion).toLocaleDateString('es-MX')}`;
+        return texto;
+      }).join('\n\n');
+    } else {
+      fuentesTexto = 'No se encontraron fuentes registradas para esta investigación.';
+    }
+    agregarSeccion(doc, 'Fuentes Primarias', fuentesTexto);
     
     // Footer en todas las páginas
     const range = doc.bufferedPageRange();
@@ -173,8 +185,11 @@ function agregarSeccion(doc: PDFKit.PDFDocument, titulo: string, contenido: stri
   doc.fontSize(14).font('Helvetica-Bold').text(titulo, { underline: true });
   doc.moveDown(0.5);
   
+  // Validación defensiva: si contenido es null/undefined, usar string vacío
+  const contenidoSeguro = contenido || '';
+  
   // Convertir markdown básico a texto plano con formato
-  const lineas = contenido.split('\n');
+  const lineas = contenidoSeguro.split('\n');
   
   lineas.forEach((linea) => {
     // Detectar encabezados markdown

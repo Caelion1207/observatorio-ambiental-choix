@@ -65,8 +65,11 @@ export const appRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
         }
         
+        // Obtener fuentes de la investigación desde tabla separada
+        const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
+        
         const { generarPDFInvestigacion } = await import('./services/pdfGenerator');
-        const pdfBuffer = await generarPDFInvestigacion(investigacion as any);
+        const pdfBuffer = await generarPDFInvestigacion(investigacion as any, fuentes);
         
         // Convertir buffer a base64 para enviar al cliente
         const pdfBase64 = pdfBuffer.toString('base64');
