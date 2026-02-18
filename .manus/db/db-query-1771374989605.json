@@ -1,0 +1,46 @@
+{
+  "query": "SHOW CREATE TABLE investigaciones;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SHOW CREATE TABLE investigaciones;",
+  "rows": [
+    {
+      "Table": "investigaciones",
+      "Create Table": "CREATE TABLE `investigaciones` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `titulo` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `slug` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `resumenEjecutivo` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `definicionSistema` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `tablaMaestra` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `supuestos` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `modelo` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `escenarios` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `brechas` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `conclusion` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `metadataJson` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `escenariosConfig` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `indicesCalculados` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `imagenesSatelitales` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `fuentes` text COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `publicada` tinyint(1) NOT NULL DEFAULT '0',",
+    "  `autorId` int(11) NOT NULL,",
+    "  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,",
+    "  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,",
+    "  `publishedAt` timestamp NULL DEFAULT NULL,",
+    "  `numero` int(11) NOT NULL,",
+    "  `dominioId` int(11) DEFAULT NULL,",
+    "  `categoria` enum('hidrologia','medio_ambiente','infraestructura','salud','educacion','transporte') COLLATE utf8mb4_unicode_ci NOT NULL,",
+    "  `versionProtocolo` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1.0',",
+    "  `fechaCierreSemantico` timestamp NULL DEFAULT NULL,",
+    "  `supuestosEstructurados` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,",
+    "  `indiceRobustez` decimal(3,2) DEFAULT '0.00',",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,",
+    "  UNIQUE KEY `investigaciones_slug_unique` (`slug`)",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=120001"
+  ],
+  "stdout": "Table\tCreate Table\ninvestigaciones\tCREATE TABLE `investigaciones` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `titulo` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `slug` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `resumenEjecutivo` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `definicionSistema` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `tablaMaestra` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `supuestos` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `modelo` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `escenarios` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `brechas` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `conclusion` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `metadataJson` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `escenariosConfig` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `indicesCalculados` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `imagenesSatelitales` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `fuentes` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `publicada` tinyint(1) NOT NULL DEFAULT '0',\n  `autorId` int(11) NOT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `publishedAt` timestamp NULL DEFAULT NULL,\n  `numero` int(11) NOT NULL,\n  `dominioId` int(11) DEFAULT NULL,\n  `categoria` enum('hidrologia','medio_ambiente','infraestructura','salud','educacion','transporte') COLLATE utf8mb4_unicode_ci NOT NULL,\n  `versionProtocolo` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1.0',\n  `fechaCierreSemantico` timestamp NULL DEFAULT NULL,\n  `supuestosEstructurados` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `indiceRobustez` decimal(3,2) DEFAULT '0.00',\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,\n  UNIQUE KEY `investigaciones_slug_unique` (`slug`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=120001\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}

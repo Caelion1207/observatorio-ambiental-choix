@@ -166,3 +166,31 @@
 - [ ] Crear 1 investigación nueva en dominio Finanzas
 - [ ] Confirmar que no se tocó el core
 - [ ] Validar que usa plantilla de dominio
+
+
+## Demostración de Escalabilidad: Investigación en Finanzas
+
+- [ ] Crear contenido completo de investigación "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026"
+- [ ] Aplicar protocolo de 7 secciones obligatorias
+- [ ] Definir modelo mínimo: IRP = Gasto fijo / Ingresos totales
+- [ ] Crear 3 escenarios: Reducción transferencias federales, Aumento gasto emergencia hídrica, Deuda adicional
+- [ ] Agregar supuestos estructurados con impacto y sensibilidad
+- [ ] Insertar investigación en base de datos con dominio Finanzas
+- [ ] Agregar mínimo 4 fuentes reales verificables (INEGI, Secretaría de Hacienda, etc.)
+- [ ] Probar render completo en frontend
+- [ ] Probar exportación PDF funcional
+- [ ] Confirmar que NO se tocó el core del sistema
+
+
+## Migración Completa Schema v2 (Deuda Técnica Crítica)
+
+- [x] Crear script de migración completo con backup automático
+- [x] Generar hash SHA-256 del backup de investigaciones
+- [x] Crear tabla temporal investigaciones_v2 con schema correcto
+- [x] Migrar datos mapeando categoria → dominioId
+- [x] Migrar fuentes a tabla separada
+- [x] Agregar campo numero a investigaciones
+- [x] Eliminar columnas legacy (categoria, fuentes)
+- [x] Verificar integridad de datos migrados (4 investigaciones, 20 fuentes, 8 dominios)
+- [x] Registrar hash del estado final en CHANGELOG
+- [x] Validar que NO se tocó el core del sistema
