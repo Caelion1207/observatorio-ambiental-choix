@@ -476,3 +476,15 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Verificar que frontend y backend apunten a la misma DB (DATABASE_URL compartida)
 - [x] Corregir contrato API del agente para que SIEMPRE devuelva JSON válido (try-catch global agregado)
 - [x] Congelar versión final sin expansión
+
+
+## CRÍTICO: Recuperación de Investigación Perdida - Presa Huites (2026-02-18)
+
+- [x] Buscar investigación de Presa Huites en dump de BD (no encontrada)
+- [x] Buscar en checkpoints anteriores (no encontrada)
+- [x] Buscar en archivos locales del proyecto (ENCONTRADA: segunda_investigacion_completa.md)
+- [x] Buscar en logs de operaciones (no aplicable)
+- [x] Reconstruir desde archivo completo encontrado
+- [x] Insertar investigación recuperada en base de datos con numeración #1
+- [x] Verificar que aparece en frontend (6 investigaciones totales, Hidrología con 1 investigación)
+- [x] Reportar recuperación completa al usuario
