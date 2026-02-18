@@ -796,3 +796,29 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
 - [x] Eliminar registros de imágenes (UPDATE imagenesSatelitales = NULL)
 - [x] Verificar que campo imagenesSatelitales está en NULL
 - [x] Congelar versión limpia
+
+
+## Corrección Estructural: Alineación IRM, Brechas y Nivel de Riesgo ✅ COMPLETADA
+
+- [x] Auditar código para localizar todas las fuentes de IRM (backend + frontend)
+- [x] Auditar código para localizar todas las fuentes de brechas (backend + frontend)
+- [x] Auditar código para localizar todas las fuentes de nivel de riesgo (backend + frontend)
+- [x] Crear función única backend: `calcularIRM(investigacion)` en server/services/metricas.ts
+- [x] Crear función única frontend: `calcularIRM(investigacion)` en client/src/lib/metricas.ts
+- [x] Crear función única backend: `calcularBrechas(investigacion)` en server/services/metricas.ts
+- [x] Crear función única frontend: `calcularBrechas(investigacion)` en client/src/lib/metricas.ts
+- [x] Eliminar cálculos paralelos o duplicados de IRM
+- [x] Eliminar cálculos paralelos o duplicados de brechas
+- [x] Unificar fuente de IRM en resumen de investigación (usar formatearIRM)
+- [x] Unificar fuente de brechas en panel superior y síntesis
+- [x] Renombrar "IRM" → "IVE (Índice de Verificación Estructural)" en UI (Agente, ProtocoloVersion, Metodología, DatosAbiertos)
+- [x] Renombrar "Nivel de Riesgo" → "Nivel de Incertidumbre Analítica" en UI (Agente)
+- [x] Actualizar explicación pública de IVE (ProtocoloVersion, Metodología)
+- [x] Actualizar explicación pública de Incertidumbre Analítica (calcularNivelIncertidumbre)
+- [x] Verificar coherencia en vista de dominio (Agente) - ✅ Coherente
+- [x] Verificar coherencia en vista de investigación individual - ⚠️ Inconsistencias detectadas:
+  * IVE mostrado 0.45 vs calculado manualmente 0.50
+  * Brechas: 0 en Agente vs 4 descritas en investigación
+- [ ] Investigar discrepancia en cálculo de IVE
+- [ ] Decidir si brechas deben ser entidades en BD o solo texto descriptivo
+- [ ] Congelar versión coherente

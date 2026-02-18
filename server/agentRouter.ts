@@ -8,6 +8,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import { DataCollector } from "./services/dataCollector";
 import { DataValidator } from "./services/dataValidator";
 import { HydroModel } from "./services/hydroModel";
+import { calcularIRMPromedio, calcularBrechasTotales, calcularNivelIncertidumbre } from "./services/metricas";
 import { ProblemEvaluator } from "./services/problemEvaluator";
 import { RegimeLogger } from "./services/regimeLogger";
 import { ReportGenerator } from "./services/reportGenerator";
@@ -352,20 +353,9 @@ export const agentRouter = router({
           };
         }
 
-      // Calcular métricas agregadas
-      const irmPromedio =
-        investigaciones.reduce((sum: number, inv: any) => sum + (inv.indiceRobustez || 0), 0) / investigaciones.length;
-
-      const totalBrechas = investigaciones.reduce((sum: number, inv: any) => {
-        try {
-          const brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
-          return sum + (Array.isArray(brechas) ? brechas.length : 0);
-        } catch {
-          // Si brechas no es JSON válido, contar ocurrencias de "**Brecha"
-          const matches = (inv.brechas || '').match(/\*\*Brecha \d+:/g);
-          return sum + (matches ? matches.length : 0);
-        }
-      }, 0);
+      // Calcular métricas agregadas usando funciones únicas
+      const irmPromedio = calcularIRMPromedio(investigaciones) || 0;
+      const totalBrechas = calcularBrechasTotales(investigaciones);
 
       // Métricas comparativas
       const irmValues = investigaciones.map((inv: any) => inv.indiceRobustez || 0);

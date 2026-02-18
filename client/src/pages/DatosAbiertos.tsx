@@ -105,7 +105,7 @@ export default function DatosAbiertos() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div>
-                        <h3 className="font-semibold text-sm text-muted-foreground">Índice de Robustez (IRM)</h3>
+                        <h3 className="font-semibold text-sm text-muted-foreground">Índice de Verificación Estructural (IVE)</h3>
                         <Badge variant={
                           parseFloat(investigacionDetalle.indiceRobustez || "0") >= 0.8 ? "default" :
                           parseFloat(investigacionDetalle.indiceRobustez || "0") >= 0.6 ? "secondary" :

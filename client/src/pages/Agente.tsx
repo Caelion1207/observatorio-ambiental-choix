@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
+import { calcularIRMPromedio, calcularBrechasTotales, calcularNivelIncertidumbre, formatearIRM } from "@/lib/metricas";
 import { AlertTriangle, CheckCircle2, TrendingUp, FileText, Database } from "lucide-react";
 
 export default function Agente() {
@@ -36,24 +37,8 @@ export default function Agente() {
   const calcularMetricas = () => {
     if (!investigaciones || investigaciones.length === 0) return null;
 
-    const irmPromedio =
-      investigaciones.reduce((sum, inv) => {
-        const irm = typeof inv.indiceRobustez === 'number' ? inv.indiceRobustez : parseFloat(inv.indiceRobustez as string) || 0;
-        return sum + irm;
-      }, 0) / investigaciones.length;
-
-    const totalBrechas = investigaciones.reduce((sum, inv) => {
-      let brechas = [];
-      try {
-        brechas = inv.brechas ? JSON.parse(inv.brechas) : [];
-      } catch (e) {
-        // Campo brechas contiene texto narrativo Markdown, contar ocurrencias de "**Brecha"
-        const brechasText = inv.brechas || '';
-        const matches = brechasText.match(/\*\*Brecha \d+:/g);
-        return sum + (matches ? matches.length : 0);
-      }
-      return sum + (Array.isArray(brechas) ? brechas.length : 0);
-    }, 0);
+    const irmPromedioNum = calcularIRMPromedio(investigaciones) || 0;
+    const totalBrechas = calcularBrechasTotales(investigaciones);
 
     const totalSupuestos = investigaciones.reduce((sum, inv) => {
       let supuestos = [];
@@ -67,11 +52,11 @@ export default function Agente() {
     }, 0);
 
     return {
-      irmPromedio: irmPromedio.toFixed(2),
+      irmPromedio: formatearIRM(irmPromedioNum),
       totalInvestigaciones: investigaciones.length,
       totalBrechas,
       totalSupuestos,
-      nivelRiesgo: irmPromedio >= 0.7 ? "Bajo" : irmPromedio >= 0.5 ? "Moderado" : "Alto",
+      nivelIncertidumbre: calcularNivelIncertidumbre(irmPromedioNum),
     };
   };
 
@@ -151,7 +136,7 @@ export default function Agente() {
 
             <Card>
               <CardHeader className="pb-2">
-                <CardDescription>IRM Promedio</CardDescription>
+                <CardDescription>IVE Promedio</CardDescription>
                 <CardTitle className="text-3xl">{metricas.irmPromedio}</CardTitle>
               </CardHeader>
               <CardContent>
@@ -185,11 +170,11 @@ export default function Agente() {
 
             <Card>
               <CardHeader className="pb-2">
-                <CardDescription>Nivel de Riesgo</CardDescription>
-                <CardTitle className="text-3xl">{metricas.nivelRiesgo}</CardTitle>
+                <CardDescription>Nivel de Incertidumbre Analítica</CardDescription>
+                <CardTitle className="text-3xl">{metricas.nivelIncertidumbre}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xs text-muted-foreground">Basado en IRM promedio</p>
+                <p className="text-xs text-muted-foreground">Basado en IVE promedio</p>
               </CardContent>
             </Card>
           </div>
@@ -225,7 +210,7 @@ export default function Agente() {
                       )}
                       <div>
                         <span className="font-medium">{inv.titulo}</span>
-                        <span className="text-muted-foreground"> - IRM: {inv.indiceRobustez ? Number(inv.indiceRobustez).toFixed(2) : "N/A"}</span>
+                        <span className="text-muted-foreground"> - IVE: {inv.indiceRobustez ? Number(inv.indiceRobustez).toFixed(2) : "N/A"}</span>
                       </div>
                     </li>
                   ))}

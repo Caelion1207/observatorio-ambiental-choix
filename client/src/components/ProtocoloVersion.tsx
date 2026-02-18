@@ -63,7 +63,7 @@ export default function ProtocoloVersion({ version, fechaCierre, indiceRobustez 
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
-                Índice de Robustez (IRM)
+                Índice de Verificación Estructural (IVE)
               </div>
               <div className="flex items-center gap-2">
                 <span className={`text-2xl font-bold font-mono ${robustezInfo.color}`}>
@@ -79,9 +79,9 @@ export default function ProtocoloVersion({ version, fechaCierre, indiceRobustez 
         {indiceRobustez && (
           <div className="pt-3 border-t border-border">
             <p className="text-xs text-muted-foreground">
-              <strong>IRM (Índice de Robustez del Modelo):</strong> Mide la proporción de supuestos críticos verificados. 
-              IRM = 1 - (Supuestos Críticos No Verificados / Total de Supuestos). 
-              Valores cercanos a 1.00 indican mayor robustez metodológica.
+              <strong>IVE (Índice de Verificación Estructural):</strong> Mide qué proporción de los supuestos críticos del análisis está respaldada por datos públicos verificables. 
+              IVE = Supuestos Críticos Verificados / Total de Supuestos Críticos. 
+              Valores cercanos a 1.00 indican mayor disponibilidad de datos oficiales.
             </p>
           </div>
         )}

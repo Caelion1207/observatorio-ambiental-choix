@@ -121,7 +121,7 @@ export default function Metodologia() {
                     <strong className="text-foreground">Todo supuesto crítico debe ser verificable.</strong>
                     <p className="text-sm text-muted-foreground mt-1">
                       Los supuestos con sensibilidad "Crítica" requieren verificación con fuentes primarias oficiales. 
-                      El Índice de Robustez del Modelo (IRM) penaliza supuestos críticos no verificados.
+                      El Índice de Verificación Estructural (IVE) mide la proporción de supuestos críticos verificados.
                     </p>
                   </div>
                 </div>
