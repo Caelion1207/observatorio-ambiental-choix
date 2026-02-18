@@ -11,6 +11,7 @@ import RelatedInvestigaciones from "@/components/RelatedInvestigaciones";
 import InvestigacionImages from "@/components/InvestigacionImages";
 import ProtocoloVersion from "@/components/ProtocoloVersion";
 import RegistroSupuestos, { type Supuesto } from "@/components/RegistroSupuestos";
+import { PanelValidacion } from "@/components/PanelValidacion";
 
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
@@ -197,6 +198,9 @@ export default function InvestigacionDetalle() {
           {supuestosEstructurados.length > 0 && (
             <RegistroSupuestos supuestos={supuestosEstructurados} />
           )}
+
+          {/* Panel de Validación ARESK/ARGOS */}
+          <PanelValidacion slug={slug} />
 
           {/* Imágenes de Contexto */}
           {investigacion.dominioId === 1 && ( // Dominio Hidrología

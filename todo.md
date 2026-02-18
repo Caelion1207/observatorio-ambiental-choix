@@ -194,3 +194,21 @@
 - [x] Verificar integridad de datos migrados (4 investigaciones, 20 fuentes, 8 dominios)
 - [x] Registrar hash del estado final en CHANGELOG
 - [x] Validar que NO se tocó el core del sistema
+
+
+## Validación de Arquitectura Modular
+
+### Fase 1: Depuración PDF Finanzas (Auditoría Encubierta)
+- [ ] Comparar payload de investigación de Finanzas contra investigación funcional (Cobertura Forestal)
+- [ ] Identificar campos null o mal tipados en investigación de Finanzas
+- [ ] Verificar que modelo IRP cumple contrato del generador PDF
+- [ ] Corregir generador PDF SIN tocar el core
+- [ ] Validar que arquitectura es realmente modular
+
+### Fase 2: ARESK/ARGOS Mínimo Viable
+- [x] Implementar validación de variables null
+- [x] Implementar detección de supuestos sin fuente
+- [x] Implementar índice de completitud del modelo
+- [x] Implementar conteo de variables "estimado"
+- [x] Crear endpoint tRPC para ejecutar validaciones
+- [x] Integrar validaciones en panel de investigaciones

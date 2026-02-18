@@ -30,24 +30,33 @@ interface Supuesto {
 
 export async function generarPDFInvestigacion(investigacion: Investigacion, fuentes?: any[]): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({
-      size: 'LETTER',
-      margins: { top: 50, bottom: 50, left: 50, right: 50 },
-      info: {
-        Title: investigacion.titulo,
-        Author: 'Laboratorio Público de Análisis Estructural - Choix',
-        Subject: `Investigación ${investigacion.numero}: ${investigacion.titulo}`,
-        Keywords: `análisis estructural, Choix, Sinaloa`,
-        CreationDate: new Date()
-      }
-    });
+    try {
+      console.log('[PDF Generator] Iniciando generación PDF para:', investigacion.titulo);
+      console.log('[PDF Generator] Fuentes recibidas:', fuentes?.length || 0);
+      
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margins: { top: 50, bottom: 50, left: 50, right: 50 },
+        info: {
+          Title: investigacion.titulo,
+          Author: 'Laboratorio Público de Análisis Estructural - Choix',
+          Subject: `Investigación ${investigacion.numero}: ${investigacion.titulo}`,
+          Keywords: `análisis estructural, Choix, Sinaloa`,
+          CreationDate: new Date()
+        }
+      });
 
-    const buffers: Buffer[] = [];
-    doc.on('data', buffers.push.bind(buffers));
-    doc.on('end', () => {
-      const pdfBuffer = Buffer.concat(buffers);
-      resolve(pdfBuffer);
-    });
+      const buffers: Buffer[] = [];
+      doc.on('data', buffers.push.bind(buffers));
+      doc.on('end', () => {
+        console.log('[PDF Generator] PDF generado exitosamente, tamaño:', Buffer.concat(buffers).length, 'bytes');
+        const pdfBuffer = Buffer.concat(buffers);
+        resolve(pdfBuffer);
+      });
+      doc.on('error', (err) => {
+        console.error('[PDF Generator] Error en stream PDF:', err);
+        reject(err);
+      });
     doc.on('error', reject);
 
     // Portada
@@ -178,6 +187,10 @@ export async function generarPDFInvestigacion(investigacion: Investigacion, fuen
     }
     
     doc.end();
+    } catch (error) {
+      console.error('[PDF Generator] Error fatal al generar PDF:', error);
+      reject(error);
+    }
   });
 }
 

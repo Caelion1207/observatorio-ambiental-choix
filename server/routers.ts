@@ -6,6 +6,7 @@ import { z } from "zod";
 import * as db from "./db";
 import { TRPCError } from "@trpc/server";
 import { agentRouter } from "./agentRouter";
+import { validarIntegridad } from "./services/validacion";
 
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== 'admin') {
@@ -78,6 +79,23 @@ export const appRouter = router({
           pdfBase64,
           filename: `${investigacion.slug}.pdf`
         };
+      }),
+    
+    validarIntegridad: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const investigacion = await db.getInvestigacionBySlug(input.slug);
+        if (!investigacion) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Investigación no encontrada' });
+        }
+        
+        // Obtener fuentes de la investigación desde tabla separada
+        const fuentes = await db.getFuentesByInvestigacionId(investigacion.id);
+        
+        // Ejecutar validación ARESK/ARGOS mínimo viable
+        const resultado = validarIntegridad(investigacion as any, fuentes);
+        
+        return resultado;
       }),
     
     // CONGELADO: Nuevas publicaciones deshabilitadas
