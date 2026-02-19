@@ -44,40 +44,40 @@
 }
 
 :root {
-  /* Paleta de laboratorio científico - tonos más técnicos y sobrios */
-  --primary: oklch(0.32 0.08 240); /* Azul técnico más saturado */
-  --primary-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.32 0.08 240);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  /* Colores de gráficas científicas - más diferenciados */
-  --chart-1: oklch(0.50 0.12 240); /* Azul técnico */
-  --chart-2: oklch(0.48 0.10 200); /* Azul verdoso */
-  --chart-3: oklch(0.45 0.08 180); /* Verde azulado */
-  --chart-4: oklch(0.60 0.12 80); /* Amarillo técnico */
-  --chart-5: oklch(0.55 0.14 40); /* Naranja técnico */
+  /* Paleta verde olivo con color hueso - sobria e institucional */
+  --primary: oklch(0.35 0.08 120); /* Verde olivo oscuro #556B2F */
+  --primary-foreground: oklch(0.98 0.01 60); /* Color hueso claro */
+  --sidebar-primary: oklch(0.35 0.08 120);
+  --sidebar-primary-foreground: oklch(0.98 0.01 60);
+  /* Colores de gráficas - tonos verdes naturales */
+  --chart-1: oklch(0.45 0.10 120); /* Verde olivo medio */
+  --chart-2: oklch(0.50 0.08 100); /* Verde musgo */
+  --chart-3: oklch(0.40 0.06 140); /* Verde bosque */
+  --chart-4: oklch(0.55 0.12 80); /* Verde amarillento */
+  --chart-5: oklch(0.38 0.10 110); /* Verde oscuro */
   --radius: 0.25rem;
-  --background: oklch(0.97 0.005 240); /* Gris azulado muy claro */
-  --foreground: oklch(0.18 0.01 240); /* Gris oscuro técnico */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.01 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.01 240);
-  --secondary: oklch(0.90 0.01 240); /* Gris azulado claro */
-  --secondary-foreground: oklch(0.22 0.01 240);
-  --muted: oklch(0.92 0.01 240);
-  --muted-foreground: oklch(0.48 0.02 240); /* Gris medio técnico */
-  --accent: oklch(0.90 0.01 240);
-  --accent-foreground: oklch(0.22 0.01 240);
+  --background: oklch(0.97 0.01 60); /* Color hueso #FAF9F6 */
+  --foreground: oklch(0.20 0.01 120); /* Gris carbón con tinte verde */
+  --card: oklch(0.99 0.005 60); /* Blanco hueso */
+  --card-foreground: oklch(0.20 0.01 120);
+  --popover: oklch(0.99 0.005 60);
+  --popover-foreground: oklch(0.20 0.01 120);
+  --secondary: oklch(0.88 0.02 120); /* Verde olivo muy claro */
+  --secondary-foreground: oklch(0.25 0.02 120);
+  --muted: oklch(0.90 0.015 60);
+  --muted-foreground: oklch(0.45 0.03 120); /* Verde olivo apagado */
+  --accent: oklch(0.50 0.10 120); /* Verde olivo #808000 */
+  --accent-foreground: oklch(0.98 0.01 60);
   --destructive: oklch(0.55 0.18 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.86 0.01 240); /* Bordes más definidos */
-  --input: oklch(0.86 0.01 240);
-  --ring: oklch(0.32 0.08 240);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.18 0.01 240);
-  --sidebar-accent: oklch(0.90 0.01 240);
-  --sidebar-accent-foreground: oklch(0.22 0.01 240);
-  --sidebar-border: oklch(0.86 0.01 240);
+  --border: oklch(0.82 0.03 120); /* Verde olivo claro para bordes */
+  --input: oklch(0.82 0.03 120);
+  --ring: oklch(0.35 0.08 120);
+  --sidebar: oklch(0.98 0.01 60);
+  --sidebar-foreground: oklch(0.20 0.01 120);
+  --sidebar-accent: oklch(0.88 0.02 120);
+  --sidebar-accent-foreground: oklch(0.25 0.02 120);
+  --sidebar-border: oklch(0.82 0.03 120);
   --sidebar-ring: oklch(0.32 0.08 240);
 }
 

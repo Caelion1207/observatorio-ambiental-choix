@@ -1214,3 +1214,15 @@ El procedimiento `participaciones.create` solo guardaba en base de datos pero NO
 - [x] Reiniciar servidor para aplicar cambios
 - [ ] Usuario debe probar envío desde sitio web y verificar recepción de correo
 - [ ] Guardar checkpoint después de confirmación
+
+
+---
+
+## Rediseño de Paleta de Colores ✅ COMPLETADA
+
+- [x] Actualizar variables CSS en index.css con paleta verde olivo y color hueso
+- [x] Aplicar color hueso (oklch 0.97 0.01 60) como fondo principal
+- [x] Aplicar verde olivo oscuro (oklch 0.35 0.08 120) en títulos principales
+- [x] Aplicar verde olivo (oklch 0.50 0.10 120) en botones y acentos
+- [x] Verificar contraste y legibilidad en todas las páginas
+- [x] Guardar checkpoint
