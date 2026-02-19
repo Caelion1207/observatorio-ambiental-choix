@@ -1,0 +1,46 @@
+{
+  "query": "SELECT id, numero, titulo, slug FROM investigaciones LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, numero, titulo, slug FROM investigaciones LIMIT 10;",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "slug": "cobertura-forestal-historica-choix-2015-2026"
+    },
+    {
+      "id": "90002",
+      "numero": "4",
+      "titulo": "Sistema Educativo de Choix - Capacidad vs Demanda",
+      "slug": "sistema-educativo-choix-capacidad-vs-demanda"
+    },
+    {
+      "id": "90003",
+      "numero": "5",
+      "titulo": "Infraestructura de Salud en Choix - Análisis de Saturación",
+      "slug": "infraestructura-salud-choix-analisis-saturacion"
+    },
+    {
+      "id": "90004",
+      "numero": "6",
+      "titulo": "Red de Transporte de Choix - Identificación de Cuellos de Botella",
+      "slug": "red-transporte-choix-cuellos-botella"
+    },
+    {
+      "id": "120002",
+      "numero": "7",
+      "titulo": "Análisis Estructural del Presupuesto Municipal de Choix 2020-2026",
+      "slug": "analisis-estructural-presupuesto-municipal-choix-2020-2026"
+    },
+    {
+      "id": "180002",
+      "numero": "1",
+      "titulo": "Sistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación",
+      "slug": "sistema-hidrico-choix-resiliencia-amortiguacion"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\ttitulo\tslug\n90001\t3\tCobertura Forestal Histórica de Choix 2015-2026\tcobertura-forestal-historica-choix-2015-2026\n90002\t4\tSistema Educativo de Choix - Capacidad vs Demanda\tsistema-educativo-choix-capacidad-vs-demanda\n90003\t5\tInfraestructura de Salud en Choix - Análisis de Saturación\tinfraestructura-salud-choix-analisis-saturacion\n90004\t6\tRed de Transporte de Choix - Identificación de Cuellos de Botella\tred-transporte-choix-cuellos-botella\n120002\t7\tAnálisis Estructural del Presupuesto Municipal de Choix 2020-2026\tanalisis-estructural-presupuesto-municipal-choix-2020-2026\n180002\t1\tSistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación\tsistema-hidrico-choix-resiliencia-amortiguacion\n",
+  "stderr": "",
+  "execution_time_ms": 475
+}

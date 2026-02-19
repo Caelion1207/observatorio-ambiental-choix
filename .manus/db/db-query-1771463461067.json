@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, numero, titulo, impactoComunitario IS NOT NULL as tiene_impacto FROM investigaciones WHERE slug = 'cobertura-forestal-historica-choix-2015-2026';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, numero, titulo, impactoComunitario IS NOT NULL as tiene_impacto FROM investigaciones WHERE slug = 'cobertura-forestal-historica-choix-2015-2026';",
+  "rows": [
+    {
+      "id": "90001",
+      "numero": "3",
+      "titulo": "Cobertura Forestal Histórica de Choix 2015-2026",
+      "tiene_impacto": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\ttitulo\ttiene_impacto\n90001\t3\tCobertura Forestal Histórica de Choix 2015-2026\t0\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}

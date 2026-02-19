@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, numero, titulo, slug FROM investigaciones WHERE dominioId = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute SELECT id, numero, titulo, slug FROM investigaciones WHERE dominioId = 1;",
+  "rows": [
+    {
+      "id": "180002",
+      "numero": "1",
+      "titulo": "Sistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación",
+      "slug": "sistema-hidrico-choix-resiliencia-amortiguacion"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnumero\ttitulo\tslug\n180002\t1\tSistema Hídrico de Choix ante Demanda Incremental: Análisis Estructural de Resiliencia y Capacidad de Amortiguación\tsistema-hidrico-choix-resiliencia-amortiguacion\n",
+  "stderr": "",
+  "execution_time_ms": 350
+}

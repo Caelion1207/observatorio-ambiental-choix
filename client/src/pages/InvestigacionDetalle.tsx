@@ -12,6 +12,9 @@ import InvestigacionImages from "@/components/InvestigacionImages";
 import ProtocoloVersion from "@/components/ProtocoloVersion";
 import RegistroSupuestos, { type Supuesto } from "@/components/RegistroSupuestos";
 import { PanelValidacion } from "@/components/PanelValidacion";
+import EscenariosChart from "@/components/EscenariosChart";
+import EvolucionTemporalChart from "@/components/EvolucionTemporalChart";
+import ImpactoComunitarioChart from "@/components/ImpactoComunitarioChart";
 
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
@@ -183,16 +186,39 @@ export default function InvestigacionDetalle() {
 
           {/* 7 Secciones del Protocolo + Fuentes */}
           {secciones.map((seccion, index) => (
-            <Card key={index} id={seccion.id} className="border-border scroll-mt-20">
-              <CardHeader>
-                <CardTitle className="text-xl">{seccion.titulo}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="prose prose-sm max-w-none text-foreground">
-                  <Streamdown>{seccion.contenido}</Streamdown>
+            <div key={index}>
+              <Card id={seccion.id} className="border-border scroll-mt-20">
+                <CardHeader>
+                  <CardTitle className="text-xl">{seccion.titulo}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-sm max-w-none text-foreground">
+                    <Streamdown>{seccion.contenido}</Streamdown>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Gráfico de Evolución Temporal después de Tabla Maestra */}
+              {seccion.id === "tabla-maestra" && (
+                <div className="mt-6">
+                  <EvolucionTemporalChart dominioId={investigacion.dominioId} />
                 </div>
-              </CardContent>
-            </Card>
+              )}
+              
+              {/* Gráfico de Escenarios después de Escenarios */}
+              {seccion.id === "escenarios" && (
+                <div className="mt-6">
+                  <EscenariosChart dominioId={investigacion.dominioId} />
+                </div>
+              )}
+              
+              {/* Gráfico de Impacto Comunitario después de Impacto Comunitario */}
+              {seccion.id === "impacto-comunitario" && (
+                <div className="mt-6">
+                  <ImpactoComunitarioChart dominioId={investigacion.dominioId} />
+                </div>
+              )}
+            </div>
           ))}
 
           {/* Investigaciones Relacionadas */}

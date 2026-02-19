@@ -1001,3 +1001,46 @@ Sistema completo con 4 secciones funcionales:
 2. **Metodología**: Explicaciones humanas de IVE, brechas, incertidumbre (sin fórmulas)
 3. **Resúmenes**: Síntesis estáticas de 6 investigaciones (10 líneas + 3 hallazgos + 3 efectos + 2 escenarios + 2 ejemplos)
 4. **Investigaciones**: 6 investigaciones con protocolo de 7 secciones + Impacto Comunitario + Líneas de Acción
+
+
+---
+
+## Gráficos Interactivos en Investigaciones ✅ COMPLETADA
+
+### Objetivo
+Agregar visualizaciones interactivas para datos, escenarios de impacto y evolución temporal de variables críticas en cada investigación.
+
+### Fase 1: Instalación y Componentes Base
+- [x] Instalar recharts como dependencia
+- [x] Crear componente base ChartContainer para wrapper común
+- [x] Configurar tema de colores para gráficos (coherente con diseño)
+
+### Fase 2: Gráfico de Escenarios Comparativos
+- [x] Crear componente EscenariosChart
+- [x] Visualizar escenarios: Conservador, Estrés, Extremo
+- [x] Mostrar variables críticas por escenario (ej: IVE, capacidad disponible, déficit)
+- [x] Agregar tooltips interactivos con valores exactos
+
+### Fase 3: Gráfico de Evolución Temporal
+- [x] Crear componente EvolucionTemporalChart
+- [x] Visualizar series de tiempo de variables históricas (Tabla Maestra)
+- [x] Agregar línea de tendencia o promedio móvil
+- [x] Mostrar período de análisis (2020-2026)
+
+### Fase 4: Gráfico de Impacto Comunitario
+- [x] Crear componente ImpactoComunitarioChart
+- [x] Visualizar impacto por sectores (agricultores, población urbana, transportistas, etc.)
+- [x] Usar gráfico de barras horizontales o radar
+- [x] Agregar escala de severidad (bajo, medio, alto)
+
+### Fase 5: Integración en InvestigacionDetalle.tsx
+- [x] Integrar EscenariosChart en sección de Escenarios
+- [x] Integrar EvolucionTemporalChart en sección de Tabla Maestra
+- [x] Integrar ImpactoComunitarioChart en sección de Impacto Comunitario
+- [x] Verificar responsividad en móvil y desktop
+- [ ] Verificar que no hay errores de TypeScript
+
+### Fase 6: Checkpoint Final
+- [ ] Verificar funcionalidad completa de todos los gráficos
+- [ ] Guardar checkpoint con descripción técnica
+- [ ] Entregar resultado al usuario
