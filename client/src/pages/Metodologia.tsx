@@ -1,12 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, CheckCircle2, Droplets, GraduationCap, Heart, Building2, Trees, DollarSign, Wheat, Beef } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { CheckCircle2 } from "lucide-react";
 
 export default function Metodologia() {
-  // Obtener dominios activos desde base de datos
-  const { data: dominios, isLoading: dominiosLoading } = trpc.dominios.list.useQuery();
-
   const protocoloSecciones = [
     {
       numero: 1,
@@ -55,13 +51,12 @@ export default function Metodologia() {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container max-w-5xl py-12">
-        <div className="space-y-8">
+        <div className="space-y-12">
           {/* Encabezado */}
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">Protocolo de Análisis Estructural</h1>
             <p className="text-lg text-muted-foreground">
-              Método constante, replicable y auditable para análisis de problemáticas locales con 
-              impacto sistémico.
+              Método constante, replicable y auditable para análisis de problemáticas locales.
             </p>
           </div>
 
@@ -75,150 +70,139 @@ export default function Metodologia() {
             </AlertDescription>
           </Alert>
 
-          {/* Principios del Laboratorio */}
-          <Card className="border-primary/20 bg-primary/5">
-            <CardHeader>
-              <CardTitle className="text-2xl">Principios del Laboratorio</CardTitle>
-              <CardDescription>
-                Estos principios guían todas las investigaciones y garantizan la neutralidad técnica del análisis.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <strong className="text-foreground">No emitimos juicios morales ni acusaciones.</strong>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Evaluamos estructuras, no personas. El análisis se centra en sistemas, flujos y variables, 
-                      no en culpabilidades individuales.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <strong className="text-foreground">Si los datos cambian, las conclusiones cambian.</strong>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      No hay conclusiones inmutables. Si aparecen nuevos datos oficiales o se corrigen los existentes, 
-                      actualizamos el modelo y las conclusiones derivadas.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <strong className="text-foreground">Toda inferencia debe estar respaldada por variables cuantificadas.</strong>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      No permitimos saltos narrativos. Cada afirmación debe derivarse de variables definidas en el Modelo Mínimo. 
-                      Palabras como "probablemente", "es evidente" o "claramente" son rechazadas automáticamente.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <strong className="text-foreground">Todo supuesto crítico debe ser verificable.</strong>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Los supuestos con sensibilidad "Crítica" requieren verificación con fuentes primarias oficiales. 
-                      El Índice de Verificación Estructural (IVE) mide la proporción de supuestos críticos verificados.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <strong className="text-foreground">Todo modelo debe ser auditable.</strong>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      El protocolo de 7 secciones garantiza que cualquier persona con conocimientos técnicos pueda 
-                      reproducir el análisis, verificar las fuentes y cuestionar los supuestos.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Protocolo de 7 Secciones */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Estructura Replicable (7 Secciones)</h2>
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold">Protocolo de 7 Secciones</h2>
             <p className="text-muted-foreground">
-              Cada análisis sigue exactamente el mismo esquema. Esto permite auditoría porque el 
-              método es constante. No depende de quién lo escriba, depende del protocolo.
+              Cada investigación sigue este protocolo obligatorio. Sin excepciones.
             </p>
             <div className="grid gap-4">
               {protocoloSecciones.map((seccion) => (
-                <Card key={seccion.numero} className="border-l-4 border-l-primary">
+                <Card key={seccion.numero} className="border-border">
                   <CardHeader>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                        {seccion.numero}
-                      </span>
-                      {seccion.titulo}
+                    <CardTitle className="text-lg">
+                      {seccion.numero}. {seccion.titulo}
                     </CardTitle>
-                    <CardDescription>{seccion.descripcion}</CardDescription>
                   </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{seccion.descripcion}</p>
+                  </CardContent>
                 </Card>
               ))}
             </div>
           </div>
 
-          {/* Dominios Activos - Render Dinámico */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Dominios de Análisis</h2>
-            <p className="text-muted-foreground">
-              Este protocolo se aplica a múltiples dominios de problemáticas locales con impacto sistémico. 
-              Cada dominio mantiene la misma estructura metodológica pero con variables y modelos específicos.
-            </p>
-            
-            {dominiosLoading ? (
-              <div className="text-center text-muted-foreground py-8">
-                Cargando dominios...
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 gap-4">
-                {dominios
-                  ?.filter(d => d.activo)
-                  .sort((a, b) => a.orden - b.orden)
-                  .map((dominio) => (
-                    <Card key={dominio.id}>
-                      <CardHeader>
-                        <CardTitle className="text-base flex items-center gap-2">
-                          {dominio.icono && (() => {
-                            const iconMap: Record<string, React.ReactNode> = {
-                              'Droplets': <Droplets className="h-5 w-5" />,
-                              'GraduationCap': <GraduationCap className="h-5 w-5" />,
-                              'Heart': <Heart className="h-5 w-5" />,
-                              'Building2': <Building2 className="h-5 w-5" />,
-                              'Trees': <Trees className="h-5 w-5" />,
-                              'DollarSign': <DollarSign className="h-5 w-5" />,
-                              'Wheat': <Wheat className="h-5 w-5" />,
-                              'Beef': <Beef className="h-5 w-5" />,
-                            };
-                            return iconMap[dominio.icono] || null;
-                          })()}
-                          {dominio.nombre}
-                        </CardTitle>
-                        <CardDescription>
-                          {dominio.descripcion}
-                        </CardDescription>
-                      </CardHeader>
-                    </Card>
-                  ))}
-              </div>
-            )}
+          {/* IVE - Índice de Verificación Estructural */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold">Índice de Verificación Estructural (IVE)</h2>
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                El IVE mide qué proporción de los supuestos críticos de una investigación están 
+                respaldados por fuentes verificables.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Un supuesto crítico es aquel que, si cambia, altera significativamente las conclusiones 
+                del análisis. El IVE indica cuántos de esos supuestos están verificados con datos oficiales.
+              </p>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/5">
+              <CardHeader>
+                <CardTitle>Rangos de Interpretación</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-3 w-3 rounded-full bg-green-500" />
+                    <strong className="text-foreground">0.80 – 1.00: Alta verificación</strong>
+                  </div>
+                  <p className="text-sm text-muted-foreground ml-5">
+                    La mayoría de los supuestos críticos están respaldados por datos oficiales.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                    <strong className="text-foreground">0.50 – 0.79: Parcialmente verificado</strong>
+                  </div>
+                  <p className="text-sm text-muted-foreground ml-5">
+                    Algunos supuestos críticos están verificados, pero otros dependen de estimaciones.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-3 w-3 rounded-full bg-orange-500" />
+                    <strong className="text-foreground">0.30 – 0.49: Información limitada</strong>
+                  </div>
+                  <p className="text-sm text-muted-foreground ml-5">
+                    La mayoría de los supuestos críticos no están verificados con fuentes oficiales.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Auditoría por Método Constante */}
-          <Alert>
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              <strong>Auditoría:</strong> Si todos los estudios siguen el mismo marco, se vuelven 
-              auditables. La estructura se mantiene estable, el método reduce ruido, el modelo evita 
-              deriva narrativa y la arquitectura escala a distintos dominios. Esto es metagobernanza 
-              aplicada.
-            </AlertDescription>
-          </Alert>
+          {/* Brechas */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold">Brechas</h2>
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Una brecha es información necesaria que no está disponible públicamente o no ha sido verificada.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                <strong>Brecha ≠ error.</strong> Una brecha es información faltante. No significa que el 
+                análisis sea incorrecto, sino que está limitado por la disponibilidad de datos.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Identificar brechas es honesto. Permite saber qué información adicional mejoraría el análisis.
+              </p>
+            </div>
+          </div>
+
+          {/* Incertidumbre Analítica */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold">Incertidumbre Analítica</h2>
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                La incertidumbre analítica mide el nivel de dependencia de estimaciones o datos incompletos 
+                dentro del modelo.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                <strong>No mide peligro social ni ambiental.</strong> Mide el grado de respaldo documental 
+                del análisis.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Un análisis con alta incertidumbre no es inválido, pero sus conclusiones deben interpretarse 
+                con mayor cautela.
+              </p>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/5">
+              <CardHeader>
+                <CardTitle>Niveles de Incertidumbre</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <strong className="text-foreground">Incertidumbre Baja (IVE ≥ 0.75)</strong>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    La mayoría de los supuestos críticos están verificados.
+                  </p>
+                </div>
+                <div>
+                  <strong className="text-foreground">Incertidumbre Media (IVE 0.50–0.74)</strong>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Algunos supuestos críticos dependen de estimaciones.
+                  </p>
+                </div>
+                <div>
+                  <strong className="text-foreground">Incertidumbre Alta (IVE &lt; 0.50)</strong>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    La mayoría de los supuestos críticos no están verificados.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

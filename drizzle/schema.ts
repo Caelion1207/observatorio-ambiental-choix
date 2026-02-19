@@ -85,6 +85,10 @@ export const investigaciones = mysqlTable("investigaciones", {
   brechas: text("brechas").notNull(),
   conclusion: text("conclusion").notNull(),
   
+  // Impacto y acciones
+  impactoComunitario: text("impactoComunitario"), // Efectos directos en la comunidad
+  lineasAccion: text("lineasAccion"), // Posibles líneas de acción
+  
   // Metadata de la investigación (JSON)
   metadataJson: text("metadataJson"), // {ubicacion, periodo, alcance, etc.}
   

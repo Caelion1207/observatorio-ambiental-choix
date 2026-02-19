@@ -894,3 +894,110 @@ Alinear arquitectura real con narrativa arquitectónica, eliminando hardcodeo le
   - client/src/lib/metricas.ts
 - [x] Verificar que sistema funciona sin errores TypeScript (0 errores LSP, 0 errores TypeScript)
 - [x] Congelar versión limpia
+
+
+---
+
+## Reestructuración Completa: Estructura Final Limpia
+
+### Fase 1: Simplificar Página de Inicio
+- [ ] Eliminar métricas flotantes de Home.tsx
+- [ ] Reescribir sección "Qué es el Observatorio" (claro, directo)
+- [ ] Agregar sección "Qué hace" (lista concreta de funciones)
+- [ ] Agregar sección "Qué NO hace" (límites claros)
+- [ ] Simplificar enlaces a Metodología e Investigaciones
+- [ ] Eliminar tecnicismos innecesarios
+
+### Fase 2: Reescribir Metodología
+- [ ] Reescribir explicación de IVE (Índice de Verificación Estructural) en lenguaje humano
+- [ ] Definir rangos simples de IVE:
+  * 0.80 – 1.00 → Alta verificación
+  * 0.50 – 0.79 → Parcialmente verificado
+  * 0.30 – 0.49 → Información limitada
+- [ ] Eliminar fórmulas públicas complejas
+- [ ] Reescribir explicación de Brechas (información faltante, NO error)
+- [ ] Reescribir explicación de Incertidumbre Analítica (dependencia de estimaciones)
+- [ ] Eliminar dramatismo y tecnicismos innecesarios
+
+### Fase 3: Crear Sección "Resúmenes"
+- [ ] Crear nueva página client/src/pages/Resumenes.tsx
+- [ ] Agregar ruta /resumenes en App.tsx
+- [ ] Agregar enlace en navegación
+- [ ] Para cada investigación, generar contenido estático:
+  * Resumen en 10 líneas
+  * 3 hallazgos clave
+  * 3 efectos en la comunidad
+  * 2 escenarios posibles
+  * 2 ejemplos de cómo otros municipios enfrentaron problemas similares
+- [ ] Almacenar contenido en BD (NO generar dinámicamente)
+- [ ] Diseñar UI limpia para mostrar resúmenes
+
+### Fase 4: Actualizar Investigaciones
+- [ ] Agregar campo "impactoComunitario" (TEXT) a schema de investigaciones
+- [ ] Agregar campo "lineasAccion" (TEXT) a schema de investigaciones
+- [ ] Ejecutar migración de BD (pnpm db:push)
+- [ ] Actualizar InvestigacionDetalle.tsx para mostrar nuevas secciones
+- [ ] Generar contenido de impacto comunitario para las 6 investigaciones existentes
+- [ ] Generar contenido de líneas de acción para las 6 investigaciones existentes
+
+### Fase 5: Verificación y Congelamiento
+- [ ] Verificar que página de inicio es clara y directa
+- [ ] Verificar que metodología es comprensible sin tecnicismos
+- [ ] Verificar que resúmenes están completos para las 6 investigaciones
+- [ ] Verificar que investigaciones tienen impacto comunitario y líneas de acción
+- [ ] Probar navegación completa del sistema
+- [ ] Congelar versión final
+
+
+---
+
+## Reestructuración Final v3.0 - Estructura Limpia ✅ COMPLETADA
+
+### Objetivo
+Implementar estructura final con 4 secciones: Inicio (simplificado), Metodología (humanizada), Resúmenes (estáticos), Investigaciones (con impacto comunitario).
+
+### Fase 1: Simplificar Home ✅
+- [x] Eliminar métricas flotantes de Home.tsx
+- [x] Mantener solo: qué es, qué hace, qué no hace, enlaces
+- [x] Remover cualquier referencia a agente o automatización
+
+### Fase 2: Reescribir Metodología ✅
+- [x] Reescribir Metodologia.tsx con explicaciones humanas
+- [x] Explicar IVE sin fórmulas públicas (rangos: 0.80-1.00 alta, 0.50-0.79 parcial, 0.30-0.49 limitada)
+- [x] Explicar brechas como información faltante (NO errores)
+- [x] Explicar incertidumbre analítica sin alarmismo (basada en IVE, NO peligro social)
+- [x] Mantener protocolo de 7 secciones obligatorias
+
+### Fase 3: Crear Resúmenes ✅
+- [x] Crear página Resumenes.tsx con contenido estático
+- [x] Agregar síntesis de 10 líneas por investigación (6 investigaciones)
+- [x] Agregar 3 hallazgos clave por investigación
+- [x] Agregar 3 efectos comunitarios por investigación
+- [x] Agregar 2 escenarios proyectados (Estrés + Extremo) por investigación
+- [x] Agregar 2 ejemplos de otros municipios por investigación (12 municipios totales)
+- [x] Agregar ruta /resumenes en App.tsx
+- [x] Agregar enlace en Navigation.tsx
+
+### Fase 4: Actualizar Investigaciones ✅
+- [x] Agregar campos impactoComunitario y lineasAccion al schema
+- [x] Aplicar migración de base de datos (ALTER TABLE)
+- [x] Actualizar investigación #1 (Sistema Hídrico) con impacto y líneas de acción
+- [x] Actualizar investigación #2 (Cobertura Forestal) con impacto y líneas de acción
+- [x] Actualizar investigación #3 (Infraestructura Salud) con impacto y líneas de acción
+- [x] Actualizar investigación #4 (Sistema Educativo) con impacto y líneas de acción
+- [x] Actualizar investigación #5 (Red Transporte) con impacto y líneas de acción
+- [x] Actualizar investigación #6 (Infraestructura Vial) con impacto y líneas de acción
+- [x] Modificar InvestigacionDetalle.tsx para mostrar nuevas secciones
+
+### Fase 5: Verificación Final ✅
+- [x] Verificar coherencia de todas las páginas
+- [x] Verificar que no hay errores de TypeScript (0 errores LSP)
+- [x] Verificar que el servidor funciona correctamente (running)
+- [ ] Guardar checkpoint final
+
+### Resultado
+Sistema completo con 4 secciones funcionales:
+1. **Inicio**: Qué es, qué hace, qué no hace, enlaces (sin métricas flotantes)
+2. **Metodología**: Explicaciones humanas de IVE, brechas, incertidumbre (sin fórmulas)
+3. **Resúmenes**: Síntesis estáticas de 6 investigaciones (10 líneas + 3 hallazgos + 3 efectos + 2 escenarios + 2 ejemplos)
+4. **Investigaciones**: 6 investigaciones con protocolo de 7 secciones + Impacto Comunitario + Líneas de Acción

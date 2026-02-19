@@ -72,6 +72,16 @@ export default function InvestigacionDetalle() {
     { id: "conclusion", titulo: "7. Conclusión Estructural", contenido: investigacion.conclusion },
   ];
   
+  // Agregar sección de Impacto Comunitario si existe
+  if (investigacion.impactoComunitario) {
+    secciones.push({ id: "impacto-comunitario", titulo: "Impacto Comunitario", contenido: investigacion.impactoComunitario });
+  }
+  
+  // Agregar sección de Líneas de Acción si existe
+  if (investigacion.lineasAccion) {
+    secciones.push({ id: "lineas-accion", titulo: "Posibles Líneas de Acción", contenido: investigacion.lineasAccion });
+  }
+  
   // Agregar sección de fuentes si existen
   if (fuentes && fuentes.length > 0) {
     console.log('[DEBUG] Fuentes recibidas:', fuentes);

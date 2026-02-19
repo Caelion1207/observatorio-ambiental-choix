@@ -15,6 +15,7 @@ export default function Navigation() {
   const navLinks = [
     { href: "/", label: "Inicio" },
     { href: "/investigaciones", label: "Investigaciones" },
+    { href: "/resumenes", label: "Resúmenes" },
     { href: "/metodologia", label: "Metodología" },
     { href: "/datos-abiertos", label: "Datos Abiertos" },
     { href: "/participacion", label: "Participación" },
