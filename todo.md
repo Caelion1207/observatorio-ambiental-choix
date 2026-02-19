@@ -1005,7 +1005,7 @@ Sistema completo con 4 secciones funcionales:
 
 ---
 
-## Gráficos Interactivos en Investigaciones ✅ COMPLETADA
+## Gráficos Interactivos en Investigaciones ❌ REVERTIDA
 
 ### Objetivo
 Agregar visualizaciones interactivas para datos, escenarios de impacto y evolución temporal de variables críticas en cada investigación.
@@ -1040,7 +1040,33 @@ Agregar visualizaciones interactivas para datos, escenarios de impacto y evoluci
 - [x] Verificar responsividad en móvil y desktop
 - [ ] Verificar que no hay errores de TypeScript
 
-### Fase 6: Checkpoint Final
-- [ ] Verificar funcionalidad completa de todos los gráficos
-- [ ] Guardar checkpoint con descripción técnica
-- [ ] Entregar resultado al usuario
+### Fase 6: Reversión Completa
+- [x] Datos hardcodeados incorrectos detectados (cobertura forestal en sistema educativo)
+- [x] Eliminar imports y renderizado de gráficos en InvestigacionDetalle.tsx
+- [x] Eliminar archivos de componentes (EscenariosChart, EvolucionTemporalChart, ImpactoComunitarioChart)
+- [x] Desinstalar recharts
+- [x] Eliminar chart.tsx de shadcn/ui
+- [x] Sistema revertido a estado sin gráficos
+
+
+---
+
+## Reversión: Eliminar Gráficos Interactivos ✅ COMPLETADA
+
+### Motivo
+Los gráficos implementados tenían datos hardcodeados incorrectos (ej: datos de cobertura forestal en investigación de sistema educativo).
+
+### Tareas
+- [x] Eliminar imports de gráficos en InvestigacionDetalle.tsx
+- [x] Eliminar renderizado de gráficos en InvestigacionDetalle.tsx
+- [x] Eliminar archivo EscenariosChart.tsx
+- [x] Eliminar archivo EvolucionTemporalChart.tsx
+- [x] Eliminar archivo ImpactoComunitarioChart.tsx
+- [x] Eliminar ScientificChart.tsx
+- [x] Eliminar AgenteCharts.tsx
+- [x] Eliminar VisualizacionHuites.tsx
+- [x] Eliminar chart.tsx de shadcn/ui
+- [x] Desinstalar recharts
+- [x] Reiniciar servidor
+- [x] Verificar 0 errores TypeScript
+- [x] Guardar checkpoint de reversión
