@@ -45,6 +45,17 @@ export default function Home() {
                   <li>No oculta limitaciones metodológicas</li>
                   <li>No sustituye la decisión de autoridades electas</li>
                 </ul>
+                
+                {/* Regla estructural de integridad de datos */}
+                <div className="mt-6 p-4 border-2 border-primary/30 bg-primary/5 rounded-lg">
+                  <p className="text-base font-semibold text-foreground">
+                    🚨 Principio de Integridad de Datos
+                  </p>
+                  <p className="text-base text-muted-foreground mt-2">
+                    El Observatorio no genera resultados empíricos ni simula impacto real. 
+                    Solo analiza estructuras con base en datos públicos verificables.
+                  </p>
+                </div>
               </div>
             </div>
 

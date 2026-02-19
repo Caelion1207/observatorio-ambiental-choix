@@ -22,6 +22,7 @@ import InvestigacionImages from "@/components/InvestigacionImages";
 import ProtocoloVersion from "@/components/ProtocoloVersion";
 import RegistroSupuestos, { type Supuesto } from "@/components/RegistroSupuestos";
 import { PanelValidacion } from "@/components/PanelValidacion";
+import TipoDato from "@/components/TipoDato";
 
 
 export default function InvestigacionDetalle() {
@@ -268,22 +269,39 @@ export default function InvestigacionDetalle() {
           )}
 
           {/* 7 Secciones del Protocolo + Fuentes */}
-          {secciones.map((seccion, index) => (
-            <div key={index}>
-              <Card id={seccion.id} className="border-border scroll-mt-20">
-                <CardHeader>
-                  <CardTitle className="text-xl">{seccion.titulo}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="prose prose-sm max-w-none text-foreground">
-                    <Streamdown>{seccion.contenido}</Streamdown>
-                  </div>
-                </CardContent>
-              </Card>
-              
-
-            </div>
-          ))}
+          {secciones.map((seccion, index) => {
+            // Determinar tipo de dato según sección
+            let tipoDato: "observado" | "supuesto" | "escenario" | null = null;
+            if (seccion.id === "tabla-maestra" || seccion.id === "fuentes") {
+              tipoDato = "observado";
+            } else if (seccion.id === "supuestos") {
+              tipoDato = "supuesto";
+            } else if (seccion.id === "escenarios") {
+              tipoDato = "escenario";
+            }
+            
+            return (
+              <div key={index}>
+                <Card id={seccion.id} className="border-border scroll-mt-20">
+                  <CardHeader>
+                    <CardTitle className="text-xl">{seccion.titulo}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {tipoDato && (
+                      <TipoDato tipo={tipoDato}>
+                        {tipoDato === "observado" && "Esta sección contiene datos extraídos de fuentes oficiales verificables."}
+                        {tipoDato === "supuesto" && "Esta sección declara explícitamente los supuestos utilizados en el análisis."}
+                        {tipoDato === "escenario" && "Esta sección presenta simulaciones hipotéticas basadas en modelos estructurales."}
+                      </TipoDato>
+                    )}
+                    <div className="prose prose-sm max-w-none text-foreground">
+                      <Streamdown>{seccion.contenido}</Streamdown>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
 
           {/* Investigaciones Relacionadas */}
           <div className="mt-12 pt-8 border-t border-border">

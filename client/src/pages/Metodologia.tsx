@@ -69,6 +69,21 @@ export default function Metodologia() {
               simulación transparente y variables auditables.
             </AlertDescription>
           </Alert>
+          
+          {/* Regla estructural de integridad de datos */}
+          <div className="p-6 border-2 border-primary/30 bg-primary/5 rounded-lg space-y-3">
+            <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+              🚨 Principio de Integridad de Datos
+            </h3>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              El Observatorio <strong>no genera resultados empíricos ni simula impacto real</strong>. 
+              Solo analiza estructuras con base en datos públicos verificables.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Toda afirmación sobre implementaciones, resultados preliminares o impacto proyectado 
+              que no haya ocurrido en la realidad <strong>queda prohibida</strong> en esta plataforma.
+            </p>
+          </div>
 
           {/* Protocolo de 7 Secciones */}
           <div className="space-y-6">

@@ -12,7 +12,6 @@ import InvestigacionDetalle from "./pages/InvestigacionDetalle";
 import DatosAbiertos from "./pages/DatosAbiertos";
 import Participacion from "./pages/Participacion";
 import Resumenes from "./pages/Resumenes";
-import CasoExito from "./pages/CasoExito";
 
 function Router() {
   return (
@@ -26,7 +25,6 @@ function Router() {
         <Route path={"/datos-abiertos"} component={DatosAbiertos} />
         <Route path={"/participacion"} component={Participacion} />
         <Route path={"/resumenes"} component={Resumenes} />
-        <Route path={"/caso-exito"} component={CasoExito} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

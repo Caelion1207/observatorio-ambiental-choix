@@ -1154,3 +1154,43 @@ Los gráficos implementados tenían datos hardcodeados incorrectos (ej: datos de
 - [x] Convertir PDF buffer a Object URL para mostrar en iframe
 - [x] Limpiar Object URLs cuando se cierra el modal (handleCerrarPreview)
 - [x] Cambiar botón a "Vista Previa PDF" con icono Eye
+
+
+---
+
+## CRÍTICO: Eliminación de Contenido Ficticio e Integridad de Datos
+
+### Motivo
+Se inventó un "caso de éxito" con resultados preliminares ficticios violando el principio de integridad de datos. Prohibido inventar datos sin fuentes o fundamentos.
+
+### Fase 1: Eliminación Completa ✅
+- [x] Eliminar página /caso-exito completamente
+- [x] Eliminar ruta de CasoExito en App.tsx
+- [x] Eliminar enlace de navegación a Caso de Éxito
+- [x] Eliminar archivo CasoExito.tsx
+- [x] Buscar y eliminar TODAS las referencias a:
+  - Implementación de recomendaciones (solo quedan en contexto metodológico legítimo)
+  - Resultados preliminares (eliminados)
+  - Impacto proyectado (eliminados)
+  - Casos de éxito ficticios (eliminados)
+
+### Fase 2: Regla Estructural Visible ✅
+- [x] Agregar en página Inicio (sección "Qué NO hace"):
+  "El Observatorio no genera resultados empíricos ni simula impacto real. Solo analiza estructuras con base en datos públicos verificables."
+- [x] Agregar misma regla en página Metodología
+- [x] Hacer regla visualmente destacada (border-2 border-primary/30 bg-primary/5)
+
+### Fase 3: Separación Estricta de Tipos de Datos ✅
+- [x] Crear componente TipoDato con 3 variantes:
+  - 📊 Datos observados (fuente citada obligatoria)
+  - 🧩 Supuestos declarados (explícitos)
+  - 📈 Escenarios hipotéticos (marcados como simulación)
+- [x] Integrar etiquetas en InvestigacionDetalle.tsx
+- [x] Aplicar etiquetas en secciones: Tabla Maestra, Fuentes (observado), Supuestos (supuesto), Escenarios (escenario)
+- [x] Verificar que NO hay mezcla de tipos de datos
+
+### Fase 4: Verificación Final ✅
+- [x] Buscar en todo el código referencias a "caso de éxito", "implementación", "resultados preliminares"
+- [x] Verificar que regla estructural es visible (Home.tsx y Metodologia.tsx)
+- [x] Verificar que separación de datos es clara (componente TipoDato integrado)
+- [x] Guardar checkpoint
