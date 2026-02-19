@@ -16,6 +16,7 @@ export default function Navigation() {
     { href: "/", label: "Inicio" },
     { href: "/investigaciones", label: "Investigaciones" },
     { href: "/resumenes", label: "Resúmenes" },
+    { href: "/caso-exito", label: "Caso de Éxito" },
     { href: "/metodologia", label: "Metodología" },
     { href: "/datos-abiertos", label: "Datos Abiertos" },
     { href: "/participacion", label: "Participación" },

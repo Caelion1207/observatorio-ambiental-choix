@@ -62,6 +62,18 @@ export const appRouter = router({
       }),
     
     
+    generarPDF: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .mutation(async ({ input }) => {
+        const { generarPDFInvestigacion } = await import("./pdf");
+        const pdfBuffer = await generarPDFInvestigacion(input.slug);
+        return {
+          success: true,
+          content: pdfBuffer.toString('base64'),
+          filename: `investigacion-${input.slug}.pdf`
+        };
+      }),
+    
     exportJSON: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {

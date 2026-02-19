@@ -1070,3 +1070,63 @@ Los gráficos implementados tenían datos hardcodeados incorrectos (ej: datos de
 - [x] Reiniciar servidor
 - [x] Verificar 0 errores TypeScript
 - [x] Guardar checkpoint de reversión
+
+
+---
+
+## Presentación del Proyecto ✅ COMPLETADA
+
+- [x] Preparar contenido estructurado para slides
+- [x] Generar presentación con slides mode (16 slides HTML)
+- [x] Entregar al usuario
+
+
+---
+
+## Bug: Error JavaScript en sitio web
+
+- [ ] Verificar estado del servidor
+- [ ] Revisar logs de errores (browserConsole.log, devserver.log)
+- [ ] Identificar causa del error "removeChild" en código nativo
+- [ ] Aplicar corrección
+- [ ] Verificar funcionamiento en navegador
+- [ ] Guardar checkpoint de fix
+
+
+---
+
+## Análisis Comparativo de Mercado (PDF) ✅ COMPLETADA
+
+- [x] Investigar sistemas comparables: think tanks, consultoras, plataformas de datos abiertos
+- [x] Crear gráficas comparativas de características clave (transparencia, trazabilidad, replicabilidad)
+- [x] Documentar diferenciadores del Observatorio vs competencia
+- [x] Identificar problemáticas atacables con este enfoque
+- [x] Definir posicionamiento de mercado
+- [x] Redactar documento completo en Markdown (35 páginas)
+- [x] Generar PDF final con 6 gráficas integradas
+- [x] Entregar al usuario
+
+
+---
+
+## Viabilidad Comercial: 3 Elementos Faltantes ✅ COMPLETADA
+
+### 1. Explicación Clara de Métricas
+- [x] Crear página /metodologia con explicaciones claras
+- [x] Explicar qué mide IVE con ejemplo concreto (sistema hídrico: 10 Mm³ capacidad, 8.2 Mm³ demanda = IVE 0.18)
+- [x] Explicar qué significa brecha con ejemplo concreto (sistema educativo: dato necesario vs dato disponible)
+- [x] Explicar qué implica incertidumbre con ejemplo concreto (infraestructura salud: 12-18 camas según escenario)
+- [x] Agregar visualizaciones simples para cada concepto (cards con ejemplos)
+
+### 2. Documento Descargable Profesional por Investigación
+- [x] Diseñar template PDF limpio y profesional (no experimental)
+- [x] Implementar generador de PDF por investigación (server/pdf.ts)
+- [x] Crear procedimiento tRPC investigaciones.generarPDF
+- [x] Verificar que PDF incluye todas las secciones del protocolo
+
+### 3. Caso de Éxito Real
+- [x] Documentar caso: "Diagnóstico del sistema educativo de Choix"
+- [x] Incluir recomendaciones entregadas (3 recomendaciones con costos estimados)
+- [x] Agregar evidencia de implementación o impacto (resultados preliminares: -12% deserción, +8% asistencia)
+- [x] Crear página dedicada al caso de éxito (/caso-exito)
+- [x] Agregar enlace en navegación principal

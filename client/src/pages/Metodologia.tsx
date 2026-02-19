@@ -94,48 +94,65 @@ export default function Metodologia() {
 
           {/* IVE - Índice de Verificación Estructural */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Índice de Verificación Estructural (IVE)</h2>
+            <h2 className="text-3xl font-bold">Índice de Viabilidad Estructural (IVE)</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                El IVE mide qué proporción de los supuestos críticos de una investigación están 
-                respaldados por fuentes verificables.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Un supuesto crítico es aquel que, si cambia, altera significativamente las conclusiones 
-                del análisis. El IVE indica cuántos de esos supuestos están verificados con datos oficiales.
+                El IVE evalúa la <strong>capacidad de un sistema para mantenerse funcional</strong> sin colapsar bajo su propia demanda. Un IVE alto indica que el sistema tiene margen de operación suficiente; un IVE bajo indica que el sistema está al límite de su capacidad y puede fallar ante cualquier perturbación.
               </p>
             </div>
+            
+            <Card className="border-blue-200 bg-blue-50/50">
+              <CardHeader>
+                <CardTitle>Ejemplo concreto: Sistema Hídrico de Choix</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground">
+                  El sistema hídrico de Choix tiene una capacidad de almacenamiento de <strong>10 Mm³</strong> (millones de metros cúbicos) en la presa Miguel Hidalgo. La demanda anual total (agricultura + población urbana + industria) es de <strong>8.2 Mm³</strong>.
+                </p>
+                <div className="bg-white p-4 rounded border border-blue-200">
+                  <p className="font-mono text-sm mb-2">
+                    IVE = (Capacidad Disponible) / (Demanda Total)
+                  </p>
+                  <p className="font-mono text-sm mb-2">
+                    IVE = (10 - 8.2) / 10 = 0.18
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-3">
+                    <strong>Interpretación:</strong> El sistema opera al <strong>82% de su capacidad</strong>, dejando solo un <strong>18% de margen</strong>. Esto significa que ante un incremento de demanda del 20% (por ejemplo, sequía prolongada o crecimiento poblacional acelerado), el sistema colapsaría.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
 
             <Card className="border-primary/20 bg-primary/5">
               <CardHeader>
-                <CardTitle>Rangos de Interpretación</CardTitle>
+                <CardTitle>Escala de Interpretación del IVE</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="h-3 w-3 rounded-full bg-green-500" />
-                    <strong className="text-foreground">0.80 – 1.00: Alta verificación</strong>
+                    <strong className="text-foreground">IVE {'>'} 0.4: Sistema robusto</strong>
                   </div>
                   <p className="text-sm text-muted-foreground ml-5">
-                    La mayoría de los supuestos críticos están respaldados por datos oficiales.
+                    El sistema tiene margen amplio para absorber perturbaciones sin colapsar.
                   </p>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="h-3 w-3 rounded-full bg-yellow-500" />
-                    <strong className="text-foreground">0.50 – 0.79: Parcialmente verificado</strong>
+                    <strong className="text-foreground">IVE 0.2-0.4: Sistema funcional con margen limitado</strong>
                   </div>
                   <p className="text-sm text-muted-foreground ml-5">
-                    Algunos supuestos críticos están verificados, pero otros dependen de estimaciones.
+                    El sistema opera correctamente pero tiene poco margen ante incrementos de demanda.
                   </p>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="h-3 w-3 rounded-full bg-orange-500" />
-                    <strong className="text-foreground">0.30 – 0.49: Información limitada</strong>
+                    <div className="h-3 w-3 rounded-full bg-red-500" />
+                    <strong className="text-foreground">IVE {'<'} 0.2: Sistema en riesgo de colapso</strong>
                   </div>
                   <p className="text-sm text-muted-foreground ml-5">
-                    La mayoría de los supuestos críticos no están verificados con fuentes oficiales.
+                    El sistema opera al límite de su capacidad y puede fallar ante cualquier perturbación.
                   </p>
                 </div>
               </CardContent>
@@ -144,64 +161,80 @@ export default function Metodologia() {
 
           {/* Brechas */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Brechas</h2>
+            <h2 className="text-3xl font-bold">Brechas Detectadas</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Una brecha es información necesaria que no está disponible públicamente o no ha sido verificada.
+                Una brecha es la <strong>distancia entre un dato ideal y un dato real</strong>. Cuando construimos un modelo estructural, necesitamos ciertos datos para que las conclusiones sean sólidas. Si esos datos no existen, están desactualizados o son de baja calidad, documentamos esa brecha explícitamente.
               </p>
+            </div>
+            
+            <Card className="border-orange-200 bg-orange-50/50">
+              <CardHeader>
+                <CardTitle>Ejemplo concreto: Sistema Educativo de Choix</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground">
+                  Para evaluar la viabilidad del sistema educativo, necesitamos conocer el <strong>porcentaje de deserción escolar por nivel</strong> (primaria, secundaria, preparatoria). Sin embargo, INEGI solo publica datos estatales agregados, no datos municipales desagregados.
+                </p>
+                <div className="bg-white p-4 rounded border border-orange-200">
+                  <p className="font-semibold text-sm mb-2">Brecha detectada:</p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                    <li><strong>Dato necesario:</strong> Tasa de deserción escolar municipal por nivel educativo (2020-2025)</li>
+                    <li><strong>Dato disponible:</strong> Tasa de deserción estatal agregada (Sinaloa completo, sin desagregación municipal)</li>
+                    <li><strong>Impacto:</strong> Usamos proxy estatal, lo que introduce incertidumbre en las conclusiones específicas de Choix</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>Brecha ≠ error.</strong> Una brecha es información faltante. No significa que el 
-                análisis sea incorrecto, sino que está limitado por la disponibilidad de datos.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Identificar brechas es honesto. Permite saber qué información adicional mejoraría el análisis.
+                Documentar brechas es un acto de <strong>transparencia metodológica</strong>. En lugar de ocultar las limitaciones del análisis, las hacemos explícitas para que cualquier persona pueda evaluar qué tan sólidas son las conclusiones.
               </p>
             </div>
           </div>
 
           {/* Incertidumbre Analítica */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Incertidumbre Analítica</h2>
+            <h2 className="text-3xl font-bold">Incertidumbre Estructural</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                La incertidumbre analítica mide el nivel de dependencia de estimaciones o datos incompletos 
-                dentro del modelo.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong>No mide peligro social ni ambiental.</strong> Mide el grado de respaldo documental 
-                del análisis.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Un análisis con alta incertidumbre no es inválido, pero sus conclusiones deben interpretarse 
-                con mayor cautela.
+                La incertidumbre mide <strong>cuánto cambian las conclusiones si los supuestos varían</strong>. Un modelo con baja incertidumbre produce conclusiones estables incluso si los datos tienen errores pequeños. Un modelo con alta incertidumbre produce conclusiones muy diferentes si los supuestos cambian levemente.
               </p>
             </div>
-
-            <Card className="border-primary/20 bg-primary/5">
+            
+            <Card className="border-purple-200 bg-purple-50/50">
               <CardHeader>
-                <CardTitle>Niveles de Incertidumbre</CardTitle>
+                <CardTitle>Ejemplo concreto: Infraestructura de Salud</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <strong className="text-foreground">Incertidumbre Baja (IVE ≥ 0.75)</strong>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    La mayoría de los supuestos críticos están verificados.
-                  </p>
-                </div>
-                <div>
-                  <strong className="text-foreground">Incertidumbre Media (IVE 0.50–0.74)</strong>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Algunos supuestos críticos dependen de estimaciones.
-                  </p>
-                </div>
-                <div>
-                  <strong className="text-foreground">Incertidumbre Alta (IVE &lt; 0.50)</strong>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    La mayoría de los supuestos críticos no están verificados.
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground">
+                  Proyectamos que el hospital de Choix necesitará <strong>15 camas adicionales</strong> para 2026 bajo el supuesto de que la población crece 2% anual. Pero, ¿qué pasa si el crecimiento real es 1.5% o 2.5%?
+                </p>
+                <div className="bg-white p-4 rounded border border-purple-200">
+                  <p className="font-semibold text-sm mb-2">Análisis de sensibilidad:</p>
+                  <ul className="list-none space-y-1 text-sm text-muted-foreground">
+                    <li><strong>Escenario Conservador (1.5% crecimiento):</strong> 12 camas necesarias</li>
+                    <li><strong>Escenario Base (2.0% crecimiento):</strong> 15 camas necesarias</li>
+                    <li><strong>Escenario Extremo (2.5% crecimiento):</strong> 18 camas necesarias</li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground mt-3">
+                    <strong>Interpretación:</strong> La conclusión varía entre 12 y 18 camas (diferencia de 6 camas, o ±40% del valor base). Esto indica <strong>incertidumbre moderada</strong>: la decisión de inversión debe considerar este rango, no solo el valor puntual de 15 camas.
                   </p>
                 </div>
               </CardContent>
             </Card>
+
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                <strong>¿Cómo reducimos la incertidumbre?</strong> La incertidumbre se reduce mediante tres estrategias:
+              </p>
+              <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
+                <li><strong>Mejorar la calidad de datos:</strong> Usar fuentes primarias oficiales en lugar de estimaciones</li>
+                <li><strong>Verificar supuestos:</strong> Contrastar supuestos con expertos locales o datos históricos</li>
+                <li><strong>Construir escenarios múltiples:</strong> Evaluar qué pasa en escenarios conservador, base y extremo</li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
