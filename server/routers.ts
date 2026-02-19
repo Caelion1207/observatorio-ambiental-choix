@@ -282,7 +282,24 @@ export const appRouter = router({
         investigacionId: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
-        return await db.createParticipacion(input);
+        // Guardar participación en base de datos
+        const result = await db.createParticipacion(input);
+        
+        // Enviar notificación por correo al propietario
+        const { notifyOwner } = await import("./_core/notification");
+        const categoriasLabels: Record<string, string> = {
+          correccion_datos: "Corrección de Datos",
+          nueva_fuente: "Nueva Fuente Oficial",
+          aclaracion_tecnica: "Aclaración Técnica",
+          pregunta_metodologica: "Pregunta Metodológica",
+        };
+        
+        await notifyOwner({
+          title: `Nueva participación: ${input.asunto}`,
+          content: `**Categoría:** ${categoriasLabels[input.categoria]}\n\n**De:** ${input.nombre} (${input.email})\n\n**Asunto:** ${input.asunto}\n\n**Contenido:**\n${input.contenido}`,
+        });
+        
+        return result;
       }),
     
     updateEstado: adminProcedure

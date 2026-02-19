@@ -1194,3 +1194,23 @@ Se inventó un "caso de éxito" con resultados preliminares ficticios violando e
 - [x] Verificar que regla estructural es visible (Home.tsx y Metodologia.tsx)
 - [x] Verificar que separación de datos es clara (componente TipoDato integrado)
 - [x] Guardar checkpoint
+
+
+---
+
+## Verificación y Corrección de Sistema de Participaciones ✅ COMPLETADA
+
+### Problema Reportado
+Usuario envió pregunta desde formulario de participación pero no llegó correo de notificación.
+
+### Causa Identificada
+El procedimiento `participaciones.create` solo guardaba en base de datos pero NO enviaba notificación por correo.
+
+### Tareas
+- [x] Revisar implementación del formulario en Participacion.tsx (correcto)
+- [x] Verificar procedimiento tRPC de envío (participaciones.create)
+- [x] Agregar integración con sistema de notificaciones (notifyOwner)
+- [x] Configurar notificación automática al propietario del proyecto
+- [x] Reiniciar servidor para aplicar cambios
+- [ ] Usuario debe probar envío desde sitio web y verificar recepción de correo
+- [ ] Guardar checkpoint después de confirmación
