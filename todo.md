@@ -1142,3 +1142,15 @@ Los gráficos implementados tenían datos hardcodeados incorrectos (ej: datos de
 - [x] Mejorar generador PDF para usar WeasyPrint y generar formato profesional
 - [x] Agregar estados de loading durante generación de PDF (isPending)
 - [x] Verificar WeasyPrint disponible en servidor
+
+
+---
+
+## Preview de PDF antes de Descargar ✅ COMPLETADA
+
+- [x] Crear componente Dialog de preview con iframe para visualizar PDF
+- [x] Modificar flujo de descarga para generar PDF y mostrar preview primero
+- [x] Agregar botones "Descargar" y "Cancelar" en modal de preview
+- [x] Convertir PDF buffer a Object URL para mostrar en iframe
+- [x] Limpiar Object URLs cuando se cierra el modal (handleCerrarPreview)
+- [x] Cambiar botón a "Vista Previa PDF" con icono Eye

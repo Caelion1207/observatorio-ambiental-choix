@@ -2,7 +2,15 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useRoute } from "wouter";
-import { ArrowLeft, Calendar, Loader2, Download } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2, Download, Eye } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -19,6 +27,8 @@ import { PanelValidacion } from "@/components/PanelValidacion";
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
   const slug = params?.slug || "";
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState<string>("");
   
   const generarPDFMutation = trpc.investigaciones.generarPDF.useMutation({
     onSuccess: (result) => {
@@ -31,18 +41,13 @@ export default function InvestigacionDetalle() {
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       
-      // Crear enlace de descarga
+      // Crear URL para preview
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = result.filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      setPdfPreviewUrl(url);
+      setPdfFilename(result.filename);
       
       toast.success("PDF generado", {
-        description: "El documento se ha descargado correctamente.",
+        description: "Vista previa lista. Verifica el contenido antes de descargar.",
       });
     },
     onError: () => {
@@ -51,6 +56,32 @@ export default function InvestigacionDetalle() {
       });
     },
   });
+  
+  const handleDescargarPDF = () => {
+    if (!pdfPreviewUrl) return;
+    
+    const a = document.createElement('a');
+    a.href = pdfPreviewUrl;
+    a.download = pdfFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    toast.success("PDF descargado", {
+      description: "El documento se ha guardado correctamente.",
+    });
+    
+    // Cerrar modal
+    handleCerrarPreview();
+  };
+  
+  const handleCerrarPreview = () => {
+    if (pdfPreviewUrl) {
+      window.URL.revokeObjectURL(pdfPreviewUrl);
+    }
+    setPdfPreviewUrl(null);
+    setPdfFilename("");
+  };
 
   const { data: investigacion, isLoading } = trpc.investigaciones.getBySlug.useQuery(
     { slug },
@@ -140,6 +171,7 @@ export default function InvestigacionDetalle() {
   const tocSections = secciones.map(s => ({ id: s.id, title: s.titulo }));
 
   return (
+    <>
     <div className="min-h-screen flex flex-col">
       <div className="container max-w-7xl py-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8">
@@ -167,12 +199,12 @@ export default function InvestigacionDetalle() {
                 {generarPDFMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Generando PDF...
+                    Generando...
                   </>
                 ) : (
                   <>
-                    <Download className="h-4 w-4" />
-                    Descargar PDF
+                    <Eye className="h-4 w-4" />
+                    Vista Previa PDF
                   </>
                 )}
               </Button>
@@ -269,5 +301,38 @@ export default function InvestigacionDetalle() {
     </div>
     </div>
     </div>
+    
+    {/* Modal de Preview PDF */}
+    <Dialog open={!!pdfPreviewUrl} onOpenChange={(open) => !open && handleCerrarPreview()}>
+      <DialogContent className="max-w-5xl h-[90vh]">
+        <DialogHeader>
+          <DialogTitle>Vista Previa del Documento</DialogTitle>
+          <DialogDescription>
+            Verifica el contenido antes de descargar. El documento incluye todas las secciones del protocolo.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="flex-1 overflow-hidden rounded-md border border-border">
+          {pdfPreviewUrl && (
+            <iframe
+              src={pdfPreviewUrl}
+              className="w-full h-full"
+              title="Vista previa del PDF"
+            />
+          )}
+        </div>
+        
+        <DialogFooter className="gap-2">
+          <Button variant="outline" onClick={handleCerrarPreview}>
+            Cancelar
+          </Button>
+          <Button onClick={handleDescargarPDF} className="gap-2">
+            <Download className="h-4 w-4" />
+            Descargar PDF
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
