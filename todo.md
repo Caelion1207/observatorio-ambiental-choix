@@ -1130,3 +1130,15 @@ Los gráficos implementados tenían datos hardcodeados incorrectos (ej: datos de
 - [x] Agregar evidencia de implementación o impacto (resultados preliminares: -12% deserción, +8% asistencia)
 - [x] Crear página dedicada al caso de éxito (/caso-exito)
 - [x] Agregar enlace en navegación principal
+
+
+---
+
+## Botón "Descargar PDF" en Investigaciones ✅ COMPLETADA
+
+- [x] Agregar botón "Descargar PDF" en InvestigacionDetalle.tsx
+- [x] Implementar hook useMutation para trpc.investigaciones.generarPDF
+- [x] Implementar lógica de descarga de archivo desde base64
+- [x] Mejorar generador PDF para usar WeasyPrint y generar formato profesional
+- [x] Agregar estados de loading durante generación de PDF (isPending)
+- [x] Verificar WeasyPrint disponible en servidor

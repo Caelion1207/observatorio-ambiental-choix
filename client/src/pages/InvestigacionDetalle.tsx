@@ -2,7 +2,9 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useRoute } from "wouter";
-import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2, Download } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Streamdown } from "streamdown";
@@ -17,6 +19,38 @@ import { PanelValidacion } from "@/components/PanelValidacion";
 export default function InvestigacionDetalle() {
   const [, params] = useRoute("/investigaciones/:slug");
   const slug = params?.slug || "";
+  
+  const generarPDFMutation = trpc.investigaciones.generarPDF.useMutation({
+    onSuccess: (result) => {
+      // Convertir base64 a Blob
+      const byteCharacters = atob(result.content);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      
+      // Crear enlace de descarga
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = result.filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      toast.success("PDF generado", {
+        description: "El documento se ha descargado correctamente.",
+      });
+    },
+    onError: () => {
+      toast.error("Error al generar PDF", {
+        description: "No se pudo generar el documento. Intenta nuevamente.",
+      });
+    },
+  });
 
   const { data: investigacion, isLoading } = trpc.investigaciones.getBySlug.useQuery(
     { slug },
@@ -123,7 +157,26 @@ export default function InvestigacionDetalle() {
 
           {/* Encabezado */}
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight">{investigacion.titulo}</h1>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="text-4xl font-bold tracking-tight flex-1">{investigacion.titulo}</h1>
+              <Button
+                onClick={() => generarPDFMutation.mutate({ slug })}
+                disabled={generarPDFMutation.isPending}
+                className="gap-2 shrink-0"
+              >
+                {generarPDFMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Generando PDF...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" />
+                    Descargar PDF
+                  </>
+                )}
+              </Button>
+            </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>
