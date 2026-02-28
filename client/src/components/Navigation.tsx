@@ -19,6 +19,7 @@ export default function Navigation() {
     { href: "/metodologia", label: "Metodología" },
     { href: "/datos-abiertos", label: "Datos Abiertos" },
     { href: "/participacion", label: "Participación" },
+    { href: "/nucleo-matematico", label: "Núcleo" },
   ];
 
   return (

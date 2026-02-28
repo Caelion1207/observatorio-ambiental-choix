@@ -1,0 +1,8 @@
+{
+  "query": "\nSELECT \n  id,\n  numero,\n  titulo,\n  slug,\n  dominioId,\n  definicionProblema,\n  tablaMaestra,\n  supuestos,\n  modeloMinimo,\n  escenarios,\n  brechasDetectadas,\n  conclusion,\n  impactoComunitario,\n  lineasAccion\nFROM investigaciones\nORDER BY numero;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2dHuGejaB9KJLvX.8b4e8adcad2a --database CCNoW76kwaDX7C8rQCJ6ZD --execute \nSELECT \n  id,\n  numero,\n  titulo,\n  slug,\n  dominioId,\n  definicionProblema,\n  tablaMaestra,\n  supuestos,\n  modeloMinimo,\n  escenarios,\n  brechasDetectadas,\n  conclusion,\n  impactoComunitario,\n  lineasAccion\nFROM investigaciones\nORDER BY numero;\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 2: Unknown column 'definicionproblema' in 'field list'"
+  ]
+}

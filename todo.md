@@ -1226,3 +1226,48 @@ El procedimiento `participaciones.create` solo guardaba en base de datos pero NO
 - [x] Aplicar verde olivo (oklch 0.50 0.10 120) en botones y acentos
 - [x] Verificar contraste y legibilidad en todas las páginas
 - [x] Guardar checkpoint
+
+
+---
+
+## Generación de PDFs de Investigaciones para Entrega Física
+
+- [ ] Obtener datos de las 6 investigaciones desde base de datos
+- [ ] Generar PDF profesional de investigación 1: Sistema Hídrico
+- [ ] Generar PDF profesional de investigación 2: Cobertura Forestal
+- [ ] Generar PDF profesional de investigación 3: Sistema Educativo
+- [ ] Generar PDF profesional de investigación 4: Infraestructura de Salud
+- [ ] Generar PDF profesional de investigación 5: Red Vial
+- [ ] Generar PDF profesional de investigación 6: Finanzas Municipales
+- [ ] Entregar los 6 PDFs al usuario
+
+
+---
+
+## Generación de PDFs de Investigaciones con Gráficas
+
+- [ ] Generar gráficas para investigación 1 (Cobertura Forestal): evolución superficie, captura CO₂, IVE
+- [ ] Regenerar PDF investigación 1 con gráficas integradas
+- [ ] Generar gráficas para investigación 2 (Sistema Hídrico): disponibilidad vs demanda, IVE, déficit/superávit
+- [ ] Generar PDF investigación 2 con gráficas
+- [ ] Generar gráficas para investigación 3 (Sistema Educativo): tasas de deserción, cobertura, matrícula
+- [ ] Generar PDF investigación 3 con gráficas
+- [ ] Generar gráficas para investigación 4 (Infraestructura Salud): capacidad vs demanda, IVE, déficit camas
+- [ ] Generar PDF investigación 4 con gráficas
+- [ ] Generar gráficas para investigación 5 (Infraestructura Vial): estado de red, conectividad, IVE
+- [ ] Generar PDF investigación 5 con gráficas
+- [ ] Generar gráficas para investigación 6 (Finanzas Públicas): ingresos vs egresos, deuda, IVE
+- [ ] Generar PDF investigación 6 con gráficas
+- [ ] Entregar los 6 PDFs al usuario
+
+
+---
+
+## Actualizaciones Finales (Feb 2026)
+
+- [ ] Cambiar etiquetas TipoDato: "Observado" → "Observado (fuente nacional)" / "Estimado municipal" / "Supuesto declarado"
+- [ ] Agregar nota metodológica: "Las cifras municipales derivan de desagregación de datos estatales ante ausencia de inventario local."
+- [ ] Crear página /nucleo-matematico con núcleo matemático cerrado
+- [ ] Agregar ruta y navegación para /nucleo-matematico
+- [ ] Exportar código a repositorio GitHub
+- [ ] Guardar checkpoint final
