@@ -52,28 +52,26 @@ Supuesto	No verificado	Declarado como Sₙ
 
 ⸻
 
-Arquitectura conceptual
+## Arquitectura conceptual
 
 Datos → IRM → IVE → RLD → CAELION
 
-Índice	Función	Pregunta
-IRM	Calidad de evidencia	¿Qué tan confiables son los datos?
-IVE	Viabilidad estructural	¿Qué margen tiene el sistema?
-RLD	Legitimidad dinámica	¿Puede sostener decisiones?
-
+| Índice | Función | Pregunta |
+|--------|--------|----------|
+| IRM | Calidad de evidencia | ¿Qué tan confiables son los datos? |
+| IVE | Viabilidad estructural | ¿Qué margen tiene el sistema? |
+| RLD | Legitimidad dinámica | ¿Puede sostener decisiones? |
 
 ⸻
 
-Separación de roles
+## Separación de roles
 
-Operador	Función	Pregunta
-CAELION	Análisis estructural	¿Cómo está organizado el sistema?
-IRM	Filtro epistemológico	¿Qué tan sólida es la evidencia?
-IVE	Reconocimiento de patrones	¿Qué trayectoria sigue?
-LIANG	Decisión estratégica	¿Qué se hace con esto?
-
-LIANG solo se activa si IRM ≥ 0.5 y IVE ≥ 0.5
-
+| Operador | Función | Pregunta |
+|----------|--------|----------|
+| CAELION | Análisis estructural | ¿Cómo está organizado el sistema? |
+| IRM | Filtro epistemológico | ¿Qué tan sólida es la evidencia? |
+| IVE | Reconocimiento de patrones | ¿Qué trayectoria sigue? |
+| LIANG | Decisión estratégica | ¿Qué se hace con esto? |
 ⸻
 
 Núcleo matemático — CAELION v3.3
