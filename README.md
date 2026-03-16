@@ -6,7 +6,7 @@ Choix, Sinaloa, México
 El Observatorio no genera resultados empíricos ni simula impacto real.
 Analiza estructuras de sistemas públicos utilizando únicamente datos públicos verificables.
 
-⸻
+
 
 Qué problema intenta resolver
 
@@ -25,32 +25,35 @@ Para ello:
 	•	declara supuestos explícitamente
 	•	calcula índices estructurales
 
-⸻
-
-Ejemplo simple
-
-Sistema hídrico de Choix
-	•	Capacidad: 10 Mm³
-	•	Demanda: 8.2 Mm³
-
-IVE = (10 − 8.2) / 10 = 0.18
-
-Interpretación:
-	•	82 % de uso
-	•	18 % de margen
-	•	alta fragilidad ante incrementos
-
-⸻
-
-Clasificación de datos
-
-Tipo	Descripción	Fuente
-Observado	Datos oficiales	INEGI, CONAGUA
-Estimado	Derivado estadístico	ENIGH
-Supuesto	No verificado	Declarado como Sₙ
 
 
-⸻
+## Ejemplo simple
+
+**Sistema hídrico de Choix**
+
+- Capacidad: 10 Mm³  
+- Demanda: 8.2 Mm³  
+
+**Cálculo:**
+
+IVE = (10 - 8.2) / 10 = 0.18  
+
+**Interpretación:**
+
+- 82 % de uso  
+- 18 % de margen  
+- Alta fragilidad ante incrementos
+
+
+## Clasificación de datos
+
+| Tipo                | Descripción                         | Fuente típica              |
+|---------------------|-------------------------------------|----------------------------|
+| Observado           | Datos oficiales                     | INEGI, CONAGUA             |
+| Estimado municipal  | Derivado estadístico                | ENIGH                      |
+| Supuesto declarado  | No verificado (Sn)                  | Declarado explícitamente   |
+
+
 
 ## Arquitectura conceptual
 
@@ -62,7 +65,7 @@ Datos → IRM → IVE → RLD → CAELION
 | IVE | Viabilidad estructural | ¿Qué margen tiene el sistema? |
 | RLD | Legitimidad dinámica | ¿Puede sostener decisiones? |
 
-⸻
+
 
 ## Separación de roles
 
@@ -72,7 +75,7 @@ Datos → IRM → IVE → RLD → CAELION
 | IRM | Filtro epistemológico | ¿Qué tan sólida es la evidencia? |
 | IVE | Reconocimiento de patrones | ¿Qué trayectoria sigue? |
 | LIANG | Decisión estratégica | ¿Qué se hace con esto? |
-⸻
+
 
 Núcleo matemático — CAELION v3.3
 
@@ -85,7 +88,7 @@ IVE(k) = IRM(k) · Σ(wⱼ · Nⱼ(k))
 RLD(k+1) = f(RLD, IVE, IRM, Ω)
 
 
-⸻
+
 
 Estado absorbente
 
@@ -98,34 +101,35 @@ Entonces:
 	•	RLD se degrada
 	•	se requiere más evidencia
 
-⸻
 
-Dominios de análisis
 
-Dominio	Investigaciones
-Sistema hídrico	2
-Cobertura forestal	1
-Suelo	1
-Biodiversidad	1
-Socioeconómico	1
-Gobernanza	1
+## Dominios de análisis
 
-Total: 8
+| Dominio              | Investigaciones |
+|---------------------|-----------------|
+| Sistema hídrico     | 2               |
+| Cobertura forestal  | 1               |
+| Suelo               | 1               |
+| Biodiversidad       | 1               |
+| Socioeconómico      | 1               |
+| Gobernanza          | 1               |
 
-⸻
+**Total:** 8
 
-Protocolo de investigación
-	1.	Espacio del sistema
-	2.	Datos
-	3.	IRM
-	4.	IVE
-	5.	RLD
-	6.	Supuestos
-	7.	Brechas
-	8.	Conclusión
-	9.	Acción
 
-⸻
+## Protocolo de investigación
+
+1. Espacio del sistema  
+2. Datos  
+3. IRM  
+4. IVE  
+5. RLD  
+6. Supuestos  
+7. Brechas  
+8. Conclusión  
+9. Acción  
+
+
 
 Arquitectura técnica
 	•	React 19
@@ -135,36 +139,38 @@ Arquitectura técnica
 	•	Drizzle ORM
 	•	MySQL
 
-⸻
-
-Estado del sistema
-
-Componente	Estado
-Web	Activo
-Núcleo CAELION	Cerrado
-IRM detallado	Pendiente
-IVE comparativo	Pendiente
-RLD visual	Pendiente
 
 
-⸻
+## Estado del sistema
 
-Limitaciones
-	•	sin datos de campo
-	•	sin monitoreo en tiempo real
-	•	depende de datos públicos
+| Componente        | Estado        |
+|------------------|--------------|
+| Sistema web      | Activo        |
+| Núcleo CAELION   | Cerrado       |
+| IRM detallado    | Pendiente     |
+| IVE comparativo  | Pendiente     |
+| RLD visual       | Pendiente     |
 
-Un IRM bajo no es error.
-Es diagnóstico.
 
-⸻
+
+
+## Limitaciones
+
+- Sin datos de campo  
+- Sin monitoreo en tiempo real  
+- Dependencia de datos públicos  
+
+**Nota:**  
+Un IRM bajo no es error. Es diagnóstico.
+
+
 
 Autor
 
 Ever
 Arquitectura CAELION (diseño propio)
 
-⸻
+
 
 Licencia
 
