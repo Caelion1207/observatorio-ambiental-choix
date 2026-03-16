@@ -77,14 +77,24 @@ Datos → IRM → IVE → RLD → CAELION
 | LIANG | Decisión estratégica | ¿Qué se hace con esto? |
 
 
-Núcleo matemático — CAELION v3.3
+## Núcleo matemático — CAELION v3.3
+
+Dinámica del sistema:
 
 x(k+1) = F(x(k), u(k)) + ξ(k)
-e(k) = x(k) − x_ref
+
+Error respecto a referencia:
+
+e(k) = x(k) - x_ref
+
+Función de estabilidad (Lyapunov):
+
 V(x) = eᵀ P e
 
-IRM(k) ∈ [0,1]
-IVE(k) = IRM(k) · Σ(wⱼ · Nⱼ(k))
+Índices estructurales:
+
+IRM(k) ∈ [0,1]  
+IVE(k) = IRM(k) · Σ(w_j · N_j(k))  
 RLD(k+1) = f(RLD, IVE, IRM, Ω)
 
 
