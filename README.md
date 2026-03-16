@@ -1,29 +1,66 @@
-Observatorio Ambiental de Choix
+# Observatorio Ambiental de Choix
 
-Laboratorio Público de Análisis Estructural
+Laboratorio Público de Análisis Estructural  
 Choix, Sinaloa, México
 
-El Observatorio no genera resultados empíricos ni simula impacto real.
-Analiza estructuras de sistemas públicos utilizando únicamente datos públicos verificables.
+---
 
+## ¿Qué es esto?
 
+Un sistema para evaluar si un sistema público puede sostenerse… o si está condenado a fallar.
 
-Qué problema intenta resolver
+No predice.  
+No simula.  
+No inventa datos.
 
-Los municipios suelen tomar decisiones con:
-	•	datos incompletos
-	•	supuestos implícitos
-	•	estudios no auditables
+Organiza evidencia pública, declara lo que no se sabe, y calcula la viabilidad estructural de un sistema.
 
-El Observatorio responde:
+---
+
+## El problema
+
+Los municipios toman decisiones con:
+
+- datos incompletos  
+- supuestos implícitos  
+- estudios no auditables  
+
+El resultado no es incertidumbre.  
+Es ilusión de certeza.
+
+---
+
+## La pregunta
 
 ¿Puede un sistema público mantenerse funcional bajo su propia demanda?
 
-Para ello:
-	•	organiza datos públicos dispersos
-	•	separa evidencia de estimaciones
-	•	declara supuestos explícitamente
-	•	calcula índices estructurales
+---
+
+## Qué hace el Observatorio
+
+- organiza datos públicos dispersos  
+- separa evidencia de estimaciones  
+- declara supuestos explícitamente  
+- calcula índices estructurales (IRM, IVE, RLD)  
+
+---
+
+## Qué NO hace
+
+- no genera datos empíricos  
+- no monitorea en tiempo real  
+- no sustituye decisiones políticas  
+
+---
+
+## Idea central
+
+Si la evidencia es débil, el sistema no es confiable.  
+Si el margen es bajo, el sistema es frágil.
+
+El Observatorio no corrige eso.
+
+Lo hace visible.
 
 
 
@@ -96,6 +133,9 @@ V(x) = eᵀ P e
 IRM(k) ∈ [0,1]  
 IVE(k) = IRM(k) · Σ(w_j · N_j(k))  
 RLD(k+1) = f(RLD, IVE, IRM, Ω)
+
+Nota: La función de Lyapunov forma parte del núcleo CAELION como sistema dinámico general. 
+En el Observatorio se incluye como referencia formal, pero no se implementa directamente en el análisis actual.
 
 
 
